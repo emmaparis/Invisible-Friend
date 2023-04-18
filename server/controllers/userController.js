@@ -1,4 +1,6 @@
-const User = require('../models/User');
+import User from '../models/userModel.js';
+import userSchema from '../utils/validators.js';
+
 
 module.exports = {
 
@@ -31,6 +33,11 @@ async getUsers(req, res) {
 
   async createUser(req, res) {
     try {
+        const { error } = userSchema.validate(req.body);
+        if (error) {
+            res.status(400).json({ message: error.details[0].message });
+            return;
+        }
         const user = await User.create(req.body);
         res.json(user);
     } catch (err) {
