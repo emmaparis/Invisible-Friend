@@ -1,0 +1,16 @@
+# top-most EditorConfig file
+root = true
+
+# Character set
+charset = utf-8
+
+# Tab indentation
+indent_style = space
+indent_size = 2
+
+# Newline
+end_of_line = lf
+insert_final_newline = true
+
+# Remove whitespace characters preceding newline
+trim_trailing_whitespace = true

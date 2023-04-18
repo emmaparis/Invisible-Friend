@@ -1,0 +1,68 @@
+{
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": ["error"],
+    "no-alert": 0,
+    "no-console": 0,
+    "react/prop-types": 0,
+    "react/jsx-filename-extension": 0,
+    "no-undef": 0,
+    "no-plusplus": 0,
+    "react/no-newline-before-fragment": 0,
+    "react/one-jsx-expression-per-line": 0
+  },
+  "overrides": [
+    {
+      "files": [
+        "01-HTML-Git-CSS/**",
+        "02-CSS-Bootstrap/**",
+        "03-JavaScript/**",
+        "04-Web-APIs/**",
+        "05-Third-Party-APIs/**",
+        "06-Server-Side-APIs/**",
+        "office-hours/**"
+      ],
+      "rules": {
+        "no-var": "off",
+        "vars-on-top": 0,
+        "block-scoped-var": 0,
+        "no-redeclare": 0,
+        "no-plusplus": 0,
+        "no-undef": 0,
+        "no-alert": 0,
+        "no-console": 0,
+        "prefer-template": "off",
+        "prefer-destructuring": "off",
+        "func-names": "off",
+        "object-shorthand": "off",
+        "no-restricted-syntax": [
+          "error",
+          {
+            "selector": "TemplateLiteral",
+            "message": "Template literals are not allowed until later modules."
+          },
+          {
+            "selector": "ArrowFunctionExpression",
+            "message": "Arrow functions are not allowed until later modules."
+          },
+          {
+            "selector": "ObjectPattern, ArrayPattern",
+            "message": "Object/Array destructuring is not allowed until later modules."
+          },
+          {
+            "selector": "SpreadElement, RestElement",
+            "message": "Rest/Spread syntax is not allowed until later modules."
+          },
+          {
+            "selector": "VariableDeclaration[kind=/(const|let)/]",
+            "message": "const/let declaration is not allowed until later modules."
+          }
+        ]
+      },
+      "env": {
+        "es6": false
+      }
+    }
+  ]
+}
