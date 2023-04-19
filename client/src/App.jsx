@@ -6,6 +6,8 @@ import { ChakraProvider, Button } from '@chakra-ui/react'
 import './App.css';
 import Header from './components/Header';
 import Home from './pages/Home';
+import Create from './pages/Create'
+import Prompt from './pages/Prompt'
 
 
 
