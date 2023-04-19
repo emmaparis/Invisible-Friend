@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardHeader, CardBody, Heading, Stack, Text, Box, StackDivider, Input } from '@chakra-ui/react'
+import { Card, CardHeader, CardBody, Button, Heading, Stack, Box, StackDivider, Input } from '@chakra-ui/react'
 
 export default function SignUp() {
     return(
@@ -30,7 +30,7 @@ export default function SignUp() {
                         <Input   type='password' class='formInput' placeholder='Confirm Password'/>
                     </Box>
                     <Button mb={5} colorScheme='teal' variant='outline'>
-                        Sign Up
+                        Create Account
                     </Button>
                 </Stack>
             </CardBody>

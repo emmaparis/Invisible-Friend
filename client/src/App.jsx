@@ -25,8 +25,8 @@ function App() {
           <Header />
           {/* <Body /> */}
           {/* <Prompt /> */}
-          {/* <SignUp /> */}
-          <LogIn />
+          <SignUp />
+          {/* <LogIn /> */}
         </ChakraProvider>
       </ApolloProvider>
   );

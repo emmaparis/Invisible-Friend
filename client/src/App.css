@@ -43,7 +43,7 @@ header {
 .login-signup{
   margin: 8rem;
   background-color: #E6FFFA;
-  box-shadow: 0px 5px 5px #B2F5EA;
+  box-shadow: 8px 5px 5px #B2F5EA;
   border-radius: 2rem;
 }
 .formInput {
@@ -52,6 +52,5 @@ header {
   padding: 3px;
   padding-left: 5px;
   margin: 5px;
-  
   width:fit-content;
 }
