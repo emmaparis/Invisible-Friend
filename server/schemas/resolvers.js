@@ -27,7 +27,7 @@ const resolvers = {
 
     users: async () => {
       try {
-        return await User.find();
+        return await User.find().populate('friends').populate('experts');
       } catch (err) {
         throw new Error(err.message);
       }
@@ -45,7 +45,7 @@ const resolvers = {
 
     friends: async () => {
       try {
-        return await Friend.find();
+        return await Friend.find().populate('user');
       } catch (err) {
         throw new Error(err.message);
       }
@@ -61,7 +61,7 @@ const resolvers = {
 
     experts: async () => {
       try {
-        return await Expert.find();
+        return await Expert.find().populate('user');
       } catch (err) {
         throw new Error(err.message);
       }

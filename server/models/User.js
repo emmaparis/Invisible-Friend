@@ -19,18 +19,18 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
-    friends: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Friend',
-        },
-    ],
-    experts: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Expert',
-        },
-    ],
+  friends: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Friend',
+    },
+  ],
+  experts: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Expert',
+    },
+  ],
 });
 
 userSchema.pre('save', async function (next) {
