@@ -22,7 +22,7 @@ function App() {
           <Header />
           {/* <Body /> */}
           <Home />
-          <Prompt />
+          {/* <Prompt /> */}
         </ChakraProvider>
       </ApolloProvider>
   );
