@@ -42,10 +42,13 @@ app.get('/', (req, res) =>
 
 // startserver
 const startServer = async () => {
+  // start apollo server
   await server.start();
+  // connect express middleware for apollo
   server.applyMiddleware({ app });
-
+  // connect the db
   db.once('open', () => {
+    // start the express server
     app.listen(PORT, () => {
       console.log(
         'server running on http://localhost:3001'.white.underline.bold
@@ -57,9 +60,6 @@ const startServer = async () => {
     });
   });
 };
-// start apollo server
-// connect express middlewar for apollo
 
-// connect the db
-// start the express server
+
 startServer();
