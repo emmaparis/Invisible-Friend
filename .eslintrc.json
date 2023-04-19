@@ -13,7 +13,8 @@
     "react/one-jsx-expression-per-line": 0,
     "no-underscore-dangle": "off",
     "no-await-in-loop": "off",
-    "class-methods-use-this": "off"
+    "class-methods-use-this": "off",
+    "import/no-extraneous-dependencies": "off"
   },
   "overrides": [
     {

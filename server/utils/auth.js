@@ -7,7 +7,7 @@ class AuthService {
 
   loggedIn() {
     const token = this.getToken();
-    return token && !this.isTokenExpired(token) ? true : false;
+    return !!(token && !this.isTokenExpired(token));
   }
 
   // eslint-disable-next-line class-methods-use-this

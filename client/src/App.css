@@ -12,7 +12,7 @@ header {
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em #64ddffaa);
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
@@ -41,9 +41,9 @@ header {
   color: #888;
 }
 .createfriend {
-  background-color: #319795;
-  color: white;  
-  box-shadow: 0px 4px 4px #81E6D9; 
+  color: white;
+  background-color: #319795 !important;  
+  box-shadow: 0px 5px 5px #81E6D9; 
   margin: 30px;
   padding: 10px;
   font-size: 1.2rem;
@@ -54,7 +54,7 @@ header {
 .savefriend {
   background-color: #E6FFFA;
   color: #1D4044;  
-  box-shadow: 0px 4px 4px #81E6D9 !important; 
+  box-shadow: 0px 5px 5px #81E6D9 !important; 
   margin: 30px 0 30px 0;
   padding: 10px;
   font-size: 1.2rem;
@@ -64,7 +64,9 @@ header {
 }
 .icon {
   height: 30px;
-  display:inline;.login-signup{
+  display:inline;
+}
+  .login-signup{
   margin: 8rem;
   background-color: #E6FFFA;
   box-shadow: 8px 5px 5px #B2F5EA;

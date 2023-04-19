@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import reactLogo from './assets/react.svg';
-import viteLogo from './assets/vite.svg';
 import { ChakraProvider } from '@chakra-ui/react';
 import './App.css';
 import Header from './components/Header';
-import Create from './pages/Create';
 import Prompt from './pages/Prompt';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
@@ -26,10 +23,11 @@ function App() {
         <Router>
           <Header />
           {/* <Body /> */}
-          {/* <Prompt /> */}
+          <Prompt />
           <Routes>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<LogIn />} />
+            <Route path="/" element={<Home />} />
           </Routes>
         </Router>
       </ChakraProvider>
