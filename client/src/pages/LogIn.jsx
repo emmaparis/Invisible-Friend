@@ -1,4 +1,5 @@
-import React from 'react';
+import { React, useState } from 'react';
+import { useMutation } from '@apollo/client';
 import {
   Card,
   CardHeader,
@@ -11,11 +12,10 @@ import {
   Input,
 } from '@chakra-ui/react';
 
-import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
-const Login = (props) => {
+const LogIn = (props) => {
   const [formState, setFormState] = useState({ email: '', password: '' });
   const [login, { error, data }] = useMutation(LOGIN_USER);
 
@@ -49,9 +49,7 @@ const Login = (props) => {
       password: '',
     });
   };
-};
 
-export default function LogIn() {
   return (
     <Card
       sx={{
@@ -70,46 +68,71 @@ export default function LogIn() {
         sx={{ display: 'flex', justifyContent: 'center', alignSelf: 'center' }}
       >
         <Stack divider={<StackDivider />} spacing="4">
-          <Box>
-            <Heading size="s" textTransform="uppercase">
-              Email
-            </Heading>
-            <Input
+          <form onSubmit={handleFormSubmit}>
+            <Box>
+              <Heading size="s" textTransform="uppercase">
+                Email
+              </Heading>
+              <Input
+                sx={{
+                  backgroundColor: 'white',
+                  borderRadius: '1rem',
+                  paddingLeft: '5px',
+                  margin: '5px',
+                  width: 'fit-content',
+                }}
+                placeholder="email@example.com"
+                name="email"
+                type="email"
+                value={formState.email}
+                onChange={handleChange}
+              />
+            </Box>
+            <Box mb={3}>
+              <Heading size="s" textTransform="uppercase">
+                Password
+              </Heading>
+              <Input
+                sx={{
+                  backgroundColor: 'white',
+                  borderRadius: '1rem',
+                  paddingLeft: '5px',
+                  margin: '5px',
+                  width: 'fit-content',
+                }}
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={formState.password}
+                onChange={handleChange}
+              />
+            </Box>
+            <Button
+              mb={5}
+              sx={{ backgroundColor: '#319795', color: 'white' }}
+              variant="outline"
+              type="submit"
+              onClick={handleFormSubmit}
+            >
+              Log In
+            </Button>
+          </form>
+          {error && (
+            <Box
               sx={{
-                backgroundColor: 'white',
+                backgroundColor: 'red',
+                color: 'white',
+                padding: '1rem',
                 borderRadius: '1rem',
-                paddingLeft: '5px',
-                margin: '5px',
-                width: 'fit-content',
               }}
-              placeholder="email@example.com"
-            />
-          </Box>
-          <Box mb={3}>
-            <Heading size="s" textTransform="uppercase">
-              Password
-            </Heading>
-            <Input
-              sx={{
-                backgroundColor: 'white',
-                borderRadius: '1rem',
-                paddingLeft: '5px',
-                margin: '5px',
-                width: 'fit-content',
-              }}
-              type="password"
-              placeholder="Password"
-            />
-          </Box>
-          <Button
-            mb={5}
-            sx={{ backgroundColor: '#319795', color: 'white' }}
-            variant="outline"
-          >
-            Log In
-          </Button>
+            >
+              {error.message}
+            </Box>
+          )}
         </Stack>
       </CardBody>
     </Card>
   );
-}
+};
+
+export default LogIn;
