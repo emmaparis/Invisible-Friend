@@ -39,6 +39,11 @@ const typeDefs = gql`
     user: User!
   }
 
+  type Prompt {
+    _id: ID!
+    body: String!
+  }
+
   type Query {
     me: User
     users: [User]
@@ -47,6 +52,7 @@ const typeDefs = gql`
     friend(_id: ID!): Friend
     experts: [Expert]
     expert(_id: ID!): Expert
+    prompt(input: String!): String
   }
 
   type Mutation {
