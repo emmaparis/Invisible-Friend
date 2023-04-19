@@ -10,6 +10,11 @@ const typeDefs = gql`
     experts: [Expert]
   }
 
+  type Message {
+    role: String!
+    content: String!
+  }
+
   type Friend {
     _id: ID!
     name: String!
@@ -17,6 +22,7 @@ const typeDefs = gql`
     age: Int!
     mood: String!
     user: User!
+    history: [Message!]
   }
 
   type Expert {
@@ -25,6 +31,7 @@ const typeDefs = gql`
     language: String!
     expertise: String!
     user: User!
+    history: [Message!]
   }
 
   type Auth {
