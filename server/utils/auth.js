@@ -1,4 +1,4 @@
-import decode from 'jwt-decode';
+const decode = require ('jwt-decode');
 
 class AuthService {
   getUser() {

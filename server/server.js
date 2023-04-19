@@ -3,6 +3,7 @@ const express = require('express');
 // eslint-disable-next-line
 const colors = require('@colors/colors');
 const path = require('path');
+const { authMiddleware } = require('./utils/auth');
 // apollo server
 const { ApolloServer } = require('apollo-server-express');
 // database connection
@@ -17,6 +18,7 @@ const PORT = process.env.PORT || 3001;
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: authMiddleware,
 });
 
 // middlewares
