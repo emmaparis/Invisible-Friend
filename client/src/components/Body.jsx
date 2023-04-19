@@ -3,23 +3,26 @@ import Home from "../pages/Home";
 
 
 export default function Body() {
-  const [currentPage, setCurrentPage] = useState('AboutMe');
+  const [currentPage, setCurrentPage] = useState('Home');
 //based on the tab of the navbar selected/the currentPage state, the content of the page will be rendered
   const renderPage = () => {
-    if (currentPage === 'AboutMe') {
-      return <AboutMe />;
+    if (currentPage === 'Home') {
+      return <Home />;
     }
-    if (currentPage === 'Portfolio') {
-      return <Portfolio projectList={projectList} />;
-    }
-    if (currentPage === 'Contact') {
-      return <Contact />;
-    }
-    if (currentPage === 'Resume') {
-      return <Resume />;
-    }
+    // if (currentPage === 'New Friend') {
+    //   return <NewFriend />;
+    // }
+    // if (currentPage === 'Friend1') {
+    //   return <Friend1 />;
+    // }
+    // if (currentPage === 'Log In') {
+    //   return <LogIn />;
+    // }
+    // if (currentPage === 'Sign Up') {
+    //   return <SignUp />;
+    // }
   };
-//assigning the state of the current
+  //assigning the state of the current
   const handlePageChange = (page) => setCurrentPage(page);
 
   return (

@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import reactLogo from './assets/react.svg';
 import viteLogo from './assets/vite.svg';
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, Button } from '@chakra-ui/react'
 import './App.css';
 import Header from './components/Header';
+import Home from './pages/Home';
 
 
 
@@ -14,13 +15,12 @@ const client = new ApolloClient({
 });
 
 function App() {
-  // const [count, setCount] = useState(0);
-
   return (
       <ApolloProvider client={client}>
         <ChakraProvider>
           <Header />
-          <Body />
+          {/* <Body /> */}
+          <Home />
         </ChakraProvider>
       </ApolloProvider>
   );

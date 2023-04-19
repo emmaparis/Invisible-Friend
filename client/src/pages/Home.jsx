@@ -1,14 +1,13 @@
 import React from "react";
-import { Button, AddIcon } from '@chakra-ui/react'
-  //maybe add a loggedIN prop for find saved friends
+import { Button } from '@chakra-ui/react';
+
 function Home () {
     return(
-        <div> 
-            <AddIcon boxSize={6} />
-            <Button colorScheme='teal' size='lg'>
-                Create a friend
+        <div > 
+            <Button colorScheme='teal' size='lg' sx={{alignItems: 'center'}}>
+                <strong> + </strong> &emsp; Create a friend
             </Button>
-        </div>
+       </div>
     )
 }
 
