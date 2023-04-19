@@ -6,7 +6,7 @@ export const LOGIN_USER = gql`
       token
       profile {
         _id
-        username
+        name
       }
     }
   }
@@ -14,14 +14,14 @@ export const LOGIN_USER = gql`
 
 export const ADD_USER = gql`
   mutation addUser(
-    username: String!, 
+    name: String!, 
     email: String!, 
     password: String!) {
     addUser(name: String!, 
         email: String!, 
         password: String!) {
       _id
-      username
+      name
       email
     }
   }
@@ -30,18 +30,18 @@ export const ADD_USER = gql`
 export const UPDATE_USER = gql`
     mutation updateUser(
         _id: ID!
-        username: String!
+        name: String!
         email: String!
         password: String!
     ) {
         updateUser(
             _id: ID!
-            username: String!
+            name: String!
             email: String!
             password: String!
         ) {
             _id
-            username
+            name
             email
         }
     }
@@ -51,7 +51,7 @@ export const DELETE_USER = gql`
     mutation deleteUser(_id: ID!) {
         deleteUser(_id: ID!) {
             _id
-            username
+            name
             email
         }
     }
