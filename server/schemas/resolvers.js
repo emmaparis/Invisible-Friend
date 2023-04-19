@@ -1,6 +1,9 @@
 const { Configuration, OpenAIApi } = require('openai');
 const { generatePrompt } = require('../utils/chatgpt');
 const { signToken } = require('../utils/auth');
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 const openai = new OpenAIApi(configuration);
 const { User, Friend, Expert } = require('../models');
 const {
@@ -11,10 +14,6 @@ const {
   expertSchema,
   expertErrorMessages,
 } = require('../utils/validators.js');
-
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
 
 const resolvers = {
   Query: {
