@@ -1,6 +1,7 @@
 // express
 const express = require('express');
-const colors = require("colors");
+// eslint-disable-next-line
+const colors = require('@colors/colors');
 const path = require('path');
 // apollo server
 const { ApolloServer } = require('apollo-server-express');
@@ -41,7 +42,9 @@ const startServer = async () => {
   db.once('open', () => {
     app.listen(PORT, () => {
       console.log('server running on http://localhost:3001');
-      console.log(`graphql at http://localhost:${PORT}${server.graphqlPath}`);
+      console.log(
+        `graphql at http://localhost:${PORT}${server.graphqlPath}`.green.bold
+      );
     });
   });
 };
