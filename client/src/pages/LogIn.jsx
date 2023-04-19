@@ -1,5 +1,15 @@
 import React from 'react';
-import { Card, CardHeader, CardBody, Heading, Stack, Button, Box, StackDivider, Input } from '@chakra-ui/react'
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  Heading,
+  Stack,
+  Button,
+  Box,
+  StackDivider,
+  Input,
+} from '@chakra-ui/react';
 
 export default function LogIn() {
     return(
