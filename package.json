@@ -10,7 +10,8 @@
     "client": "cd client && npm run dev",
     "server": "cd server && npm run watch",
     "start": "cd server && npm run start",
-    "build": "cd client && npm run build"
+    "build": "cd client && npm run build",
+    "seed": "cd server && npm run seed"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +32,7 @@
     "@chakra-ui/react": "^2.5.5",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "dotenv": "^16.0.3",
     "framer-motion": "^10.12.4"
   }
 }

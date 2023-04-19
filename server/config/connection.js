@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/merndb');
+const connectDB = async () => {
+  const conn = await mongoose.connect(process.env.MONGO_URI);
 
-module.exports = mongoose.connection;
+  console.log(`MongoDB Connected: ${conn.connection.host}`.cyan.underline.bold);
+};
+
+module.exports = connectDB;
