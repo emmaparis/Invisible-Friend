@@ -42,12 +42,37 @@ const typeDefs = gql`
 
   type Mutation {
     addUser(name: String!, email: String!, password: String!): User
-    login(email: String!, password: String!): Auth
-    addFriend(name: String!, language: String!, age: Int!, mood: String!, user: String!): Friend
-    updateFriend(_id: ID!, name: String!, language: String!, age: Int!, mood: String!, user: String!): Friend
+    updateUser(_id: ID!, name: String!, email: String!, password: String!): User
+    deleteUser(_id: ID!): User
+    addFriend(
+      name: String!
+      language: String!
+      age: Int!
+      mood: String!
+      user: String!
+    ): Friend
+    updateFriend(
+      _id: ID!
+      name: String!
+      language: String!
+      age: Int!
+      mood: String!
+      user: String!
+    ): Friend
     deleteFriend(_id: ID!): Friend
-    addExpert(name: String!, language: String!, expertise: String!, user: String!): Expert
-    updateExpert(_id: ID!, name: String!, language: String!, expertise: String!, user: String!): Expert
+    addExpert(
+      name: String!
+      language: String!
+      expertise: String!
+      user: String!
+    ): Expert
+    updateExpert(
+      _id: ID!
+      name: String!
+      language: String!
+      expertise: String!
+      user: String!
+    ): Expert
     deleteExpert(_id: ID!): Expert
   }
 `;

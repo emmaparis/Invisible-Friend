@@ -1,13 +1,12 @@
-
-import { User, Friend, Expert } from '../models';
-import {
+const { User, Friend, Expert } = require('../models');
+const {
   userErrorMessages,
   userSchema,
   friendSchema,
   friendErrorMessages,
   expertSchema,
   expertErrorMessages,
-} from '../utils/validators.js';
+} = require('../utils/validators.js');
 
 const resolvers = {
   Query: {

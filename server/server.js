@@ -41,9 +41,12 @@ const startServer = async () => {
 
   db.once('open', () => {
     app.listen(PORT, () => {
-      console.log('server running on http://localhost:3001');
       console.log(
-        `graphql at http://localhost:${PORT}${server.graphqlPath}`.green.bold
+        'server running on http://localhost:3001'.white.underline.bold
+      );
+      console.log(
+        `graphql at http://localhost:${PORT}${server.graphqlPath}`.blue
+          .underline.bold
       );
     });
   });
