@@ -1,3 +1,12 @@
+const { Configuration, OpenAIApi } = require("openai");
+const {generatePrompt} = require("../utils/chatgpt");
+
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+const openai = new OpenAIApi(configuration);
+
 const { User, Friend, Expert } = require('../models');
 const {
   userErrorMessages,
@@ -77,23 +86,17 @@ const resolvers = {
 
     prompt: async (parent, { input }) => {
       try {
-        const response = await fetch("/api/generate", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ input: userInput }),
+        console.log("userInput", input);
+        const completion = await openai.createCompletion({
+          model: "text-davinci-003",
+          prompt: generatePrompt(input),
+          temperature: 0.6,
         });
-  
-        const data = await response.json();
-        if (response.status !== 200) {
-          throw data.error || new Error(`Request failed with status ${response.status}`);
-        }
-        return (data.result)
+      
+        return completion.data.choices[0].text ;
       } catch(error) {
         // Consider implementing your own error handling logic here
         console.error(error);
-        alert(error.message);
       }
     }
   },
