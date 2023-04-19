@@ -7,12 +7,9 @@ import './App.css';
 import Header from './components/Header';
 import Create from './pages/Create'
 import Prompt from './pages/Prompt'
-<<<<<<< HEAD
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
-=======
 import Home from './pages/Home';
->>>>>>> 745fcd1fb4944971aad098215c63cbe5b13acdf8
 
 
 const client = new ApolloClient({
@@ -29,12 +26,8 @@ function App() {
           <Header />
           {/* <Body /> */}
           {/* <Prompt /> */}
-<<<<<<< HEAD
           <SignUp />
           {/* <LogIn /> */}
-=======
-          <Home/>
->>>>>>> 745fcd1fb4944971aad098215c63cbe5b13acdf8
         </ChakraProvider>
       </ApolloProvider>
   );
