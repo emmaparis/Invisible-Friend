@@ -15,6 +15,11 @@ const typeDefs = gql`
     content: String!
   }
 
+  input inputMessage {
+    role: String!
+    content: String!
+  }
+
   type Friend {
     _id: ID!
     name: String!
@@ -65,7 +70,7 @@ const typeDefs = gql`
       age: Int!
       mood: String!
       user: String!
-      history: [Message!]
+      history: [inputMessage]
     ): Friend
     updateFriend(
       _id: ID!
@@ -74,17 +79,17 @@ const typeDefs = gql`
       age: Int!
       mood: String!
       user: String!
-      history: [Message!]
+      history: [inputMessage]
     ): Friend
-    updateFriendHistory(_id: ID!, message: MessageInput!): Friend
-    updateExpertHistory(_id: ID!, message: MessageInput!): Expert
+    updateFriendHistory(_id: ID!, message: inputMessage): Friend
+    updateExpertHistory(_id: ID!, message: inputMessage): Expert
     deleteFriend(_id: ID!): Friend
     addExpert(
       name: String!
       language: String!
       expertise: String!
       user: String!
-      history: [Message!]
+      history: [inputMessage]
     ): Expert
     updateExpert(
       _id: ID!
@@ -92,7 +97,7 @@ const typeDefs = gql`
       language: String!
       expertise: String!
       user: String!
-      history: [Message!]
+      history: [inputMessage]
     ): Expert
     deleteExpert(_id: ID!): Expert
   }

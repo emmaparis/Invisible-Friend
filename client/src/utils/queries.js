@@ -12,12 +12,20 @@ export const QUERY_USERS = gql`
         language
         age
         mood
+        history {
+          role
+          content
+        }
       }
       experts {
         _id
         name
         language
         expertise
+        history {
+          role
+          content
+        }
       }
     }
   }
@@ -34,12 +42,20 @@ export const USER = gql`
         language
         age
         mood
+        history {
+          role
+          content
+        }
       }
       experts {
         _id
         name
         language
         expertise
+        history {
+          role
+          content
+        }
       }
     }
   }
@@ -57,12 +73,20 @@ export const QUERY_ME = gql`
         language
         age
         mood
+        history {
+          role
+          content
+        }
       }
       experts {
         _id
         name
         language
         expertise
+        history {
+          role
+          content
+        }
       }
     }
   }
@@ -81,6 +105,10 @@ export const QUERY_FRIENDS = gql`
         username
         email
       }
+      history {
+        role
+        content
+      }
     }
   }
 `;
@@ -98,6 +126,10 @@ export const QUERY_FRIEND = gql`
         username
         email
       }
+      history {
+        role
+        content
+      }
     }
   }
 `;
@@ -113,6 +145,10 @@ export const QUERY_EXPERTS = gql`
         _id
         username
         email
+      }
+      history {
+        role
+        content
       }
     }
   }
@@ -130,12 +166,16 @@ export const QUERY_EXPERT = gql`
         username
         email
       }
+      history {
+        role
+        content
+      }
     }
   }
 `;
 
 export const PROMPT = gql`
-  query prompt($input : String!){
+  query prompt($input: String!) {
     prompt {
       _id
       body
