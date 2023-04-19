@@ -19,6 +19,7 @@ function App() {
       <ApolloProvider client={client}>
         <ChakraProvider>
           <Header />
+          <Body />
         </ChakraProvider>
       </ApolloProvider>
   );
