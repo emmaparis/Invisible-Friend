@@ -12,7 +12,7 @@ export default function Header(){
                     objectFit='cover'
                     src={logo}
                     alt='Invisible Friend logo.'
-                    href=''
+                    href='/'
                 />
                 <Heading>Invisible Friend</Heading>
             </Box>
@@ -26,14 +26,3 @@ export default function Header(){
         </header> 
     )
 }
-
-// --chakra-colors-teal-50: #E6FFFA;
-//     --chakra-colors-teal-100: #B2F5EA;
-//     --chakra-colors-teal-200: #81E6D9;
-//     --chakra-colors-teal-300: #4FD1C5;
-//     --chakra-colors-teal-400: #38B2AC;
-//     --chakra-colors-teal-500: #319795;
-//     --chakra-colors-teal-600: #2C7A7B;
-//     --chakra-colors-teal-700: #285E61;
-//     --chakra-colors-teal-800: #234E52;
-//     --chakra-colors-teal-900: #1D4044;
