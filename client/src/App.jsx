@@ -11,6 +11,7 @@ import Prompt from './pages/Prompt';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
 import Home from './pages/Home';
+import Avatar from './pages/Avatar';
 
 const client = new ApolloClient({
   uri: '/graphql',
