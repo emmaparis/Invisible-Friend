@@ -19,10 +19,10 @@ export default function SignUp() {
     username: '',
     email: '',
     password: '',
-    confirmPassword: '',
   });
   const [addUser, { error, data }] = useMutation(ADD_USER);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
+  const [passwordContent, setPasswordContent] = useState('');
 
   // update state based on form input changes
   const handleChange = (event) => {
@@ -34,12 +34,18 @@ export default function SignUp() {
     });
   };
 
+  const handlePassChange = (event) => {
+    const { value } = event.target;
+
+    setPasswordContent(value);
+  };
+
   // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log(formState);
 
-    if (formState.password !== formState.confirmPassword) {
+    if (formState.password !== passwordContent) {
       setPasswordsMatch(false);
       return;
     }
@@ -142,9 +148,9 @@ export default function SignUp() {
                 type="password"
                 className="formInput"
                 placeholder="Confirm Password"
-                onChange={handleChange}
+                onChange={handlePassChange}
                 name="confirmPassword"
-                value={formState.confirmPassword}
+                value={passwordContent}
               />
             </Box>
             <Button
