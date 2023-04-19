@@ -7,10 +7,12 @@
     "test": "eslint",
     "install": "cd client && npm install && cd ../server && npm install",
     "develop": "concurrently \"npm run server\" \"npm run client\"",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "client": "cd client && npm run dev",
     "server": "cd server && npm run watch",
     "start": "cd server && npm run start",
-    "build": "cd client && npm run build"
+    "build": "cd client && npm run build",
+    "seed": "cd server && npm run seed"
   },
   "keywords": [],
   "author": "",
@@ -31,6 +33,8 @@
     "@chakra-ui/react": "^2.5.5",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "chakra-react-select": "^4.6.0",
+    "dotenv": "^16.0.3",
     "framer-motion": "^10.12.4"
   }
 }
