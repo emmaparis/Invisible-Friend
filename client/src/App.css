@@ -64,7 +64,9 @@ header {
 }
 .icon {
   height: 30px;
-  display:inline;.login-signup{
+  display:inline;
+}
+  .login-signup{
   margin: 8rem;
   background-color: #E6FFFA;
   box-shadow: 8px 5px 5px #B2F5EA;

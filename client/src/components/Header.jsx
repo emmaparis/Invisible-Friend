@@ -6,6 +6,7 @@ export default function Header(){
     return(     
         <header style= {{ backgroundColor: '#E6FFFA', boxShadow: '0px 2px 2px #B2F5EA', display:'flex', justifyContent:'space-between', width:'100vw', border:'0px'}}>
             <Flex sx={{display:'flex', justifyContent:'space-between', width:'100%'}}  minWidth='max-content' alignItems='center' gap='2'>
+            <a href="/">
             <Box sx={{display:'flex', flexDirection:'row', alignItems: 'center'}}>
                 <Heading sx={{color: '#1D4044'}}>INVISIBLE</Heading>
                 <Image
@@ -13,10 +14,10 @@ export default function Header(){
                     objectFit='cover'
                     src={logo}
                     alt='Invisible Friend logo.'
-                    href=''
                 />
                 <Heading sx={{color: '#1D4044'}}>FRIEND</Heading>
             </Box>
+            </a>
                  <Spacer />
                   <ButtonGroup gap='2'>
                     {/* {loggedIN ? :} */}
@@ -24,6 +25,7 @@ export default function Header(){
                       <Button colorScheme='teal'>Log in</Button>
                   </ButtonGroup>
               </Flex> 
+              
         </header> 
     )
 }

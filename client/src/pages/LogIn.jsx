@@ -3,7 +3,7 @@ import { Card, CardHeader, CardBody, Heading, Stack, Button, Box, StackDivider, 
 
 export default function LogIn() {
     return(
-        <Card  class= 'login-signup'>
+        <Card  className="login-sign">
             <CardHeader>
                 <Heading fontSize='5xl' size='md' m={8}>Log In</Heading>
             </CardHeader>
@@ -13,13 +13,13 @@ export default function LogIn() {
                         <Heading size='s' textTransform='uppercase'>
                         Email
                         </Heading>
-                        <Input class='formInput' placeholder='example@example.com'/>
+                        <Input  className='formInput' placeholder='example@example.com'/>
                     </Box>
                     <Box mb={3}>
                         <Heading size='s' textTransform='uppercase'>
                         Password
                         </Heading>
-                        <Input  type='password' class='formInput' placeholder='Password'/>
+                        <Input  type='password'  className='formInput' placeholder='Password'/>
                     </Box>
                     <Button mb={5} colorScheme='teal' variant='outline'>
                         Log In

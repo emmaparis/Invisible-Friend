@@ -3,7 +3,7 @@ import { Card, CardHeader, CardBody, Button, Heading, Stack, Box, StackDivider, 
 
 export default function SignUp() {
     return(
-        <Card  class= 'login-signup'>
+        <Card  className= 'login-signup'>
             <CardHeader>
                 <Heading fontSize='5xl' size='md' m={8}>Sign Up</Heading>
             </CardHeader>
@@ -13,21 +13,21 @@ export default function SignUp() {
                         <Heading size='s' textTransform='uppercase'>
                         Name
                         </Heading>
-                        <Input    class='formInput' placeholder='First Name'/>
-                        <Input   class='formInput' placeholder='Last Name'/>
+                        <Input  className='formInput' placeholder='First Name'/>
+                        <Input   className='formInput' placeholder='Last Name'/>
                     </Box>
                     <Box>
                         <Heading size='s' textTransform='uppercase'>
                         Email
                         </Heading>
-                        <Input class='formInput' placeholder='example@example.com'/>
+                        <Input className='formInput' placeholder='example@example.com'/>
                     </Box>
                     <Box mb={3}>
                         <Heading size='s' textTransform='uppercase'>
                         Password
                         </Heading>
-                        <Input  type='password' class='formInput' placeholder='Password'/>
-                        <Input   type='password' class='formInput' placeholder='Confirm Password'/>
+                        <Input  type='password' className='formInput' placeholder='Password'/>
+                        <Input   type='password' className='formInput' placeholder='Confirm Password'/>
                     </Box>
                     <Button mb={5} colorScheme='teal' variant='outline'>
                         Create Account
