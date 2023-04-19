@@ -12,7 +12,8 @@
     "react/no-newline-before-fragment": 0,
     "react/one-jsx-expression-per-line": 0,
     "no-underscore-dangle": "off",
-    "no-await-in-loop": "off"
+    "no-await-in-loop": "off",
+    "class-methods-use-this": "off"
   },
   "overrides": [
     {
