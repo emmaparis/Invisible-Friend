@@ -30,31 +30,31 @@ export default function Header() {
         gap="2"
       >
         <Link to="/">
-        <Box
-          sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
-        >
-          <Heading sx={{ color: '#1D4044' }}>INVISIBLE</Heading>
-          <Image
-            boxSize="30px"
-            objectFit="cover"
-            src={logo}
-            alt="Invisible Friend logo."
-            href=""
-          />
-          <Heading sx={{ color: '#1D4044' }}>FRIEND</Heading>
-        </Box>
-        </Link >
+          <Box
+            sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+          >
+            <Heading sx={{ color: '#1D4044' }}>INVISIBLE</Heading>
+            <Image
+              boxSize="30px"
+              objectFit="cover"
+              src={logo}
+              alt="Invisible Friend logo."
+              href=""
+            />
+            <Heading sx={{ color: '#1D4044' }}>FRIEND</Heading>
+          </Box>
+        </Link>
         <Spacer />
         <ButtonGroup gap="2">
           {/* {loggedIN ? :} */}
-          <Button sx= {{backgroundColor:'#319795', color:'white'}}>
-            <Link to="/signup" colorScheme="teal">
-                Sign Up
+          <Button sx={{ backgroundColor: '#319795', color: 'white' }}>
+            <Link to="/signup" colorscheme="teal">
+              Sign Up
             </Link>
           </Button>
-          <Button sx= {{backgroundColor:'#319795', color:'white'}}>
-            <Link to="/login" colorScheme="teal">
-                Log in
+          <Button sx={{ backgroundColor: '#319795', color: 'white' }}>
+            <Link to="/login" colorscheme="teal">
+              Log in
             </Link>
           </Button>
         </ButtonGroup>
