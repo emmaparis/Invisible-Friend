@@ -1,18 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Input, Textarea } from '@chakra-ui/react'
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { PROMPT } from '../utils/queries'
 
 
 export default function Prompt() {
     const [userInput, setUserInput] = useState("");
-    const [prompt] = useQuery(PROMPT);
+    const [getPromptResponse, {data, loading}] = useLazyQuery(PROMPT);
     const body = data?.body || "";
-
+    useEffect(() => {
+      if (data) {
+        console.log(data.prompt);
+      }
+    }, [data]);
+  
   
     async function onSubmit(event) {
       event.preventDefault();
-        const { data } = await prompt({variables: userInput})
+      getPromptResponse({
+        variables: { userInput },
+      });
     }
     console.log(data)
     return (
@@ -20,7 +27,7 @@ export default function Prompt() {
   
         <main>
           <h3>Name my pet</h3>
-          <form onSubmit={() => onSubmit}>
+          <form onSubmit={onSubmit}>
             <input
               type="text"
               name="animal"
@@ -34,7 +41,7 @@ export default function Prompt() {
           {loading ? (
             <div>Loading...</div>
           ) : (
-            {body}
+          <p> Data loaded...</p>
           )}
           </div>
         </main>
