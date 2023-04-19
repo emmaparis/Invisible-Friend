@@ -23,7 +23,7 @@ function App() {
         <Router>
           <Header />
           {/* <Body /> */}
-          {/* <Prompt /> */}
+          <Prompt />
           <Routes>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<LogIn />} />
