@@ -1,4 +1,4 @@
-const decode = require ('jwt-decode');
+const decode = require('jwt-decode');
 
 class AuthService {
   getUser() {
@@ -35,4 +35,4 @@ class AuthService {
   }
 }
 
-export default new AuthService();
+module.exports = new AuthService();

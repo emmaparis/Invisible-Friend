@@ -3,9 +3,11 @@ const express = require('express');
 // eslint-disable-next-line
 const colors = require('@colors/colors');
 const path = require('path');
-const { authMiddleware } = require('./utils/auth');
 // apollo server
 const { ApolloServer } = require('apollo-server-express');
+
+const { authMiddleware } = require('./utils/auth');
+
 // database connection
 const db = require('./config/connection');
 
