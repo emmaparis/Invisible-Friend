@@ -19,8 +19,10 @@ export default function SignUp() {
     username: '',
     email: '',
     password: '',
+    confirmPassword: '',
   });
   const [addUser, { error, data }] = useMutation(ADD_USER);
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
 
   // update state based on form input changes
   const handleChange = (event) => {
@@ -36,6 +38,11 @@ export default function SignUp() {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log(formState);
+
+    if (formState.password !== formState.confirmPassword) {
+      setPasswordsMatch(false);
+      return;
+    }
 
     try {
       const { data } = await addUser({
@@ -136,6 +143,8 @@ export default function SignUp() {
                 className="formInput"
                 placeholder="Confirm Password"
                 onChange={handleChange}
+                name="confirmPassword"
+                value={formState.confirmPassword}
               />
             </Box>
             <Button
@@ -158,6 +167,18 @@ export default function SignUp() {
               }}
             >
               {error.message}
+            </Box>
+          )}
+          {!passwordsMatch && (
+            <Box
+              sx={{
+                backgroundColor: 'red',
+                color: 'white',
+                padding: '1rem',
+                borderRadius: '1rem',
+              }}
+            >
+              Passwords do not match
             </Box>
           )}
         </Stack>
