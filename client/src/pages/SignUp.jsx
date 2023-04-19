@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Card,
   CardHeader,
@@ -11,7 +11,43 @@ import {
   Input,
 } from '@chakra-ui/react';
 
+import { useMutation } from '@apollo/client';
+import { ADD_USER } from '../utils/mutations';
+
 export default function SignUp() {
+  const [formState, setFormState] = useState({
+    username: '',
+    email: '',
+    password: '',
+  });
+  const [addUser, { error, data }] = useMutation(ADD_USER);
+
+  // update state based on form input changes
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
+
+  // submit form
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    console.log(formState);
+
+    try {
+      const { data } = await addUser({
+        variables: { ...formState },
+      });
+
+      Auth.login(data.addProfile.token);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <Card
       sx={{
@@ -30,84 +66,100 @@ export default function SignUp() {
         sx={{ display: 'flex', justifyContent: 'center', alignSelf: 'center' }}
       >
         <Stack divider={<StackDivider />} spacing="4">
-          <Box>
-            <Heading size="s" textTransform="uppercase">
-              Name
-            </Heading>
-            <Input
+          <form onSubmit={handleFormSubmit}>
+            <Box>
+              <Heading size="s" textTransform="uppercase">
+                Name
+              </Heading>
+              <Input
+                sx={{
+                  backgroundColor: 'white',
+                  borderRadius: '1rem',
+                  paddingLeft: '5px',
+                  margin: '5px',
+                  width: 'fit-content',
+                }}
+                className="username"
+                placeholder="username"
+                name="username"
+                value={formState.username}
+                onChange={handleChange}
+              />
+            </Box>
+            <Box>
+              <Heading size="s" textTransform="uppercase">
+                Email
+              </Heading>
+              <Input
+                sx={{
+                  backgroundColor: 'white',
+                  borderRadius: '1rem',
+                  paddingLeft: '5px',
+                  margin: '5px',
+                  width: 'fit-content',
+                }}
+                className="formInput"
+                placeholder="example@example.com"
+                name="email"
+                type="email"
+                value={formState.email}
+                onChange={handleChange}
+              />
+            </Box>
+            <Box mb={3}>
+              <Heading size="s" textTransform="uppercase">
+                Password
+              </Heading>
+              <Input
+                sx={{
+                  backgroundColor: 'white',
+                  borderRadius: '1rem',
+                  paddingLeft: '5px',
+                  margin: '5px',
+                  width: 'fit-content',
+                }}
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={formState.password}
+                onChange={handleChange}
+              />
+              <Input
+                sx={{
+                  backgroundColor: 'white',
+                  borderRadius: '1rem',
+                  paddingLeft: '5px',
+                  margin: '5px',
+                  width: 'fit-content',
+                }}
+                type="password"
+                className="formInput"
+                placeholder="Confirm Password"
+                onChange={handleChange}
+              />
+            </Box>
+            <Button
+              mb={5}
+              sx={{ backgroundColor: '#319795', color: 'white' }}
+              variant="outline"
+              type="submit"
+              onClick={handleFormSubmit}
+            >
+              Create Account
+            </Button>
+          </form>
+          {error && (
+            <Box
               sx={{
-                backgroundColor: 'white',
+                backgroundColor: 'red',
+                color: 'white',
+                padding: '1rem',
                 borderRadius: '1rem',
-                paddingLeft: '5px',
-                margin: '5px',
-                width: 'fit-content',
               }}
-              className="formInput"
-              placeholder="First Name"
-            />
-            <Input
-              sx={{
-                backgroundColor: 'white',
-                borderRadius: '1rem',
-                paddingLeft: '5px',
-                margin: '5px',
-                width: 'fit-content',
-              }}
-              className="formInput"
-              placeholder="Last Name"
-            />
-          </Box>
-          <Box>
-            <Heading size="s" textTransform="uppercase">
-              Email
-            </Heading>
-            <Input
-              sx={{
-                backgroundColor: 'white',
-                borderRadius: '1rem',
-                paddingLeft: '5px',
-                margin: '5px',
-                width: 'fit-content',
-              }}
-              className="formInput"
-              placeholder="example@example.com"
-            />
-          </Box>
-          <Box mb={3}>
-            <Heading size="s" textTransform="uppercase">
-              Password
-            </Heading>
-            <Input
-              sx={{
-                backgroundColor: 'white',
-                borderRadius: '1rem',
-                paddingLeft: '5px',
-                margin: '5px',
-                width: 'fit-content',
-              }}
-              type="password"
-              placeholder="Password"
-            />
-            <Input
-              sx={{
-                backgroundColor: 'white',
-                borderRadius: '1rem',
-                paddingLeft: '5px',
-                margin: '5px',
-                width: 'fit-content',
-              }}
-              type="password"
-              className="formInput"
-              placeholder="Confirm Password"
-            />
-          </Box>
-          <Button
-            mb={5}
-            sx={{ backgroundColor: '#319795', color: 'white' }}
-            variant="outline"
-          >
-            Create Account
-          </Button>
+            >
+              {error.message}
+            </Box>
+          )}
         </Stack>
       </CardBody>
     </Card>
