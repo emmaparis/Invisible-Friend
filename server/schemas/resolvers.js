@@ -10,7 +10,6 @@ const resolvers = {
               throw new Error(userErrorMessages.validationError);
             }
               const userData = await User.findOne({ _id: context.user._id })
-                .select('-__v -password')
                 .populate('friends')
                 .populate('experts');
               return userData;
