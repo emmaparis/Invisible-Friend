@@ -64,4 +64,17 @@ header {
 }
 .icon {
   height: 30px;
-  display:inline;
+  display:inline;.login-signup{
+  margin: 8rem;
+  background-color: #E6FFFA;
+  box-shadow: 8px 5px 5px #B2F5EA;
+  border-radius: 2rem;
+}
+.formInput {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 3px;
+  padding-left: 5px;
+  margin: 5px;
+  width:fit-content;
+}
