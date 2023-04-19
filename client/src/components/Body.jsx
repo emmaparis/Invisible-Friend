@@ -23,7 +23,7 @@ export default function Body() {
     // }
   };
   //assigning the state of the current
-  const handlePageChange = (page) => setCurrentPage(page);
+  // const handlePageChange = (page) => setCurrentPage(page);
 
   return (
     <div >
