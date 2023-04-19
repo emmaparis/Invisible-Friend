@@ -4,17 +4,18 @@ import {Flex, Box, Heading, Spacer, ButtonGroup, Button, Image } from '@chakra-u
 
 export default function Header(){
     return(     
-        <header style= {{ backgroundColor: '#E6FFFA', boxShadow: '0px 3px 3px #81E6D9', display:'flex', justifyContent:'space-between', width:'100vw', border:'0px'}}>
+        <header style= {{ backgroundColor: '#E6FFFA', boxShadow: '0px 2px 2px #B2F5EA', display:'flex', justifyContent:'space-between', width:'100vw', border:'0px'}}>
             <Flex sx={{display:'flex', justifyContent:'space-between', width:'100%'}}  minWidth='max-content' alignItems='center' gap='2'>
             <Box sx={{display:'flex', flexDirection:'row', alignItems: 'center'}}>
+                <Heading sx={{color: '#1D4044'}}>INVISIBLE</Heading>
                 <Image
-                    boxSize='100px'
+                    boxSize='30px'
                     objectFit='cover'
                     src={logo}
                     alt='Invisible Friend logo.'
                     href=''
                 />
-                <Heading>Invisible Friend</Heading>
+                <Heading sx={{color: '#1D4044'}}>FRIEND</Heading>
             </Box>
                  <Spacer />
                   <ButtonGroup gap='2'>
