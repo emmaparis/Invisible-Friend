@@ -1,13 +1,12 @@
 import React from "react";
 import { Button, ButtonGroup, Spacer } from '@chakra-ui/react';
 import SavedFriendButton from "../subcomponents/SavedFriendButton"
+import CreateFriendButton from '../subcomponents/CreateFriendButton'
 
 function Home () {
     return(
         <ButtonGroup style={{marginTop:'150px', display:'flex', flexDirection: 'column', alignSelf:'center', justifyContent:'center'}} > 
-                <Button size='lg' className='createfriend' >
-                    <strong> + </strong> &emsp; Create a friend
-                </Button>
+                <CreateFriendButton />
                 <SavedFriendButton/>
                 <SavedFriendButton/>
        </ButtonGroup>

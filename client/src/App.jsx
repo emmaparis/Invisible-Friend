@@ -30,6 +30,7 @@ function App() {
           <Routes>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<LogIn />} />
+            <Route path="/" element={<Home />} />
           </Routes>
         </Router>
       </ChakraProvider>
