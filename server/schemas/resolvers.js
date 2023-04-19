@@ -155,6 +155,30 @@ const resolvers = {
       }
     },
 
+    updateFriendHistory: async (parent, { _id, message }) => {
+      try {
+        // Find the friend by its _id
+        const friend = await Friend.findById(_id);
+        if (!friend) {
+          throw new Error('Friend not found.');
+        }
+
+        // Add the message to the history
+        friend.history.push(message);
+
+        // If the history array size is over 11, remove elements in positions 1 and 2
+        if (friend.history.length > 11) {
+          friend.history.splice(1, 2);
+        }
+
+        // Save the updated friend and return it
+        const updatedFriend = await friend.save();
+        return updatedFriend;
+      } catch (err) {
+        throw new Error(err.message);
+      }
+    },
+
     deleteFriend: async (parent, { _id }) => {
       try {
         const friend = await Friend.findOneAndDelete({ _id });
