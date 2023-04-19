@@ -1,12 +1,7 @@
-const { Configuration, OpenAIApi } = require("openai");
-const {generatePrompt} = require("../utils/chatgpt");
-
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
+const { Configuration, OpenAIApi } = require('openai');
+const { generatePrompt } = require('../utils/chatgpt');
+const { signToken } = require('../utils/auth');
 const openai = new OpenAIApi(configuration);
-
 const { User, Friend, Expert } = require('../models');
 const {
   userErrorMessages,
@@ -16,6 +11,10 @@ const {
   expertSchema,
   expertErrorMessages,
 } = require('../utils/validators.js');
+
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 const resolvers = {
   Query: {
@@ -86,22 +85,39 @@ const resolvers = {
 
     prompt: async (parent, { input }) => {
       try {
-        console.log("userInput", input);
+        console.log('userInput', input);
         const completion = await openai.createCompletion({
-          model: "text-davinci-003",
+          model: 'text-davinci-003',
           prompt: generatePrompt(input),
           temperature: 0.6,
         });
-      
-        return completion.data.choices[0].text ;
-      } catch(error) {
+
+        return completion.data.choices[0].text;
+      } catch (error) {
         // Consider implementing your own error handling logic here
         console.error(error);
       }
-    }
+    },
   },
 
   Mutation: {
+    login: async (parent, { email, password }) => {
+      const profile = await User.findOne({ email });
+
+      if (!profile) {
+        throw new AuthenticationError('No profile with this email found!');
+      }
+
+      const correctPw = await profile.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect password!');
+      }
+
+      const token = signToken(profile);
+      return { token, profile };
+    },
+
     addUser: async (parent, args) => {
       try {
         const { error, value } = userSchema.validate(args);
@@ -109,9 +125,13 @@ const resolvers = {
           throw new Error(userErrorMessages.validationError);
         }
         const user = await User.create(value);
+        const token = signToken(user);
+
         return {
           message: 'User created successfully',
           user,
+          token,
+          profile,
         };
       } catch (err) {
         throw new Error(userErrorMessages.validationError);

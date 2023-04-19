@@ -29,7 +29,7 @@ const typeDefs = gql`
 
   type Auth {
     token: ID!
-    user: User!
+    user: User
   }
 
   type Prompt {
@@ -49,7 +49,8 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addUser(name: String!, email: String!, password: String!): User
+    login(email: String!, password: String!): Auth
+    addUser(name: String!, email: String!, password: String!): Auth
     updateUser(_id: ID!, name: String!, email: String!, password: String!): User
     deleteUser(_id: ID!): User
     addFriend(
