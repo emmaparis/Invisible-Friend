@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const { messageSchema } = require('./Message.js');
 
 const expertSchema = new Schema({
   name: {

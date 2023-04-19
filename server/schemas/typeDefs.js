@@ -59,6 +59,7 @@ const typeDefs = gql`
       age: Int!
       mood: String!
       user: String!
+      history: [Message!]
     ): Friend
     updateFriend(
       _id: ID!
@@ -67,6 +68,7 @@ const typeDefs = gql`
       age: Int!
       mood: String!
       user: String!
+      history: [Message!]
     ): Friend
     updateFriendHistory(_id: ID!, message: MessageInput!): Friend
     updateExpertHistory(_id: ID!, message: MessageInput!): Expert
@@ -76,6 +78,7 @@ const typeDefs = gql`
       language: String!
       expertise: String!
       user: String!
+      history: [Message!]
     ): Expert
     updateExpert(
       _id: ID!
@@ -83,6 +86,7 @@ const typeDefs = gql`
       language: String!
       expertise: String!
       user: String!
+      history: [Message!]
     ): Expert
     deleteExpert(_id: ID!): Expert
   }

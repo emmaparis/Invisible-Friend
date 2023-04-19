@@ -132,7 +132,10 @@ const resolvers = {
       }
     },
 
-    updateFriend: async (parent, { _id, name, language, age, mood, user }) => {
+    updateFriend: async (
+      parent,
+      { _id, name, language, age, mood, user, history }
+    ) => {
       try {
         const { error, value } = friendSchema.validate({
           name,
@@ -140,6 +143,7 @@ const resolvers = {
           age,
           mood,
           user,
+          history,
         });
         if (error) {
           throw new Error(friendErrorMessages.validationError);
@@ -225,13 +229,17 @@ const resolvers = {
       }
     },
 
-    updateExpert: async (parent, { _id, name, language, expertise, user }) => {
+    updateExpert: async (
+      parent,
+      { _id, name, language, expertise, user, history }
+    ) => {
       try {
         const { error, value } = expertSchema.validate({
           name,
           language,
           expertise,
           user,
+          history,
         });
         if (error) {
           throw new Error(expertErrorMessages.validationError);
