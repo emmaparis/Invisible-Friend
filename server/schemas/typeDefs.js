@@ -68,14 +68,8 @@ const typeDefs = gql`
       mood: String!
       user: String!
     ): Friend
-    updateFriendHistory(
-      _id: ID!
-      history: [Message!]
-    )
-    updateExpertHistory(
-      _id: ID!
-      history: [Message!]
-    )
+    updateFriendHistory(_id: ID!, message: MessageInput!): Friend
+    updateExpertHistory(_id: ID!, message: MessageInput!): Expert
     deleteFriend(_id: ID!): Friend
     addExpert(
       name: String!

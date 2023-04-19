@@ -179,6 +179,30 @@ const resolvers = {
       }
     },
 
+    updateExpertHistory: async (parent, { _id, message }) => {
+      try {
+        // Find the expert by its _id
+        const expert = await Expert.findById(_id);
+        if (!expert) {
+          throw new Error('Expert not found.');
+        }
+
+        // Add the message to the history
+        expert.history.push(message);
+
+        // If the history array size is over 11, remove elements in positions 1 and 2
+        if (expert.history.length > 11) {
+          expert.history.splice(1, 2);
+        }
+
+        // Save the updated expert and return it
+        const updatedExpert = await expert.save();
+        return updatedExpert;
+      } catch (err) {
+        throw new Error(err.message);
+      }
+    },
+
     deleteFriend: async (parent, { _id }) => {
       try {
         const friend = await Friend.findOneAndDelete({ _id });
