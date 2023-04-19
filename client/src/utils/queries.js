@@ -135,7 +135,7 @@ export const QUERY_EXPERT = gql`
 `;
 
 export const PROMPT = gql`
-  query prompt(_id: $id){
+  query prompt($input : String!){
     prompt {
       _id
       body

@@ -6,19 +6,21 @@ import { PROMPT } from '../utils/queries'
 
 export default function Prompt() {
     const [userInput, setUserInput] = useState("");
-    const { loading, data } = useQuery(PROMPT);
+    const [prompt] = useQuery(PROMPT);
+    const body = data?.body || "";
+
   
     async function onSubmit(event) {
       event.preventDefault();
-      getPrompt() 
+        const { data } = await prompt({variables: userInput})
     }
-  
+    console.log(data)
     return (
       <div>
   
         <main>
           <h3>Name my pet</h3>
-          <form onSubmit={onSubmit}>
+          <form onSubmit={() => onSubmit}>
             <input
               type="text"
               name="animal"
@@ -32,7 +34,7 @@ export default function Prompt() {
           {loading ? (
             <div>Loading...</div>
           ) : (
-            {data}
+            {body}
           )}
           </div>
         </main>
