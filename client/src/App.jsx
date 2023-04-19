@@ -21,6 +21,7 @@ function App() {
         <ChakraProvider>
           <Header />
           {/* <Body /> */}
+          {/* <Create /> */}
         </ChakraProvider>
       </ApolloProvider>
   );
