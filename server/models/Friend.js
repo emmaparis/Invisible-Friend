@@ -14,7 +14,6 @@ const friendSchema = new Schema({
     age: {
         type: Number,
         required: true,
-        trim: true,
     },
     mood: {
         type: String,
