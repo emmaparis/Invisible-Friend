@@ -10,7 +10,7 @@ import LogIn from './pages/LogIn';
 import Home from './pages/Home';
 
 const client = new ApolloClient({
-  uri: '/graphql',
+  uri: 'http://localhost:3001/graphql',
   cache: new InMemoryCache(),
 });
 

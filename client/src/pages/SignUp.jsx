@@ -52,7 +52,7 @@ export default function SignUp() {
 
     try {
       const { data } = await addUser({
-        variables: { ...formState },
+        variables: formState,
       });
 
       Auth.login(data.addProfile.token);
