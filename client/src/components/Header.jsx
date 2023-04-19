@@ -1,15 +1,14 @@
 import React from 'react';
-import logo from '../assets/images/ifLogoMini.png';
-import { Link } from 'react-router-dom';
 import {
   Flex,
   Box,
   Heading,
   Spacer,
   ButtonGroup,
-  Button,
   Image,
 } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
+import logo from '../assets/images/ifLogoMini.png';
 
 export default function Header() {
   return (
