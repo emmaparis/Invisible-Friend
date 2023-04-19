@@ -11,6 +11,8 @@ import {
   Input,
 } from '@chakra-ui/react';
 
+import { useMutation } from '@apollo/client';
+import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
 const Login = (props) => {
@@ -47,6 +49,7 @@ const Login = (props) => {
       password: '',
     });
   };
+};
 
 export default function LogIn() {
   return (
