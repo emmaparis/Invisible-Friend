@@ -6,7 +6,7 @@ import { PROMPT } from '../utils/queries'
 
 export default function Prompt() {
     const [animalInput, setAnimalInput] = useState("");
-    const {getPrompt, data} = useQuery(PROMPT);
+    const { loading, data } = useQuery(PROMPT);
   
     async function onSubmit(event) {
       event.preventDefault();
@@ -28,7 +28,13 @@ export default function Prompt() {
             />
             <input type="submit" value="Generate names" />
           </form>
-          <div>{data}</div>
+          <div>
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            {data}
+          )}
+          </div>
         </main>
       </div>
     );

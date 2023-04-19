@@ -36,6 +36,10 @@
     "chakra-react-select": "^4.6.0",
     "dotenv": "^16.0.3",
     "framer-motion": "^10.12.4",
+<<<<<<< HEAD
     "openai": "^3.2.1"
+=======
+    "jwt-decode": "^3.1.2"
+>>>>>>> b34a92b61773b64f2c57f19d60f375ac09f71ff3
   }
 }
