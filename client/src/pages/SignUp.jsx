@@ -29,6 +29,9 @@ export default function SignUp() {
                         <Input  type='password' class='formInput' placeholder='Password'/>
                         <Input   type='password' class='formInput' placeholder='Confirm Password'/>
                     </Box>
+                    <Button mb={5} colorScheme='teal' variant='outline'>
+                        Sign Up
+                    </Button>
                 </Stack>
             </CardBody>
         </Card>
