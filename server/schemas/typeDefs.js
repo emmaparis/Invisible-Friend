@@ -45,7 +45,6 @@ const typeDefs = gql`
     friend(_id: ID!): Friend
     experts: [Expert]
     expert(_id: ID!): Expert
-    prompts: [Prompt]
     prompt(input: String!): String
   }
 

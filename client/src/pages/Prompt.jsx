@@ -5,7 +5,7 @@ import { PROMPT } from '../utils/queries'
 
 
 export default function Prompt() {
-    const [animalInput, setAnimalInput] = useState("");
+    const [userInput, setUserInput] = useState("");
     const { loading, data } = useQuery(PROMPT);
   
     async function onSubmit(event) {
@@ -23,8 +23,8 @@ export default function Prompt() {
               type="text"
               name="animal"
               placeholder="Enter an animal"
-              value={animalInput}
-              onChange={(e) => setAnimalInput(e.target.value)}
+              value={userInput}
+              onChange={(e) => setUserInput(e.target.value)}
             />
             <input type="submit" value="Generate names" />
           </form>
