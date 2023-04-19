@@ -5,6 +5,7 @@ import viteLogo from './assets/vite.svg';
 import { ChakraProvider } from '@chakra-ui/react'
 import './App.css';
 import Header from './components/Header';
+import Create from './pages/Create'
 
 
 const client = new ApolloClient({
@@ -19,7 +20,7 @@ function App() {
       <ApolloProvider client={client}>
         <ChakraProvider>
           <Header />
-          <Body />
+          {/* <Body /> */}
         </ChakraProvider>
       </ApolloProvider>
   );
