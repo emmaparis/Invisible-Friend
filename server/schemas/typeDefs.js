@@ -8,8 +8,21 @@ const typeDefs = gql`
     password: String
   }
 
-  type Query {
-    users: [User]
+  type Friend {
+    _id: ID
+    name: String
+    language: String
+    age: Int
+    mood: String
+    user: User
+  }
+
+  type Expert {
+    _id: ID
+    name: String
+    language: String
+    expertise: String
+    user: User
   }
 `;
 
