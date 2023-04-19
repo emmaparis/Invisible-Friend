@@ -176,7 +176,10 @@ const resolvers = {
       }
     },
 
-    updateFriend: async (parent, { _id, name, language, age, mood, user }) => {
+    updateFriend: async (
+      parent,
+      { _id, name, language, age, mood, user, history }
+    ) => {
       try {
         const { error, value } = friendSchema.validate({
           name,
@@ -184,6 +187,7 @@ const resolvers = {
           age,
           mood,
           user,
+          history,
         });
         if (error) {
           throw new Error(friendErrorMessages.validationError);
@@ -196,6 +200,54 @@ const resolvers = {
         return updatedFriend;
       } catch (err) {
         throw new Error(friendErrorMessages.validationError);
+      }
+    },
+
+    updateFriendHistory: async (parent, { _id, message }) => {
+      try {
+        // Find the friend by its _id
+        const friend = await Friend.findById(_id);
+        if (!friend) {
+          throw new Error('Friend not found.');
+        }
+
+        // Add the message to the history
+        friend.history.push(message);
+
+        // If the history array size is over 11, remove elements in positions 1 and 2
+        if (friend.history.length > 11) {
+          friend.history.splice(1, 2);
+        }
+
+        // Save the updated friend and return it
+        const updatedFriend = await friend.save();
+        return updatedFriend;
+      } catch (err) {
+        throw new Error(err.message);
+      }
+    },
+
+    updateExpertHistory: async (parent, { _id, message }) => {
+      try {
+        // Find the expert by its _id
+        const expert = await Expert.findById(_id);
+        if (!expert) {
+          throw new Error('Expert not found.');
+        }
+
+        // Add the message to the history
+        expert.history.push(message);
+
+        // If the history array size is over 11, remove elements in positions 1 and 2
+        if (expert.history.length > 11) {
+          expert.history.splice(1, 2);
+        }
+
+        // Save the updated expert and return it
+        const updatedExpert = await expert.save();
+        return updatedExpert;
+      } catch (err) {
+        throw new Error(err.message);
       }
     },
 
@@ -221,13 +273,17 @@ const resolvers = {
       }
     },
 
-    updateExpert: async (parent, { _id, name, language, expertise, user }) => {
+    updateExpert: async (
+      parent,
+      { _id, name, language, expertise, user, history }
+    ) => {
       try {
         const { error, value } = expertSchema.validate({
           name,
           language,
           expertise,
           user,
+          history,
         });
         if (error) {
           throw new Error(expertErrorMessages.validationError);

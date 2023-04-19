@@ -64,6 +64,7 @@ export const ADD_FRIEND = gql`
         age: Int!
         mood: String!
         user: String!
+        history: [inputMessage]
     ) {
         addFriend(
             name: String!
@@ -71,6 +72,7 @@ export const ADD_FRIEND = gql`
             age: Int!
             mood: String!
             user: String!
+            history: [inputMessage]
         ) {
             _id
             name
@@ -81,6 +83,10 @@ export const ADD_FRIEND = gql`
                 _id
                 name
                 email
+            }
+            history {
+                role
+                content
             }
         }
     }
@@ -94,6 +100,7 @@ export const UPDATE_FRIEND = gql`
         age: Int!
         mood: String!
         user: String!
+        history: [inputMessage]
     ) {
         updateFriend(
             _id: ID!
@@ -102,6 +109,7 @@ export const UPDATE_FRIEND = gql`
             age: Int!
             mood: String!
             user: String!
+            history: [inputMessage]
         ) {
             _id
             name
@@ -112,6 +120,10 @@ export const UPDATE_FRIEND = gql`
                 _id
                 name
                 email
+            }
+            history {
+                role
+                content
             }
         }
     }
@@ -130,6 +142,10 @@ export const DELETE_FRIEND = gql`
                 name
                 email
             }
+            history {
+                role
+                content
+            }
         }
     }
 `;
@@ -140,12 +156,14 @@ export const ADD_EXPERT = gql`
         language: String!
         expertise: String!
         user: String!
+        history: [inputMessage]
     ) {
         addExpert(
             name: String!
             language: String!
             expertise: String!
             user: String!
+            history: [inputMessage]
         ) {
             _id
             name
@@ -155,6 +173,10 @@ export const ADD_EXPERT = gql`
                 _id
                 name
                 email
+            }
+            history {
+                role
+                content
             }
         }
     }
@@ -167,6 +189,7 @@ export const UPDATE_EXPERT = gql`
         language: String!
         expertise: String!
         user: String!
+        history: [inputMessage]
     ) {
         updateExpert(
             _id: ID!
@@ -174,6 +197,7 @@ export const UPDATE_EXPERT = gql`
             language: String!
             expertise: String!
             user: String!
+            history: [inputMessage]
         ) {
             _id
             name
@@ -183,6 +207,10 @@ export const UPDATE_EXPERT = gql`
                 _id
                 name
                 email
+            }
+            history {
+                role
+                content
             }
         }
     }
@@ -199,6 +227,10 @@ export const DELETE_EXPERT = gql`
                 _id
                 name
                 email
+            }
+            history {
+                role
+                content
             }
         }
     }
