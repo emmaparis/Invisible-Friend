@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from '../assets/images/ifLogoMini.png'
-import {Flex, Box, Heading, Spacer, ButtonGroup, Button, Image } from '@chakra-ui/react'
+import {Flex, Box, Heading, Spacer, ButtonGroup, Button, Image } from '@chakra-ui/react';
 
 export default function Header(){
     return(     

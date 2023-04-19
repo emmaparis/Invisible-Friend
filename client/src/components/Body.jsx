@@ -6,7 +6,7 @@ export default function Body() {
   const [currentPage, setCurrentPage] = useState('Home');
 //based on the tab of the navbar selected/the currentPage state, the content of the page will be rendered
   const renderPage = () => {
-    if (currentPage === 'Home') {
+    if (href='/') {
       return <Home />;
     }
     // if (currentPage === 'New Friend') {
