@@ -6,6 +6,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import './App.css';
 import Header from './components/Header';
 import Create from './pages/Create'
+import Prompt from './pages/Prompt'
 
 
 const client = new ApolloClient({
@@ -21,7 +22,7 @@ function App() {
         <ChakraProvider>
           <Header />
           {/* <Body /> */}
-          {/* <Create /> */}
+          <Prompt />
         </ChakraProvider>
       </ApolloProvider>
   );
