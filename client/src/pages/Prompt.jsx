@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Input } from '@chakra-ui/react'
+import { Button, Input, Textarea } from '@chakra-ui/react'
 
 export default function Prompt() {
   return (
@@ -13,10 +13,9 @@ export default function Prompt() {
             </div>
         </div>
         <div>
-            <Input placeholder='large size' size='lg' />
+            <Textarea placeholder='large size' size='lg' rows={10} height="auto"/>
             <Input placeholder='large size' size='lg' />
         </div>
-        
     </div>
   )
 }
