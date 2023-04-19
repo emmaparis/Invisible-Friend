@@ -141,35 +141,35 @@ export const DELETE_FRIEND = gql`
 `;
 
 export const ADD_EXPERT = gql`
-    mutation addExpert(
-        $name: String!
-        $language: String!
-        $expertise: String!
-        $user: String!
-        $history: [inputMessage]
+  mutation addExpert(
+    $name: String!
+    $language: String!
+    $expertise: String!
+    $user: String!
+    $history: [inputMessage]
+  ) {
+    addExpert(
+      name: $String
+      language: $String
+      expertise: $String
+      user: $String
+      history: $history
     ) {
-        addExpert(
-            name: $String!
-            language: $String!
-            expertise: $String!
-            user: $String!
-            history: $[inputMessage]
-        ) {
-            _id
-            name
-            language
-            expertise
-            user {
-                _id
-                name
-                email
-            }
-            history {
-                role
-                content
-            }
-        }
+      _id
+      name
+      language
+      expertise
+      user {
+        _id
+        name
+        email
+      }
+      history {
+        role
+        content
+      }
     }
+  }
 `;
 
 export const UPDATE_EXPERT = gql`
