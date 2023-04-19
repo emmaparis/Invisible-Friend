@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import reactLogo from './assets/react.svg';
 import viteLogo from './assets/vite.svg';
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider } from '@chakra-ui/react';
 import './App.css';
 import Header from './components/Header';
-import Create from './pages/Create'
-
+import Create from './pages/Create';
 
 const client = new ApolloClient({
   uri: '/graphql',
@@ -17,13 +16,13 @@ function App() {
   // const [count, setCount] = useState(0);
 
   return (
-      <ApolloProvider client={client}>
-        <ChakraProvider>
-          <Header />
-          {/* <Body /> */}
-          {/* <Create /> */}
-        </ChakraProvider>
-      </ApolloProvider>
+    <ApolloProvider client={client}>
+      <ChakraProvider>
+        <Header />
+        {/* <Body /> */}
+        {/* <Create /> */}
+      </ChakraProvider>
+    </ApolloProvider>
   );
 }
 
