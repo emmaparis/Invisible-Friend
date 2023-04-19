@@ -1,0 +1,73 @@
+[
+    {
+      "username": "doctorinsane",
+      "email": "doctorinsane@madman.com",
+      "password": "password123",
+      "friends": [],
+      "experts": []
+    },
+    {
+      "username": "janedoe",
+      "email": "janedoe@example.com",
+      "password": "password456",
+      "friends": [],
+      "experts": []
+    },
+    {
+      "username": "bobsmith",
+      "email": "bobsmith@example.com",
+      "password": "password789",
+      "friends": [],
+      "experts": []
+    },
+    {
+      "username": "alicejohnson",
+      "email": "alicejohnson@example.com",
+      "password": "passwordabc",
+      "friends": [],
+      "experts": []
+    },
+    {
+      "username": "mikejones",
+      "email": "mikejones@example.com",
+      "password": "passworddef",
+      "friends": [],
+      "experts": []
+    },
+    {
+      "username": "marywilson",
+      "email": "marywilson@example.com",
+      "password": "passwordxyz",
+      "friends": [],
+      "experts": []
+    },
+    {
+      "username": "davidlee",
+      "email": "davidlee@example.com",
+      "password": "password1234",
+      "friends": [],
+      "experts": []
+    },
+    {
+      "username": "jessicawilliams",
+      "email": "jessicawilliams@example.com",
+      "password": "password5678",
+      "friends": [],
+      "experts": []
+    },
+    {
+      "username": "thomasmiller",
+      "email": "thomasmiller@example.com",
+      "password": "password90",
+      "friends": [],
+      "experts": []
+    },
+    {
+      "username": "sarahlee",
+      "email": "sarahlee@example.com",
+      "password": "passwordab",
+      "friends": [],
+      "experts": []
+    }
+  ]
+  

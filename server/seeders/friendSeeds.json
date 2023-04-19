@@ -1,0 +1,73 @@
+[
+    {
+      "name": "John",
+      "language": "English",
+      "age": 25,
+      "mood": "Happy",
+      "user": ""
+    },
+    {
+      "name": "Alice",
+      "language": "French",
+      "age": 30,
+      "mood": "Excited",
+      "user": ""
+    },
+    {
+      "name": "Mark",
+      "language": "German",
+      "age": 27,
+      "mood": "Chill",
+      "user": ""
+    },
+    {
+      "name": "Emily",
+      "language": "Spanish",
+      "age": 23,
+      "mood": "Anxious",
+      "user": ""
+    },
+    {
+      "name": "David",
+      "language": "Mandarin",
+      "age": 29,
+      "mood": "Bored",
+      "user": ""
+    },
+    {
+      "name": "Sophia",
+      "language": "Italian",
+      "age": 26,
+      "mood": "Grateful",
+      "user": ""
+    },
+    {
+      "name": "Jack",
+      "language": "Russian",
+      "age": 24,
+      "mood": "Sad",
+      "user": ""
+    },
+    {
+      "name": "Olivia",
+      "language": "Japanese",
+      "age": 28,
+      "mood": "Energetic",
+      "user": ""
+    },
+    {
+      "name": "Alex",
+      "language": "Korean",
+      "age": 22,
+      "mood": "Optimistic",
+      "user": ""
+    },
+    {
+      "name": "Mia",
+      "language": "Arabic",
+      "age": 31,
+      "mood": "Relaxed",
+      "user": ""
+    }
+  ]
+  
