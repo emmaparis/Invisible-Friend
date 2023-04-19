@@ -5,7 +5,7 @@ import SavedFriendButton from "../subcomponents/SavedFriendButton"
 function Home () {
     return(
         <ButtonGroup style={{marginTop:'150px', display:'flex', flexDirection: 'column', alignSelf:'center', justifyContent:'center'}} > 
-                <Button size='lg' class='createfriend' >
+                <Button size='lg' className='createfriend' >
                     <strong> + </strong> &emsp; Create a friend
                 </Button>
                 <SavedFriendButton/>

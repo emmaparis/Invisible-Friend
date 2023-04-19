@@ -4,8 +4,8 @@ import personIcon from '../assets/images/personIcon.png'
 
 export default function SavedFriendButton(){
     return (
-        <Button class= 'savefriend' size='lg' >
-            <img class='icon' src= {personIcon} ></img>
+        <Button className= 'savefriend' size='lg' >
+            <img className='icon' src= {personIcon} ></img>
             &emsp;
             Saved friend
         </Button>
