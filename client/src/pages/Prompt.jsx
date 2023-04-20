@@ -74,7 +74,7 @@ export default function Prompt() {
                         </div>
                     </Box>
                     <Box>
-                        <Card isDisabled sx={{height:'300px',
+                        <Card sx={{height:'300px',
                             backgroundColor: 'white',
                             borderRadius: '1rem',
                             color: 'black'
