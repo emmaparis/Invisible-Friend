@@ -52,6 +52,7 @@ const LogIn = (props) => {
   };
 
   return (
+    <div className='mainPage'>
     <Card
       sx={{
         margin: '8rem',
@@ -143,6 +144,7 @@ const LogIn = (props) => {
         </Stack>
       </CardBody>
     </Card>
+    </div>
   );
 };
 

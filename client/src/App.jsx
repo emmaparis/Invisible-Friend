@@ -10,6 +10,7 @@ import Create from './pages/Create';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
 import NotFound from './pages/NotFound';
+import PromptJ from './pages/PromptJ';
 import Test from './pages/Test';
 
 const client = new ApolloClient({
@@ -18,8 +19,6 @@ const client = new ApolloClient({
 });
 
 function App() {
-  // const [count, setCount] = useState(0);
-
   return (
     <ApolloProvider client={client}>
       <ChakraProvider>
@@ -32,9 +31,10 @@ function App() {
             <Route path="/create" element={<Test />} />
             {/* <Route path="/create" element={<Create />} /> */}
             <Route path="/prompt" element={<Prompt />} />
+            <Route path="/promptj" element={<PromptJ />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </Router>
+        </Router> 
       </ChakraProvider>
     </ApolloProvider>
   );
