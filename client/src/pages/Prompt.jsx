@@ -38,22 +38,18 @@ export default function PromptJ() {
     setPromptResponse(prompt);
   }
 
+  const [messages, setMessages] = useState([]);
   async function onLoad() {
     const messagesData = [
       { type: 'user', content: 'Hello!' },
       { type: 'system', content: 'Welcome to the chat.' },
     ];
-    const messagesDiv = document.getElementById('messages');
-
-    messagesData.forEach((message) => {
-      const messageElement = document.createElement('div');
-      messageElement.classList.add('message');
-      messageElement.classList.add(message.type);
-      messageElement.textContent = message.content;
-      messagesDiv.appendChild(messageElement);
-    });
+    setMessages(messagesData);
   }
 
+  function Message({ type, content }) {
+    return <div className={`message ${type}`}>{content}</div>;
+  }
   useEffect(() => {
     onLoad();
   }, []);
@@ -152,7 +148,13 @@ export default function PromptJ() {
             </Box>
             <Box>
               <div id="chat-container">
-                <div id="messages"></div>
+                {messages.map((message, index) => (
+                  <Message
+                    key={index}
+                    type={message.type}
+                    content={message.content}
+                  />
+                ))}
               </div>
               <FormControl className="txtInput">
                 <Input
