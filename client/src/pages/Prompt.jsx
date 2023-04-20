@@ -23,19 +23,42 @@ import {
   InputGroup,
 } from '@chakra-ui/react';
 
-export default function PromptJ() {
+export default function Prompt(props) {
   const [userInput, setUserInput] = useState('');
   const [promptResponse, setPromptResponse] = useState('');
   const [getPromptResponse, { loading, error, data }] = useLazyQuery(PROMPT);
+  const {
+    friendSelect,
+    temperamentSelect,
+    ageSelect,
+    languageSelect,
+    promptEntered,
+    setFriendSelect,
+    setTemperamentSelect,
+    setAgeSelect,
+    setLanguageSelect,
+    setPromptEntered,
+  } = props;
+
   async function onSubmit(event) {
     event.preventDefault();
-    const {
-      data: { prompt },
-    } = await getPromptResponse({
-      variables: { input: userInput },
+    console.log(props);
+    console.log(userInput);
+    // const {
+    //   data: { prompt },
+    // }
+    const response = await getPromptResponse({
+      variables: {
+        input: userInput,
+        friendType: friendSelect.value,
+        temperament: temperamentSelect.value,
+        age: parseInt(ageSelect.value),
+        language: languageSelect.value,
+      },
     });
-    // console.log(response.error.message);
-    setPromptResponse(prompt);
+
+    console.log(response.data.prompt);
+    setPromptResponse(response.data.prompt);
   }
 
   const [messages, setMessages] = useState([]);
@@ -66,7 +89,7 @@ export default function PromptJ() {
         }}
       >
         <CardHeader>
-          <Heading fontSize="5xl" size="md" m={8}>
+          <Heading fontSize="5xl" size="md" m={3} mb={0}>
             Talk to 'Friend Name'
           </Heading>
         </CardHeader>
@@ -77,64 +100,18 @@ export default function PromptJ() {
                 style={{
                   display: 'flex',
                   flexDirecion: 'row',
-                  justifyContent: 'center',
+                  justifyContent: 'space-between',
                   alignContent: 'center',
                 }}
               >
-                <FormControl>
-                  <form onSubmit={onSubmit}>
-                    <Center>
-                      <FormLabel>Name my Pet</FormLabel>
-                    </Center>
-                    <InputGroup>
-                      <Input
-                        type="text"
-                        sx={{
-                          backgroundColor: 'white',
-                          borderRadius: '1rem',
-                          marginTop: '5px',
-                          maxWidth: '80%',
-                        }}
-                        placeholder="Enter an animal"
-                        name="animal"
-                        value={userInput}
-                        onChange={(e) => setUserInput(e.target.value)}
-                      />
-                      <InputRightElement
-                        style={{ display: 'flex', flexDirection: 'row' }}
-                      >
-                        <Button
-                          // onClick={subscribe}
-                          minWidth={100}
-                          mr={10}
-                          className="genButton"
-                          value="Generate Names"
-                          type="submit"
-                        >
-                          Generate
-                        </Button>
-                      </InputRightElement>
-                    </InputGroup>
-                  </form>
-                </FormControl>
-                <div>
-                  {loading ? <div>Loading...</div> : <p>{promptResponse}</p>}
-                </div>
-              </div>
-            </Box>
-            <Box>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirecion: 'row',
-                  justifyContent: 'center',
-                  alignContent: 'center',
-                }}
-              >
-                <Text fontSize="md">Friend Name</Text>
+                <Text fontSize="lg">Friend Name</Text>
                 &emsp;
                 <ButtonGroup>
-                  <Button colorScheme="teal" size="sm">
+                  <Button
+                    colorScheme="teal"
+                    style={{ color: 'white' }}
+                    size="sm"
+                  >
                     Save Friend
                   </Button>
                   <Button colorScheme="teal" size="sm">
@@ -156,36 +133,92 @@ export default function PromptJ() {
                   />
                 ))}
               </div>
-              <InputGroup className="txtInput">
-                <Input
-                  type="text"
-                  sx={{
-                    backgroundColor: 'white',
-                    borderRadius: '1rem',
-                    marginTop: '5px',
-                    maxWidth: '80%',
+              <Box mt={5}>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirecion: 'row',
+                    justifyContent: 'center',
+                    alignContent: 'center',
                   }}
-                  placeholder="What do you want to say?"
-                />
-
-                <InputRightElement
-                  style={{ display: 'flex', flexDirection: 'row' }}
                 >
-                  <Button
-                    minWidth={100}
-                    mr={10}
-                    className="genButton"
-                    value="Generate Names"
-                    type="submit"
-                  >
-                    Send
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
+                  <FormControl>
+                    <form onSubmit={onSubmit}>
+                      <InputGroup>
+                        <Input
+                          type="text"
+                          sx={{
+                            backgroundColor: 'white',
+                            borderRadius: '1rem',
+                            marginTop: '5px',
+                            maxWidth: '80%',
+                          }}
+                          placeholder="What do you want to say?"
+                          name="request"
+                          value={userInput}
+                          onChange={(e) => setUserInput(e.target.value)}
+                        />
+                        <InputRightElement
+                          style={{ display: 'flex', flexDirection: 'row' }}
+                        >
+                          <Button
+                            minWidth={100}
+                            mr={10}
+                            className="genButton"
+                            value="Generate"
+                            type="submit"
+                          >
+                            Send
+                          </Button>
+                        </InputRightElement>
+                      </InputGroup>
+                    </form>
+                  </FormControl>
+                </div>
+              </Box>
             </Box>
           </Stack>
         </CardBody>
       </Card>
     </div>
   );
+}
+
+{
+  /* <Box>
+<div id="chat-container">
+  {messages.map((message, index) => (
+    <Message
+      key={index}
+      type={message.type}
+      content={message.content}
+    />
+  ))}
+</div>
+<InputGroup className="txtInput">
+  <Input
+    type="text"
+    sx={{
+      backgroundColor: 'white',
+      borderRadius: '1rem',
+      marginTop: '5px',
+      maxWidth: '80%',
+    }}
+    placeholder="What do you want to say?"
+  />
+
+  <InputRightElement
+    style={{ display: 'flex', flexDirection: 'row' }}
+  >
+    <Button
+      minWidth={100}
+      mr={10}
+      className="genButton"
+      value="Generate Names"
+      type="submit"
+    >
+      Send
+    </Button>
+  </InputRightElement>
+</InputGroup> */
 }

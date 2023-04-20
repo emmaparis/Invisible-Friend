@@ -57,7 +57,7 @@ const typeDefs = gql`
     friend(_id: ID!): Friend
     experts: [Expert]
     expert(_id: ID!): Expert
-    prompt(input: String!): String
+    prompt(input: String!, friendType: String!, temperament: String!, age: Int!, language: String!): String
   }
 
   type Mutation {
