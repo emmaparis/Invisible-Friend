@@ -110,7 +110,9 @@ header {
 .message {
   margin-bottom: 10px;
   padding: 8px;
-  border-radius: 5px;
+  border-radius: 15px;
+  max-width: 75%;
+  word-wrap: break-word;
 }
 
 .user {
@@ -118,9 +120,17 @@ header {
   color: #fff;
   align-self: flex-end;
   order: 2;
+  float: right;
+  clear: both;
+  border-bottom-right-radius: 0;
+  margin-left: 25%;
 }
 
 .system {
   background-color: #e5e5e5;
   color: #222;
+  float: left;
+  clear: both;
+  border-bottom-left-radius: 0;
+  margin-right: 25%;
 }
