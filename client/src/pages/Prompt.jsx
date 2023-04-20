@@ -54,7 +54,31 @@ export default function PromptJ() {
         </CardHeader>
             <CardBody>
                 <Stack divider={<StackDivider />} spacing="4">
-                    <Box >
+                    
+                    <Box>
+                        <div style={{display:'flex', flexDirecion:'row', justifyContent:'center', alignContent:'center'}}>
+                            <Text fontSize='md'>Friend Name</Text>
+                            &emsp;
+                            <ButtonGroup>
+                                <Button colorScheme='teal' size='sm'>
+                                    Save Friend
+                                </Button>
+                                <Button colorScheme='teal' size='sm'>
+                                    Edit Friend
+                                </Button>
+                                <Button  colorScheme='teal' size='sm'>
+                                    Remove Friend 
+                                </Button>
+                            </ButtonGroup>
+                        </div>
+                    </Box>
+                    <Box>
+                        <Textarea sx={{height:'300px',
+                            backgroundColor: 'white',
+                            borderRadius: '1rem',
+                        }} 
+                        placeholder='AI text here?' />
+                        <Box >
                         <div style={{display:'flex', flexDirecion:'row', justifyContent:'center', alignContent:'center'}}>
                             <FormControl 
                             >
@@ -93,38 +117,6 @@ export default function PromptJ() {
                             <div>{loading ? <div>Loading...</div> : <p>{promptResponse}</p>}</div>
                         </div>
                     </Box>
-                    <Box>
-                        <div style={{display:'flex', flexDirecion:'row', justifyContent:'center', alignContent:'center'}}>
-                            <Text fontSize='md'>Friend Name</Text>
-                            &emsp;
-                            <ButtonGroup>
-                                <Button colorScheme='teal' size='sm'>
-                                    Save Friend
-                                </Button>
-                                <Button colorScheme='teal' size='sm'>
-                                    Edit Friend
-                                </Button>
-                                <Button  colorScheme='teal' size='sm'>
-                                    Remove Friend 
-                                </Button>
-                            </ButtonGroup>
-                        </div>
-                    </Box>
-                    <Box>
-                        <Textarea sx={{height:'300px',
-                            backgroundColor: 'white',
-                            borderRadius: '1rem',
-                        }} 
-                        placeholder='AI text here?' />
-                        <FormControl className='txtInput'>
-                            <Input type='text' sx={{
-                                    backgroundColor: 'white',
-                                    borderRadius: '1rem',
-                                    marginTop: '5px',
-                                }}
-                                placeholder='What do you want to say?'
-                            />
-                        </FormControl>
                     </Box>
                 </Stack>
             </CardBody>

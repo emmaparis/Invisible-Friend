@@ -30,7 +30,6 @@ function App() {
             <Route path="/create" element={<Test />} />
             {/* <Route path="/create" element={<Create />} /> */}
             <Route path="/prompt" element={<Prompt />} />
-            <Route path="/promptj" element={<PromptJ />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Router> 
