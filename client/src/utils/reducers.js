@@ -1,6 +1,6 @@
 import { QUERY_ME } from './actions';
 
-export default reducer = (state, action) => {
+export const reducer = (state, action) => {
   switch (action.type) {
     case QUERY_ME:
       return {
@@ -11,3 +11,7 @@ export default reducer = (state, action) => {
       return state;
   }
 };
+
+export function useProductReducer(initialState) {
+  return useReducer(reducer, initialState);
+}

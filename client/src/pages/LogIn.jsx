@@ -1,5 +1,6 @@
 import { React, useState } from 'react';
-import { useMutation } from '@apollo/client';
+import { useMutation, useLazyQuery } from '@apollo/client';
+
 import { Link } from 'react-router-dom';
 import {
   Card,
@@ -12,13 +13,17 @@ import {
   StackDivider,
   Input,
 } from '@chakra-ui/react';
-
+import { useStoreContext } from '../utils/GlobalState';
 import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
+import { QUERY_ME } from '../utils/queries';
 
 const LogIn = (props) => {
   const [formState, setFormState] = useState({ email: '', password: '' });
   const [login, { error, data }] = useMutation(LOGIN_USER);
+  const [state, dispatch] = useStoreContext();
+  const [getUserInfo, { loading, error: queryError, data: queryData }] =
+    useLazyQuery(QUERY_ME);
 
   // update state based on form input changes
   const handleChange = (event) => {
@@ -40,6 +45,7 @@ const LogIn = (props) => {
       });
 
       Auth.login(data.login.token);
+      getUserInfo();
     } catch (e) {
       console.error(e);
     }
@@ -50,6 +56,16 @@ const LogIn = (props) => {
       password: '',
     });
   };
+
+  if (loading) return <p>Loading...</p>;
+  if (queryError) return <p>Error fetching user data.</p>;
+
+  if (queryData) {
+    dispatch({
+      type: 'QUERY_ME',
+      payload: queryData.me,
+    });
+  }
 
   return (
     <div className="mainPage">
@@ -67,7 +83,11 @@ const LogIn = (props) => {
           </Heading>
         </CardHeader>
         <CardBody
-        sx={{ display: 'flex', justifyContent: 'center', alignSelf: 'center' }}
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignSelf: 'center',
+          }}
         >
           <Stack divider={<StackDivider />} spacing="4">
             <form onSubmit={handleFormSubmit}>
