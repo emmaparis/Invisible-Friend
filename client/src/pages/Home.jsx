@@ -5,19 +5,21 @@ import CreateFriendButton from '../subcomponents/CreateFriendButton';
 
 function Home() {
   return (
-    <ButtonGroup
-      style={{
-        marginTop: '150px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignSelf: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <CreateFriendButton />
-      <SavedFriendButton />
-      <SavedFriendButton />
-    </ButtonGroup>
+    <div className='mainCard'>
+        <ButtonGroup
+        style={{
+            marginTop: '150px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignSelf: 'center',
+            justifyContent: 'center',
+        }}
+        >
+        <CreateFriendButton />
+        <SavedFriendButton />
+        <SavedFriendButton />
+        </ButtonGroup>
+    </div>
   );
 }
 

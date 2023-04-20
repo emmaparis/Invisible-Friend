@@ -28,7 +28,8 @@ export default function Prompt() {
   }
   // console.log(data)
   return (
-    <div>
+    <div className='mainCard'>
+      <div>
       <main>
         <h3>Name my pet</h3>
         <form onSubmit={onSubmit}>
@@ -44,21 +45,20 @@ export default function Prompt() {
         <div>{loading ? <div>Loading...</div> : <p>{promptResponse}</p>}</div>
       </main>
     </div>
-  );
-  //   return (
-  //     <div style={{maxWidth: "700px", margin: "auto"}}>
-  //         <div style={{display: 'flex', flexDirection: 'row', justifyContent:'space-between', marginTop: '24px', padding:'0px 24px'}}>
-  //             <h2>Friend Name</h2>
-  //             <div>
-  //                 <Button size='sm'>Save Friend</Button>
-  //                 <Button size='sm'>Edit Friend</Button>
-  //                 <Button size='sm'>Remove Friend</Button>
-  //             </div>
-  //         </div>
-  //         <div>
-  //             <Textarea placeholder='large size' size='lg' rows={10} height="auto"/>
-  //             <Input placeholder='large size' size='lg' />
-  //         </div>
-  //     </div>
-  //   )
+      <div style={{maxWidth: "700px", margin: "auto"}}>
+          <div style={{display: 'flex', flexDirection: 'row', justifyContent:'space-between', marginTop: '24px', padding:'0px 24px'}}>
+              <h2>Friend Name</h2>
+              <div>
+                  <Button size='sm'>Save Friend</Button>
+                  <Button size='sm'>Edit Friend</Button>
+                  <Button size='sm'>Remove Friend</Button>
+              </div>
+          </div>
+          <div>
+              <Textarea placeholder='large size' size='lg' rows={10} height="auto"/>
+              <Input placeholder='large size' size='lg' />
+          </div>
+      </div>
+      </div>
+    )
 }

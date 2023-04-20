@@ -31,7 +31,9 @@ header {
     animation: logo-spin infinite 20s linear;
   }
 }
-
+.mainCard{
+  min-height: 100vh;
+}
 .card {
   padding: 2em;
 }

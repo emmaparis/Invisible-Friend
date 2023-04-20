@@ -13,6 +13,7 @@ import {
 
 export default function SignUp() {
   return (
+    <div className='mainCard'>
     <Card
       sx={{
         margin: '8rem',
@@ -111,5 +112,6 @@ export default function SignUp() {
         </Stack>
       </CardBody>
     </Card>
+    </div>
   );
 }
