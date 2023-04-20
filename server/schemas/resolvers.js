@@ -125,6 +125,7 @@ const resolvers = {
           throw new Error(userErrorMessages.validationError);
         }
         const user = await User.create(args);
+        console.log('user', user);
         const token = signToken(user);
 
         return {

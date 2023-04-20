@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Card,
   CardHeader,
@@ -13,8 +14,10 @@ import {
 
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
+import Auth from '../utils/auth';
 
 export default function SignUp() {
+  const navigateTo = useNavigate();
   const [formState, setFormState] = useState({
     username: '',
     email: '',
@@ -55,7 +58,8 @@ export default function SignUp() {
         variables: formState,
       });
 
-      Auth.login(data.addProfile.token);
+      Auth.login(data.addUser.token);
+      navigateTo('/');
     } catch (e) {
       console.error(e);
     }
