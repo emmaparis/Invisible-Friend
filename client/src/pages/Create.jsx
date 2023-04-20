@@ -170,9 +170,9 @@ export default function Create() {
         />
       </FormControl>
       <FormControl as='fieldset'>
-        <FormLabel as='legend' htmlFor={null}>
-          Choose a Friend
-        </FormLabel>
+          <FormLabel ml={10} as='legend' htmlFor={null}>
+            Choose a Friend
+          </FormLabel>
         <RadioGroup defaultValue='Itachi'>
           <HStack spacing='24px'>
             <Radio value='Avatar1' > 
