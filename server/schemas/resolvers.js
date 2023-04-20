@@ -101,39 +101,39 @@ const resolvers = {
 
   Mutation: {
     login: async (parent, { email, password }) => {
-      const profile = await User.findOne({ email });
+      const user = await User.findOne({ email });
 
-      if (!profile) {
-        throw new AuthenticationError('No profile with this email found!');
+      if (!user) {
+        throw new AuthenticationError('No user with this email found!');
       }
 
-      const correctPw = await profile.isCorrectPassword(password);
+      const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
         throw new AuthenticationError('Incorrect password!');
       }
 
-      const token = signToken(profile);
-      return { token, profile };
+      const token = signToken(user);
+      return { token };
     },
 
     addUser: async (parent, args) => {
       try {
+        console.log(args);
         const { error, value } = userSchema.validate(args);
         if (error) {
           throw new Error(userErrorMessages.validationError);
         }
-        const user = await User.create(value);
+        const user = await User.create(args);
+        console.log('user', user);
         const token = signToken(user);
 
         return {
           message: 'User created successfully',
-          user,
           token,
-          profile,
         };
       } catch (err) {
-        throw new Error(userErrorMessages.validationError);
+        throw new Error(`${userErrorMessages.validationError}, ${err}`);
       }
     },
 
