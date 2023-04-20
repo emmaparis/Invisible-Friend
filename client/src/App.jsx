@@ -9,6 +9,7 @@ import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
+import Create from './pages/Create'
 
 const client = new ApolloClient({
   uri: 'http://localhost:3001/graphql',
@@ -23,12 +24,12 @@ function App() {
       <ChakraProvider>
         <Router>
           <Header />
-          {/* <Body /> */}
           <Prompt />
           <Routes>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/" element={<Home />} />
+            <Route path="/create" element={<Create />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
