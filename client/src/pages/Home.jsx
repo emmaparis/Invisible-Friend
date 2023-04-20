@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, ButtonGroup, Spacer } from '@chakra-ui/react';
 import SavedFriendButton from '../subcomponents/SavedFriendButton';
 import CreateFriendButton from '../subcomponents/CreateFriendButton';
+import { Link } from 'react-router-dom';
 
 function Home() {
   return (
@@ -14,7 +15,9 @@ function Home() {
         justifyContent: 'center',
       }}
     >
-      <CreateFriendButton />
+      <Link to="/create" colorscheme="teal">
+        <CreateFriendButton/>
+      </Link>
       <SavedFriendButton />
       <SavedFriendButton />
     </ButtonGroup>
