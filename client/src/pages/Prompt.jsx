@@ -23,20 +23,26 @@ import {
   InputGroup,
 } from '@chakra-ui/react';
 
-export default function PromptJ() {
+export default function Prompt(props) {
     const [userInput, setUserInput] = useState('');
     const [promptResponse, setPromptResponse] = useState('');
     const [getPromptResponse, { loading, error, data }] = useLazyQuery(PROMPT);
+    const {friendSelect, temperamentSelect, ageSelect, languageSelect, promptEntered, setFriendSelect, setTemperamentSelect, setAgeSelect, setLanguageSelect, setPromptEntered} = props
+
     async function onSubmit(event) {
         event.preventDefault();
-        const {
-          data: { prompt },
-        } = await getPromptResponse({
-          variables: { input: userInput },
+        console.log(props)
+        // const {
+        //   data: { prompt },
+        // }
+        const response = await getPromptResponse({
+          variables: { input: userInput, friendType: friendSelect.value, temperament: temperamentSelect.value, age: parseInt(ageSelect.value), language: languageSelect.value },
         });
-        // console.log(response.error.message);
-        setPromptResponse(prompt);
-      }
+        
+        console.log(response.data.prompt)
+        setPromptResponse(response.data.prompt);
+    }
+
     return (
       <div className='mainPage'>
         <Card className='mainCard'

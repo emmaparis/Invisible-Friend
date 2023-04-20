@@ -1,6 +1,8 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Container, FormControl, FormLabel, Input, Button } from '@chakra-ui/react';
 import { Select } from 'chakra-react-select';
+import { useQuery } from '@apollo/client';
+import { Link } from 'react-router-dom';
 
 const friendTypeOptions = [
   { value: 'Friend', label: 'Friend' },
@@ -38,11 +40,8 @@ const languageOptions = [
   { value: 'Portugese', label: 'Portugese' },
 ];
 
-export default function Create() {
-  const [friendSelect, setFriendSelect] = useState('')
-  const [temperamentSelect, setTemperamentSelect] = useState('')
-  const [ageSelect, setAgeSelect] = useState('')
-  const [languageSelect, setLanguageSelect] = useState('')
+export default function Create(props) {
+  const {friendSelect, temperamentSelect, ageSelect, languageSelect, promptEntered, setFriendSelect, setTemperamentSelect, setAgeSelect, setLanguageSelect, setPromptEntered} = props
 
   const handleFriendSelect = (option) => {
     setFriendSelect(option);
@@ -58,6 +57,11 @@ export default function Create() {
 
   const handleLanguageSelect = (option) => {
     setLanguageSelect(option);
+  }
+
+  const submitSelections = () => {
+    
+
   }
 
   return (
@@ -146,7 +150,9 @@ export default function Create() {
           value={languageSelect}
         />
       </FormControl>
-      <Button>Create Friend</Button>
+      <Link to='/prompt' colorscheme="teal">
+        <Button onClick={submitSelections}>Create Friend</Button>
+      </Link>
     </Container>
   );
 }

@@ -81,15 +81,15 @@ const resolvers = {
       }
     },
 
-    prompt: async (parent, { input }) => {
+    prompt: async (parent, { input, friendType, temperament, age, language }) => {
       try {
-        console.log('userInput', input);
+        console.log('userInput', input, friendType, temperament, age, language);
         const completion = await openai.createCompletion({
           model: 'text-davinci-003',
-          prompt: generatePrompt(input),
+          prompt: generatePrompt(input, friendType, temperament, age, language),
           temperature: 0.6,
         });
-
+        console.log(completion);
         return completion.data.choices[0].text;
       } catch (error) {
         // Consider implementing your own error handling logic here

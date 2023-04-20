@@ -1,6 +1,6 @@
-function generatePrompt(prompt, friendType, temperament, age, language) {
+function generatePrompt(input, friendType, temperament, age, language) {
     return `
-    ${prompt}
+    ${input}
 
     Respond to me like you are:
   
@@ -9,9 +9,3 @@ function generatePrompt(prompt, friendType, temperament, age, language) {
   }
 
 module.exports = {generatePrompt};
-
-// friendType: ${friendType}
-// Temperament: ${temperament}
-// Age: ${age}
-// Language: ${language}
-
