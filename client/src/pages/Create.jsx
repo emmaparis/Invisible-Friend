@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Container, FormControl, FormLabel, Input } from '@chakra-ui/react';
+import { Container, FormControl, FormLabel, Input, Button } from '@chakra-ui/react';
 import { Select } from 'chakra-react-select';
 
 const friendTypeOptions = [
@@ -146,6 +146,7 @@ export default function Create() {
           value={languageSelect}
         />
       </FormControl>
+      <Button>Create Friend</Button>
     </Container>
   );
 }
