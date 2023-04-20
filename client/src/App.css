@@ -31,7 +31,7 @@ header {
     animation: logo-spin infinite 20s linear;
   }
 }
-.mainPage{
+.mainPage {
   min-height: 100vh;
 }
 .card {
@@ -67,7 +67,7 @@ header {
   height: 30px;
   display: inline;
 }
-.mainCard{
+.mainCard {
   margin: 8rem;
   max-width: 70%;
   align-self: center;
@@ -90,6 +90,37 @@ header {
   justify-content: center;
 }
 .genButton {
-  background-color:white !important;
+  background-color: white !important;
   box-shadow: 0px 5px 5px #81e6d9 !important;
+}
+
+#chat-container {
+  width: 80%;
+  max-width: 600px;
+  height: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: auto;
+}
+
+.message {
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+.user {
+  background-color: #1e90ff;
+  color: #fff;
+  align-self: flex-end;
+  order: 2;
+}
+
+.system {
+  background-color: #e5e5e5;
+  color: #222;
 }
