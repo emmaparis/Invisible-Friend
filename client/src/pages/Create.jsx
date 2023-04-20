@@ -175,21 +175,6 @@ export default function Create() {
             <Radio value='Avatar1' > 
               <img src={avatar1}/>
             </Radio>
-            <Radio value='Avatar2' > 
-              <img src={avatar2}/>
-            </Radio>
-            <Radio value='Avatar3' > 
-              <img src={avatar3}/>
-            </Radio>
-            <Radio value='Avatar4' > 
-              <img src={avatar4}/>
-            </Radio>
-            <Radio value='Avatar5' > 
-              <img src={avatar5}/>
-            </Radio>
-            <Radio value='Avatar6' > 
-              <img src={avatar6}/>
-            </Radio>
           </HStack>
         </RadioGroup>
         <FormHelperText>Select only if you're a fan.</FormHelperText>
