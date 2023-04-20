@@ -3,7 +3,7 @@ import React from 'react';
 class NotFound extends React.Component {
   render() {
     return (
-      <div className="not-found mainPage">
+      <div className="not-found">
         <div className="animation-wrapper">
           <div className="animation">
             <img

@@ -22,10 +22,9 @@ const resolvers = {
         if (!context.user) {
           throw new AuthenticationError('You need to be logged in!');
         }
-        const userData = await User.findOne({ _id: context.user._id })
+        return await User.findOne({ _id: context.user._id })
           .populate('friends')
           .populate('experts');
-        return userData;
       } catch (err) {
         throw new Error(err.message);
       }
