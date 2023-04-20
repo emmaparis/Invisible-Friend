@@ -1,4 +1,3 @@
-import PromptJ from './PromptJ';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -196,7 +195,6 @@ export default function SignUp() {
         </Stack>
       </CardBody>
     </Card>
-    <PromptJ/>
     </div>
   );
 }
