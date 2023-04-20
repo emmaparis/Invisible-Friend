@@ -13,6 +13,9 @@ import {
   FormLabel,
   FormErrorMessage,
   FormHelperText,
+  Center,
+  Text,
+  ButtonGroup
 } from '@chakra-ui/react';
 
 export default function PromptJ() {
@@ -31,11 +34,44 @@ export default function PromptJ() {
             Create Your Friend
             </Heading>
         </CardHeader>
-        <FormControl>
-            <FormLabel>Email address</FormLabel>
-            <Input type='email' />
-            <FormHelperText>We'll never share your email.</FormHelperText>
-        </FormControl>
+            <CardBody>
+                <Stack divider={<StackDivider />} spacing="4">
+                    <Box >
+                        <div style={{display:'flex', flexDirecion:'row', justifyContent:'center', alignContent:'center'}}>
+                            <FormControl className='txtInput'>
+                                <Center>
+                                    <FormLabel>Name my Pet</FormLabel>
+                                </Center>
+                                <Input type='text' />
+                                {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
+                            </FormControl>
+                            <Button colorScheme='teal' size='sm' mt={9} >
+                                Generate Names
+                            </Button>
+                        </div>
+                    </Box>
+                    <Box>
+                        <div style={{display:'flex', flexDirecion:'row', justifyContent:'center', alignContent:'center'}}>
+                            <Text fontSize='md'>Friend Name</Text>
+                            &emsp;
+                            <ButtonGroup>
+                                <Button colorScheme='teal' size='sm'>
+                                    Save Friend
+                                </Button>
+                                <Button colorScheme='teal' size='sm'>
+                                    Edit Friend
+                                </Button>
+                                <Button colorScheme='teal' size='sm'>
+                                    Remove Friend 
+                                </Button>
+                            </ButtonGroup>
+                        </div>
+                    </Box>
+                    <Box>
+                        
+                    </Box>
+                </Stack>
+            </CardBody>
         </Card>
       </div>
     );

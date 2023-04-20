@@ -60,7 +60,7 @@ export default function Prompt() {
               <Input placeholder='large size' size='lg' />
           </div>
       </div>
-      <PromptJ/>
+          <PromptJ/>
       </div>
     )
 }
