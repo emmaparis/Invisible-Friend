@@ -1,6 +1,4 @@
 import React from 'react';
-import logo from '../assets/images/ifLogoMini.png';
-import { Link } from 'react-router-dom';
 import {
   Flex,
   Box,
@@ -10,8 +8,15 @@ import {
   Button,
   Image,
 } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
+import logo from '../assets/images/ifLogoMini.png';
+import Auth from '../utils/auth';
 
 export default function Header() {
+  const logout = (event) => {
+    event.preventDefault();
+    Auth.logout();
+  };
   return (
     <header
       style={{
@@ -29,28 +34,44 @@ export default function Header() {
         alignItems="center"
         gap="2"
       >
-        <Box
-          sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
-        >
-          <Heading sx={{ color: '#1D4044' }}>INVISIBLE</Heading>
-          <Image
-            boxSize="30px"
-            objectFit="cover"
-            src={logo}
-            alt="Invisible Friend logo."
-            href=""
-          />
-          <Heading sx={{ color: '#1D4044' }}>FRIEND</Heading>
-        </Box>
+        <Link to="/">
+          <Box
+            sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
+          >
+            <Heading sx={{ color: '#1D4044' }}>INVISIBLE</Heading>
+            <Image
+              boxSize="30px"
+              objectFit="cover"
+              src={logo}
+              alt="Invisible Friend logo."
+              href=""
+            />
+            <Heading sx={{ color: '#1D4044' }}>FRIEND</Heading>
+          </Box>
+        </Link>
         <Spacer />
         <ButtonGroup gap="2">
-          {/* {loggedIN ? :} */}
-          <Link to="/signup" colorScheme="teal">
-            Sign Up
-          </Link>
-          <Link to="/login" colorScheme="teal">
-            Log in
-          </Link>
+          {!Auth.loggedIn() ? (
+            <>
+              <Button sx={{ backgroundColor: '#319795', color: 'white' }}>
+                <Link to="/signup" colorscheme="teal">
+                  Sign Up
+                </Link>
+              </Button>
+              <Button sx={{ backgroundColor: '#319795', color: 'white' }}>
+                <Link to="/login" colorscheme="teal">
+                  Log in
+                </Link>
+              </Button>
+            </>
+          ) : (
+            <Button
+              sx={{ backgroundColor: '#319795', color: 'white' }}
+              onClick={logout}
+            >
+              Log Out
+            </Button>
+          )}
         </ButtonGroup>
       </Flex>
     </header>

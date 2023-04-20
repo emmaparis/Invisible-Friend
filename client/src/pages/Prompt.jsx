@@ -1,30 +1,28 @@
-import React, { useState, useEffect } from 'react'
-import { Button, Input, Textarea } from '@chakra-ui/react'
+import React, { useState, useEffect } from 'react';
+import { Button, Input, Textarea } from '@chakra-ui/react';
 import { useLazyQuery } from '@apollo/client';
-import { PROMPT } from '../utils/queries'
-
+import { PROMPT } from '../utils/queries';
+import PromptJ from './PromptJ';
 
 export default function Prompt() {
-    const [userInput, setUserInput] = useState("");
-    const [getPromptResponse, {data, loading}] = useLazyQuery(PROMPT);
-    const body = data?.body || "";
-    useEffect(() => {
-      if (data) {
-        console.log(data.prompt);
-      }
-    }, [data]);
-  
-  
-    async function onSubmit(event) {
-      event.preventDefault();
-      getPromptResponse({
-        variables: { userInput },
-      });
-    }
-    console.log(data)
-    return (
+  const [userInput, setUserInput] = useState('');
+  const [promptResponse, setPromptResponse] = useState('');
+  const [getPromptResponse, { loading, error, data }] = useLazyQuery(PROMPT);
+
+  async function onSubmit(event) {
+    event.preventDefault();
+    const {
+      data: { prompt },
+    } = await getPromptResponse({
+      variables: { input: userInput },
+    });
+
+    setPromptResponse(prompt);
+  }
+
+  return (
+    <div className='mainPage' >
       <div>
-  
         <main>
           <h3>Name my pet</h3>
           <form onSubmit={onSubmit}>
@@ -37,30 +35,9 @@ export default function Prompt() {
             />
             <input type="submit" value="Generate names" />
           </form>
-          <div>
-          {loading ? (
-            <div>Loading...</div>
-          ) : (
-          <p> Data loaded...</p>
-          )}
-          </div>
+          <div>{loading ? <div>Loading...</div> : <p>{promptResponse}</p>}</div>
         </main>
       </div>
-    );
-//   return (
-//     <div style={{maxWidth: "700px", margin: "auto"}}>
-//         <div style={{display: 'flex', flexDirection: 'row', justifyContent:'space-between', marginTop: '24px', padding:'0px 24px'}}>
-//             <h2>Friend Name</h2>
-//             <div>
-//                 <Button size='sm'>Save Friend</Button>
-//                 <Button size='sm'>Edit Friend</Button>
-//                 <Button size='sm'>Remove Friend</Button>
-//             </div>
-//         </div>
-//         <div>
-//             <Textarea placeholder='large size' size='lg' rows={10} height="auto"/>
-//             <Input placeholder='large size' size='lg' />
-//         </div>
-//     </div>
-//   )
+    </div>
+    )
 }

@@ -1,38 +1,35 @@
-const decode = require('jwt-decode');
+const jwt = require('jsonwebtoken');
 
-class AuthService {
-  getUser() {
-    return decode(this.getToken());
-  }
+const secret = 'mysecretssshhhhhhh';
+const expiration = '2h';
 
-  loggedIn() {
-    const token = this.getToken();
-    return token && !this.isTokenExpired(token) ? true : false;
-  }
+module.exports = {
+  authMiddleware: function ({ req }) {
+    // allows token to be sent via req.body, req.query, or headers
+    let token = req.body.token || req.query.token || req.headers.authorization;
 
-  // eslint-disable-next-line class-methods-use-this
-  isTokenExpired(token) {
-    const decoded = decode(token);
-    if (decoded.exp < Date.now() / 1000) {
-      localStorage.removeItem('id_token');
-      return true;
+    // We split the token string into an array and return actual token
+    if (req.headers.authorization) {
+      token = token.split(' ').pop().trim();
     }
-    return false;
-  }
 
-  getToken() {
-    return localStorage.getItem('id_token');
-  }
+    if (!token) {
+      return req;
+    }
 
-  login(idToken) {
-    localStorage.setItem('id_token', idToken);
-    window.location.assign('/');
-  }
+    // if token can be verified, add the decoded user's data to the request so it can be accessed in the resolver
+    try {
+      const { data } = jwt.verify(token, secret, { maxAge: expiration });
+      req.username = data;
+    } catch {
+      console.log('Invalid token');
+    }
 
-  logout() {
-    localStorage.removeItem('id_token');
-    window.location.reload();
-  }
-}
-
-module.exports = new AuthService();
+    // return the request object so it can be passed to the resolver as `context`
+    return req;
+  },
+  signToken: function ({ email, name, _id }) {
+    const payload = { email, name, _id };
+    return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
+  },
+};

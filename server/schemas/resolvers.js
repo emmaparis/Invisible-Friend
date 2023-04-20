@@ -1,12 +1,10 @@
-const { Configuration, OpenAIApi } = require("openai");
-const {generatePrompt} = require("../utils/chatgpt");
-
+const { Configuration, OpenAIApi } = require('openai');
+const { generatePrompt } = require('../utils/chatgpt');
+const { signToken } = require('../utils/auth');
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
-
 const openai = new OpenAIApi(configuration);
-
 const { User, Friend, Expert } = require('../models');
 const {
   userErrorMessages,
@@ -86,35 +84,56 @@ const resolvers = {
 
     prompt: async (parent, { input }) => {
       try {
-        console.log("userInput", input);
+        console.log('userInput', input);
         const completion = await openai.createCompletion({
-          model: "text-davinci-003",
+          model: 'text-davinci-003',
           prompt: generatePrompt(input),
           temperature: 0.6,
         });
-      
-        return completion.data.choices[0].text ;
-      } catch(error) {
+
+        return completion.data.choices[0].text;
+      } catch (error) {
         // Consider implementing your own error handling logic here
         console.error(error);
       }
-    }
+    },
   },
 
   Mutation: {
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        throw new AuthenticationError('No user with this email found!');
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect password!');
+      }
+
+      const token = signToken(user);
+      return { token };
+    },
+
     addUser: async (parent, args) => {
       try {
+        console.log(args);
         const { error, value } = userSchema.validate(args);
         if (error) {
           throw new Error(userErrorMessages.validationError);
         }
-        const user = await User.create(value);
+        const user = await User.create(args);
+        console.log('user', user);
+        const token = signToken(user);
+
         return {
           message: 'User created successfully',
-          user,
+          token,
         };
       } catch (err) {
-        throw new Error(userErrorMessages.validationError);
+        throw new Error(`${userErrorMessages.validationError}, ${err}`);
       }
     },
 
@@ -157,7 +176,10 @@ const resolvers = {
       }
     },
 
-    updateFriend: async (parent, { _id, name, language, age, mood, user }) => {
+    updateFriend: async (
+      parent,
+      { _id, name, language, age, mood, user, history }
+    ) => {
       try {
         const { error, value } = friendSchema.validate({
           name,
@@ -165,6 +187,7 @@ const resolvers = {
           age,
           mood,
           user,
+          history,
         });
         if (error) {
           throw new Error(friendErrorMessages.validationError);
@@ -177,6 +200,54 @@ const resolvers = {
         return updatedFriend;
       } catch (err) {
         throw new Error(friendErrorMessages.validationError);
+      }
+    },
+
+    updateFriendHistory: async (parent, { _id, message }) => {
+      try {
+        // Find the friend by its _id
+        const friend = await Friend.findById(_id);
+        if (!friend) {
+          throw new Error('Friend not found.');
+        }
+
+        // Add the message to the history
+        friend.history.push(message);
+
+        // If the history array size is over 11, remove elements in positions 1 and 2
+        if (friend.history.length > 11) {
+          friend.history.splice(1, 2);
+        }
+
+        // Save the updated friend and return it
+        const updatedFriend = await friend.save();
+        return updatedFriend;
+      } catch (err) {
+        throw new Error(err.message);
+      }
+    },
+
+    updateExpertHistory: async (parent, { _id, message }) => {
+      try {
+        // Find the expert by its _id
+        const expert = await Expert.findById(_id);
+        if (!expert) {
+          throw new Error('Expert not found.');
+        }
+
+        // Add the message to the history
+        expert.history.push(message);
+
+        // If the history array size is over 11, remove elements in positions 1 and 2
+        if (expert.history.length > 11) {
+          expert.history.splice(1, 2);
+        }
+
+        // Save the updated expert and return it
+        const updatedExpert = await expert.save();
+        return updatedExpert;
+      } catch (err) {
+        throw new Error(err.message);
       }
     },
 
@@ -202,13 +273,17 @@ const resolvers = {
       }
     },
 
-    updateExpert: async (parent, { _id, name, language, expertise, user }) => {
+    updateExpert: async (
+      parent,
+      { _id, name, language, expertise, user, history }
+    ) => {
       try {
         const { error, value } = expertSchema.validate({
           name,
           language,
           expertise,
           user,
+          history,
         });
         if (error) {
           throw new Error(expertErrorMessages.validationError);

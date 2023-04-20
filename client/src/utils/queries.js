@@ -4,7 +4,7 @@ export const QUERY_USERS = gql`
   query allUsers {
     users {
       _id
-      username
+      name
       email
       friends {
         _id
@@ -12,12 +12,20 @@ export const QUERY_USERS = gql`
         language
         age
         mood
+        history {
+          role
+          content
+        }
       }
       experts {
         _id
         name
         language
         expertise
+        history {
+          role
+          content
+        }
       }
     }
   }
@@ -26,7 +34,7 @@ export const QUERY_USERS = gql`
 export const USER = gql`
   query User($id: ID!) {
     user(_id: $id) {
-      username
+      name
       email
       friends {
         _id
@@ -34,12 +42,20 @@ export const USER = gql`
         language
         age
         mood
+        history {
+          role
+          content
+        }
       }
       experts {
         _id
         name
         language
         expertise
+        history {
+          role
+          content
+        }
       }
     }
   }
@@ -49,7 +65,7 @@ export const QUERY_ME = gql`
   query me {
     me {
       _id
-      username
+      name
       email
       friends {
         _id
@@ -57,12 +73,20 @@ export const QUERY_ME = gql`
         language
         age
         mood
+        history {
+          role
+          content
+        }
       }
       experts {
         _id
         name
         language
         expertise
+        history {
+          role
+          content
+        }
       }
     }
   }
@@ -78,8 +102,12 @@ export const QUERY_FRIENDS = gql`
       mood
       user {
         _id
-        username
+        name
         email
+      }
+      history {
+        role
+        content
       }
     }
   }
@@ -95,8 +123,12 @@ export const QUERY_FRIEND = gql`
       mood
       user {
         _id
-        username
+        name
         email
+      }
+      history {
+        role
+        content
       }
     }
   }
@@ -111,8 +143,12 @@ export const QUERY_EXPERTS = gql`
       expertise
       user {
         _id
-        username
+        name
         email
+      }
+      history {
+        role
+        content
       }
     }
   }
@@ -127,18 +163,19 @@ export const QUERY_EXPERT = gql`
       expertise
       user {
         _id
-        username
+        name
         email
+      }
+      history {
+        role
+        content
       }
     }
   }
 `;
 
 export const PROMPT = gql`
-  query prompt($input : String!){
-    prompt {
-      _id
-      body
-    }
+  query Query($input: String!) {
+    prompt(input: $input)
   }
 `;
