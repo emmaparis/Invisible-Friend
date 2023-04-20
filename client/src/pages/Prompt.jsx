@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { PROMPT } from '../utils/queries';
 import {
@@ -37,6 +37,27 @@ export default function PromptJ() {
     // console.log(response.error.message);
     setPromptResponse(prompt);
   }
+
+  async function onLoad() {
+    const messagesData = [
+      { type: 'user', content: 'Hello!' },
+      { type: 'system', content: 'Welcome to the chat.' },
+    ];
+    const messagesDiv = document.getElementById('messages');
+
+    messagesData.forEach((message) => {
+      const messageElement = document.createElement('div');
+      messageElement.classList.add('message');
+      messageElement.classList.add(message.type);
+      messageElement.textContent = message.content;
+      messagesDiv.appendChild(messageElement);
+    });
+  }
+
+  useEffect(() => {
+    onLoad();
+  }, []);
+
   return (
     <div className="mainPage">
       <Card
