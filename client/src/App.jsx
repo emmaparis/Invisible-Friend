@@ -34,7 +34,7 @@ function App() {
             <Route path="/promptj" element={<PromptJ />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </Router> 
+        </Router>
       </ChakraProvider>
     </ApolloProvider>
   );
