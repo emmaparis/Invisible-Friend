@@ -7,6 +7,8 @@ import { Container,
   RadioGroup, 
   Radio,  
   FormHelperText, 
+  Button,
+  Heading,
 
 } from '@chakra-ui/react';
 import { Select } from 'chakra-react-select';
@@ -81,7 +83,8 @@ export default function Create() {
   }
 
   return (
-    <Container mb={16}>
+    <Container className='mainCard' sx={{width:'100%'}} p={15} mb={16}>
+      <Heading>Build Your Friend</Heading>
       <FormControl p={4}>
         <Select
           name="colors"
@@ -103,7 +106,7 @@ export default function Create() {
           value={friendSelect}
         />
       </FormControl>
-      <FormControl p={4}>
+      <FormControl p={4} >
         <Select
           name="colors"
           classNamePrefix="Temperament-Select"
@@ -124,7 +127,7 @@ export default function Create() {
           value={temperamentSelect}
         />
       </FormControl>
-      <FormControl p={4}>
+      <FormControl p={4} >
         <Select
           name="colors"
           classNamePrefix="Age-Select"
@@ -145,7 +148,7 @@ export default function Create() {
           value={ageSelect}
         />
       </FormControl>
-      <FormControl p={4}>
+      <FormControl p={4} >
         <Select
           name="colors"
           classNamePrefix="Language-Select"
@@ -167,18 +170,36 @@ export default function Create() {
         />
       </FormControl>
       <FormControl as='fieldset'>
-        <FormLabel as='legend' htmlFor={null}>
-          Favorite Naruto Character
-        </FormLabel>
+          <FormLabel ml={10} as='legend' htmlFor={null}>
+            Choose a Friend
+          </FormLabel>
         <RadioGroup defaultValue='Itachi'>
           <HStack spacing='24px'>
             <Radio value='Avatar1' > 
               <img src={avatar1}/>
             </Radio>
+            <Radio value='Avatar2' > 
+              <img src={avatar2}/>
+            </Radio>
+            <Radio value='Avatar3' > 
+              <img src={avatar3}/>
+            </Radio>
+          </HStack>
+          <HStack spacing='24px'>
+            <Radio value='Avatar4' > 
+              <img src={avatar4}/>
+            </Radio>
+            <Radio value='Avatar5' > 
+              <img src={avatar5}/>
+            </Radio>
+            <Radio value='Avatar6' > 
+              <img src={avatar6}/>
+            </Radio>
           </HStack>
         </RadioGroup>
-        <FormHelperText>Select only if you're a fan.</FormHelperText>
       </FormControl>
+      <Button mt={6} style={{backgroundColor:'#319795'}}>Initiate Friend</Button>
     </Container>
+    
   );
 }
