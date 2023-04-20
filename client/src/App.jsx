@@ -26,6 +26,7 @@ function App() {
       <ChakraProvider>
         <Router>
           <Header />
+          <Avatar />
           {/* <Body /> */}
           {/* <Prompt /> */}
           <Routes>
