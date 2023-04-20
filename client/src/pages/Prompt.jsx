@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Input, Textarea } from '@chakra-ui/react';
 import { useLazyQuery } from '@apollo/client';
 import { PROMPT } from '../utils/queries';
+import PromptJ from './PromptJ';
 
 export default function Prompt() {
   const [userInput, setUserInput] = useState('');
@@ -20,21 +21,23 @@ export default function Prompt() {
   }
 
   return (
-    <div>
-      <main>
-        <h3>Name my pet</h3>
-        <form onSubmit={onSubmit}>
-          <input
-            type="text"
-            name="animal"
-            placeholder="Enter an animal"
-            value={userInput}
-            onChange={(e) => setUserInput(e.target.value)}
-          />
-          <input type="submit" value="Generate names" />
-        </form>
-        <div>{loading ? <div>Loading...</div> : <p>{promptResponse}</p>}</div>
-      </main>
+    <div className='mainPage' >
+      <div>
+        <main>
+          <h3>Name my pet</h3>
+          <form onSubmit={onSubmit}>
+            <input
+              type="text"
+              name="animal"
+              placeholder="Enter an animal"
+              value={userInput}
+              onChange={(e) => setUserInput(e.target.value)}
+            />
+            <input type="submit" value="Generate names" />
+          </form>
+          <div>{loading ? <div>Loading...</div> : <p>{promptResponse}</p>}</div>
+        </main>
+      </div>
     </div>
-  );
+    )
 }
