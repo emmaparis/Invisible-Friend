@@ -1,4 +1,4 @@
-import { QUERY_ME } from './actions';
+import { QUERY_ME, UPDATE_USER } from './actions';
 
 export const reducer = (state, action) => {
   switch (action.type) {
@@ -7,6 +7,13 @@ export const reducer = (state, action) => {
         ...state,
         user: action.user,
       };
+
+    case UPDATE_USER:
+      return {
+        ...state,
+        currentUser: action.payload,
+      };
+
     default:
       return state;
   }
