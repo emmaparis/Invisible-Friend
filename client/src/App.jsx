@@ -46,8 +46,8 @@ function App() {
               <Route path="/signup" element={<SignUp />} />
               <Route path="/login" element={<LogIn />} />
               <Route path="/" element={<Home />} />
-              <Route path="/create" element={<Create />} />
-              <Route path="/prompt" element={<Prompt />} />
+              <Route path="/create" element={<Create {...options}/>} />
+              <Route path="/prompt" element={<Prompt {...options}/>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </StoreProvider>
