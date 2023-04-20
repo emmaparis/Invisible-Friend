@@ -21,9 +21,10 @@ import {
   Textarea,
   InputRightElement,
   InputGroup,
-} from '@chakra-ui/react';
 
-export default function PromptJ() {
+} from '@chakra-ui/react';
+{/* <div>{loading ? <div>Loading...</div> : <p>{promptResponse}</p>}</div> */}
+export default function Prompt() {
     const [userInput, setUserInput] = useState('');
     const [promptResponse, setPromptResponse] = useState('');
     const [getPromptResponse, { loading, error, data }] = useLazyQuery(PROMPT);
@@ -48,7 +49,7 @@ export default function PromptJ() {
             }}
         >
         <CardHeader>
-            <Heading fontSize="5xl" size="md" m={8}>
+            <Heading fontSize="5xl" size="md" m={3} mb={0}>
             Talk to 'Friend Name'
             </Heading>
         </CardHeader>
@@ -57,10 +58,10 @@ export default function PromptJ() {
                     
                     <Box>
                         <div style={{display:'flex', flexDirecion:'row', justifyContent:'center', alignContent:'center'}}>
-                            <Text fontSize='md'>Friend Name</Text>
+                            <Text fontSize='lg'>Friend Name</Text>
                             &emsp;
                             <ButtonGroup>
-                                <Button colorScheme='teal' size='sm'>
+                                <Button colorScheme='teal' style={{color:'white'}} size='sm'>
                                     Save Friend
                                 </Button>
                                 <Button colorScheme='teal' size='sm'>
@@ -73,19 +74,18 @@ export default function PromptJ() {
                         </div>
                     </Box>
                     <Box>
-                        <Textarea sx={{height:'300px',
+                        <Card isDisabled sx={{height:'300px',
                             backgroundColor: 'white',
                             borderRadius: '1rem',
+                            color: 'black'
                         }} 
-                        placeholder='AI text here?' />
-                        <Box >
+                        >
+                        <div>{loading ? <div>Loading...</div> : <p>{promptResponse}</p>}</div>
+                        </Card>
+                        <Box mt={5}>
                         <div style={{display:'flex', flexDirecion:'row', justifyContent:'center', alignContent:'center'}}>
-                            <FormControl 
-                            >
+                            <FormControl>
                                 <form onSubmit={onSubmit} >
-                                <Center>
-                                    <FormLabel>Name my Pet</FormLabel>
-                                </Center>
                                 <InputGroup>
                                     <Input type='text' 
                                     sx={{
@@ -94,8 +94,8 @@ export default function PromptJ() {
                                         marginTop: '5px',
                                         maxWidth: '80%',
                                     }}
-                                    placeholder='Enter an animal'
-                                    name="animal"
+                                    placeholder='What do you want to say?'
+                                    name="request"
                                     value={userInput}
                                     onChange={(e) => setUserInput(e.target.value)}
                                     />
@@ -105,7 +105,7 @@ export default function PromptJ() {
                                             minWidth={100}
                                             mr={10}
                                             className='genButton'
-                                            value="Generate Names"
+                                            value="Generate"
                                             type="submit"
                                             >
                                             Generate
@@ -114,7 +114,7 @@ export default function PromptJ() {
                                 </InputGroup>
                             </form>
                             </FormControl>
-                            <div>{loading ? <div>Loading...</div> : <p>{promptResponse}</p>}</div>
+                            {/* <div>{loading ? <div>Loading...</div> : <p>{promptResponse}</p>}</div> */}
                         </div>
                     </Box>
                     </Box>
