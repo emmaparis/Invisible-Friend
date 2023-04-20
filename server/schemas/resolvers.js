@@ -19,9 +19,8 @@ const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       try {
-        const { value, error } = userSchema.validate(context.user);
-        if (error) {
-          throw new Error(userErrorMessages.validationError);
+        if (!context.user) {
+          throw new AuthenticationError('You need to be logged in!');
         }
         const userData = await User.findOne({ _id: context.user._id })
           .populate('friends')
