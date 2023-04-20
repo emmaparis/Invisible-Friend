@@ -7,6 +7,8 @@ import { Container,
   RadioGroup, 
   Radio,  
   FormHelperText, 
+  Button,
+  Heading,
 
 } from '@chakra-ui/react';
 import { Select } from 'chakra-react-select';
@@ -81,9 +83,11 @@ export default function Create() {
   }
 
   return (
-    <Container mb={16}>
-      <FormControl p={4}>
+    <Container className='mainCard' sx={{width:'100%'}} p={15} mb={16}>
+      <Heading>Build Your Friend</Heading>
+      <FormControl>
         <Select
+          sx={{backgroundColor:'white'}}
           name="colors"
           classNamePrefix="Friend-Type-Select"
           options={friendTypeOptions}
@@ -195,6 +199,8 @@ export default function Create() {
           </HStack>
         </RadioGroup>
       </FormControl>
+      <Button mt={6} style={{backgroundColor:'#319795'}}>Initiate Friend</Button>
     </Container>
+    
   );
 }
