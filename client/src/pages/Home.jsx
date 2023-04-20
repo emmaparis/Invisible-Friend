@@ -5,7 +5,7 @@ import CreateFriendButton from '../subcomponents/CreateFriendButton';
 
 function Home() {
   return (
-    <div className='mainCard'>
+    <div className='mainPage'>
         <ButtonGroup
         style={{
             marginTop: '150px',

@@ -51,8 +51,8 @@ const LogIn = (props) => {
   };
 
   return (
-    <div className='mainCard'>
-    <Card 
+    <div className='mainPage'>
+    <Card
       sx={{
         margin: '8rem',
         backgroundColor: '#E6FFFA',

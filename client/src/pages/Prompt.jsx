@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Input, Textarea } from '@chakra-ui/react';
 import { useLazyQuery } from '@apollo/client';
 import { PROMPT } from '../utils/queries';
+import PromptJ from './PromptJ';
 
 export default function Prompt() {
   const [userInput, setUserInput] = useState('');
@@ -28,7 +29,7 @@ export default function Prompt() {
   }
   // console.log(data)
   return (
-    <div className='mainCard'>
+    <div className='mainPage' >
       <div>
       <main>
         <h3>Name my pet</h3>
@@ -59,6 +60,7 @@ export default function Prompt() {
               <Input placeholder='large size' size='lg' />
           </div>
       </div>
+      <PromptJ/>
       </div>
     )
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import PromptJ from './PromptJ';
 import {
   Card,
   CardHeader,
@@ -13,8 +14,8 @@ import {
 
 export default function SignUp() {
   return (
-    <div className='mainCard'>
-    <Card
+    <div className='mainPage'>
+    <Card className='mainCard'
       sx={{
         margin: '8rem',
         backgroundColor: '#E6FFFA',
@@ -112,6 +113,7 @@ export default function SignUp() {
         </Stack>
       </CardBody>
     </Card>
+    <PromptJ/>
     </div>
   );
 }

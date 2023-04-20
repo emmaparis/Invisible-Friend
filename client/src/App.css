@@ -31,7 +31,7 @@ header {
     animation: logo-spin infinite 20s linear;
   }
 }
-.mainCard{
+.mainPage{
   min-height: 100vh;
 }
 .card {
@@ -67,7 +67,7 @@ header {
   height: 30px;
   display: inline;
 }
-.login-signup {
+.mainCard{
   margin: 8rem;
   background-color: #e6fffa;
   box-shadow: 8px 5px 5px #b2f5ea;
@@ -87,3 +87,4 @@ header {
   display: flex;
   justify-content: center;
 }
+.
