@@ -1,5 +1,6 @@
 import { React, useState } from 'react';
 import { useMutation } from '@apollo/client';
+import { Link } from 'react-router-dom';
 import {
   Card,
   CardHeader,
@@ -116,6 +117,16 @@ const LogIn = (props) => {
             >
               Log In
             </Button>
+            <Heading size="s">Don't have an account?</Heading>
+            <Link to="/signup">
+              <Button
+                mb={5}
+                sx={{ backgroundColor: '#319795', color: 'white' }}
+                variant="outline"
+              >
+                Sign Up
+              </Button>
+            </Link>
           </form>
           {error && (
             <Box
