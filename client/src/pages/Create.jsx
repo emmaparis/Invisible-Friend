@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { Link } from 'react-router-dom';
 import { Container, 
   FormControl, 
   FormLabel, 
@@ -9,7 +10,6 @@ import { Container,
   FormHelperText, 
   Button,
   Heading,
-
 } from '@chakra-ui/react';
 import { Select } from 'chakra-react-select';
 import avatar1 from '../assets/images/avatars/avatar-1.png'
@@ -60,11 +60,8 @@ const languageOptions = [
   { value: 'Portugese', label: 'Portugese' },
 ];
 
-export default function Create() {
-  const [friendSelect, setFriendSelect] = useState('')
-  const [temperamentSelect, setTemperamentSelect] = useState('')
-  const [ageSelect, setAgeSelect] = useState('')
-  const [languageSelect, setLanguageSelect] = useState('')
+export default function Create(props) {
+  const {friendSelect, temperamentSelect, ageSelect, languageSelect, promptEntered, setFriendSelect, setTemperamentSelect, setAgeSelect, setLanguageSelect, setPromptEntered} = props
 
   const handleFriendSelect = (option) => {
     setFriendSelect(option);
@@ -198,7 +195,9 @@ export default function Create() {
           </HStack>
         </RadioGroup>
       </FormControl>
+      <Link to='/prompt' colorscheme="teal">
       <Button mt={6} style={{backgroundColor:'#319795'}}>Initiate Friend</Button>
+      </Link>
     </Container>
     
   );

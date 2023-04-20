@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
@@ -18,6 +18,24 @@ const client = new ApolloClient({
 });
 
 function App() {
+  const [friendSelect, setFriendSelect] = useState('');
+  const [temperamentSelect, setTemperamentSelect] = useState('');
+  const [ageSelect, setAgeSelect] = useState('');
+  const [languageSelect, setLanguageSelect] = useState('');
+  const [promptEntered, setPromptEntered] = useState('');
+  const options = {
+    friendSelect,
+    temperamentSelect,
+    ageSelect,
+    languageSelect,
+    promptEntered,
+    setFriendSelect,
+    setTemperamentSelect,
+    setAgeSelect,
+    setLanguageSelect,
+    setPromptEntered,
+  };
+
   return (
     <ApolloProvider client={client}>
       <ChakraProvider>
