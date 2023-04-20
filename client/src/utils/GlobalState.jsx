@@ -1,18 +1,13 @@
-import React, { createContext, useContext, useReducer } from 'react';
-import { reducer } from './reducers';
+import React, { createContext, useContext } from 'react';
+import { useProductReducer } from './reducers';
 
 const StoreContext = createContext();
 const { Provider } = StoreContext;
 
-const StoreProvider = ({ value = [], ...props }) => {
-  const initialState = {
-    user: {
-      me: { _id: '', username: '', email: '', friends: [], experts: [] },
-    },
-  };
-  const [state, dispatch] = useReducer(reducer, initialState);
+const StoreProvider = (props) => {
+  const [state, dispatch] = useProductReducer();
 
-  return <Provider value={[state, dispatch]} {...props} />;
+  return <Provider value={[state, dispatch]} {...props} />; //eslint-disable-line
 };
 
 const useStoreContext = () => {
