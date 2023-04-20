@@ -85,9 +85,8 @@ export default function Create() {
   return (
     <Container className='mainCard' sx={{width:'100%'}} p={15} mb={16}>
       <Heading>Build Your Friend</Heading>
-      <FormControl>
+      <FormControl p={4} style={{backgroundColor:'white'}}>
         <Select
-          sx={{backgroundColor:'white'}}
           name="colors"
           classNamePrefix="Friend-Type-Select"
           options={friendTypeOptions}
@@ -128,7 +127,7 @@ export default function Create() {
           value={temperamentSelect}
         />
       </FormControl>
-      <FormControl p={4}>
+      <FormControl p={4} style={{backgroundColor:'white'}}>
         <Select
           name="colors"
           classNamePrefix="Age-Select"
@@ -149,7 +148,7 @@ export default function Create() {
           value={ageSelect}
         />
       </FormControl>
-      <FormControl p={4}>
+      <FormControl p={4} style={{backgroundColor:'white'}}>
         <Select
           name="colors"
           classNamePrefix="Language-Select"
