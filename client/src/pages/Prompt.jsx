@@ -80,7 +80,7 @@ export default function Prompt() {
                             color: 'black'
                         }} 
                         >
-                        <div>{loading ? <div>Loading...</div> : <p>{promptResponse}</p>}</div>
+                        {loading ? <div>Loading...</div> : <p>{promptResponse}</p>}
                         </Card>
                         <Box mt={5}>
                         <div style={{display:'flex', flexDirecion:'row', justifyContent:'center', alignContent:'center'}}>
