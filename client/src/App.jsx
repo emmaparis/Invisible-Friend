@@ -2,6 +2,7 @@ import React from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
+import { StoreProvider } from './utils/GlobalState';
 import './App.css';
 import Header from './components/Header';
 import Home from './pages/Home';
@@ -21,15 +22,17 @@ function App() {
     <ApolloProvider client={client}>
       <ChakraProvider>
         <Router>
-          <Header />
-          <Routes>
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<LogIn />} />
-            <Route path="/" element={<Home />} />
-            <Route path="/create" element={<Create />} />
-            <Route path="/prompt" element={<Prompt />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <StoreProvider>
+            <Header />
+            <Routes>
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/login" element={<LogIn />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/create" element={<Create />} />
+              <Route path="/prompt" element={<Prompt />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </StoreProvider>
         </Router>
       </ChakraProvider>
     </ApolloProvider>
