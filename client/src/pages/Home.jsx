@@ -19,8 +19,12 @@ function Home() {
       <Link to={Auth.loggedIn() ? '/create' : '/login'} colorscheme="teal">
         <CreateFriendButton />
       </Link>
-      <SavedFriendButton />
-      <SavedFriendButton />
+      {Auth.loggedIn() && (
+        <>
+          <SavedFriendButton />
+          <SavedFriendButton />
+        </>
+      )}
     </ButtonGroup>
   );
 }
