@@ -6,10 +6,11 @@ import './App.css';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Prompt from './pages/Prompt';
-import Create from './pages/Create'
+import Create from './pages/Create';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
 import NotFound from './pages/NotFound';
+import Test from './pages/Test';
 
 const client = new ApolloClient({
   uri: 'http://localhost:3001/graphql',
@@ -28,7 +29,8 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/" element={<Home />} />
-            <Route path="/create" element={<Create />} />
+            <Route path="/create" element={<Test />} />
+            {/* <Route path="/create" element={<Create />} /> */}
             <Route path="/prompt" element={<Prompt />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
