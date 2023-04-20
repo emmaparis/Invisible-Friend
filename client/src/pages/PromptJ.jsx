@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 import {
   Card,
   CardHeader,
@@ -20,19 +21,19 @@ import {
 } from '@chakra-ui/react';
 
 export default function PromptJ() {
-    // const [userInput, setUserInput] = useState('');
-    // const [promptResponse, setPromptResponse] = useState('');
-    // const [getPromptResponse, { loading, error, data }] = useLazyQuery(PROMPT);
-    // async function onSubmit(event) {
-    //     event.preventDefault();
-    //     const {
-    //     data: { prompt },
-    //     } = await getPromptResponse({
-    //     variables: { input: userInput },
-    //     });
-    //     setPromptResponse(prompt);
-    // }
-
+    const [userInput, setUserInput] = useState('');
+    const [promptResponse, setPromptResponse] = useState('');
+    const [getPromptResponse, { loading, error, data }] = useLazyQuery(PROMPT);
+    async function onSubmit(event) {
+        event.preventDefault();
+        const {
+          data: { prompt },
+        } = await getPromptResponse({
+          variables: { input: userInput },
+        });
+        // console.log(response.error.message);
+        setPromptResponse(prompt);
+      }
     return (
       <div className='mainPage'>
         <Card className='mainCard'
@@ -55,6 +56,7 @@ export default function PromptJ() {
                             <FormControl 
                             // onSubmit={onSubmit} className='txtInput'
                             >
+                                <Form onSubmit={onSubmit} >
                                 <Center>
                                     <FormLabel>Name my Pet</FormLabel>
                                 </Center>
@@ -75,6 +77,7 @@ export default function PromptJ() {
                                 <Input type="submit" value="Generate names" sx={{display:'none'}}/>
                                 Generate Names
                             </Button>
+                            </Form>
                             </FormControl>
                             {/* <div>{loading ? <div>Loading...</div> : <p>{promptResponse}</p>}</div> */}
                         </div>
