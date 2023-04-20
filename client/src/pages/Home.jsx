@@ -1,8 +1,9 @@
 import React from 'react';
-import { Button, ButtonGroup, Spacer } from '@chakra-ui/react';
+import { ButtonGroup } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 import SavedFriendButton from '../subcomponents/SavedFriendButton';
 import CreateFriendButton from '../subcomponents/CreateFriendButton';
-import { Link } from 'react-router-dom';
+import Auth from '../utils/auth';
 
 function Home() {
   return (
@@ -15,11 +16,15 @@ function Home() {
         justifyContent: 'center',
       }}
     >
-      <Link to="/create" colorscheme="teal">
-        <CreateFriendButton/>
+      <Link to={Auth.loggedIn() ? '/create' : '/login'} colorscheme="teal">
+        <CreateFriendButton />
       </Link>
-      <SavedFriendButton />
-      <SavedFriendButton />
+      {Auth.loggedIn() && (
+        <>
+          <SavedFriendButton />
+          <SavedFriendButton />
+        </>
+      )}
     </ButtonGroup>
   );
 }
