@@ -9,10 +9,7 @@ import Prompt from './pages/Prompt';
 import Create from './pages/Create';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
-import Home from './pages/Home';
-import Avatar from './pages/Avatar';
 import NotFound from './pages/NotFound';
-import Test from './pages/Test';
 
 const client = new ApolloClient({
   uri: 'http://localhost:3001/graphql',
