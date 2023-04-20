@@ -15,10 +15,24 @@ import {
   FormHelperText,
   Center,
   Text,
-  ButtonGroup
+  ButtonGroup,
+  Textarea
 } from '@chakra-ui/react';
 
 export default function PromptJ() {
+    // const [userInput, setUserInput] = useState('');
+    // const [promptResponse, setPromptResponse] = useState('');
+    // const [getPromptResponse, { loading, error, data }] = useLazyQuery(PROMPT);
+    // async function onSubmit(event) {
+    //     event.preventDefault();
+    //     const {
+    //     data: { prompt },
+    //     } = await getPromptResponse({
+    //     variables: { input: userInput },
+    //     });
+    //     setPromptResponse(prompt);
+    // }
+
     return (
       <div className='mainPage'>
         <Card className='mainCard'
@@ -31,23 +45,38 @@ export default function PromptJ() {
         >
         <CardHeader>
             <Heading fontSize="5xl" size="md" m={8}>
-            Create Your Friend
+            Talk to 'Friend Name'
             </Heading>
         </CardHeader>
             <CardBody>
                 <Stack divider={<StackDivider />} spacing="4">
                     <Box >
                         <div style={{display:'flex', flexDirecion:'row', justifyContent:'center', alignContent:'center'}}>
-                            <FormControl className='txtInput'>
+                            <FormControl 
+                            // onSubmit={onSubmit} className='txtInput'
+                            >
                                 <Center>
                                     <FormLabel>Name my Pet</FormLabel>
                                 </Center>
-                                <Input type='text' />
+                                <Input type='text' 
+                                sx={{
+                                    backgroundColor: 'white',
+                                    borderRadius: '1rem',
+                                    marginTop: '5px',
+                                    maxWidth: '80%',
+                                }}
+                                placeholder='Enter an animal'
+                                name="animal"
+                                // value={userInput}
+                                // onChange={(e) => setUserInput(e.target.value)}
+                                />
                                 {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
-                            </FormControl>
-                            <Button colorScheme='teal' size='sm' mt={9} >
+                            <Button colorScheme='teal' size='sm' ml={2}>
+                                <Input type="submit" value="Generate names" sx={{display:'none'}}/>
                                 Generate Names
                             </Button>
+                            </FormControl>
+                            {/* <div>{loading ? <div>Loading...</div> : <p>{promptResponse}</p>}</div> */}
                         </div>
                     </Box>
                     <Box>
@@ -61,14 +90,27 @@ export default function PromptJ() {
                                 <Button colorScheme='teal' size='sm'>
                                     Edit Friend
                                 </Button>
-                                <Button colorScheme='teal' size='sm'>
+                                <Button  colorScheme='teal' size='sm'>
                                     Remove Friend 
                                 </Button>
                             </ButtonGroup>
                         </div>
                     </Box>
                     <Box>
-                        
+                        <Textarea sx={{height:'300px',
+                            backgroundColor: 'white',
+                            borderRadius: '1rem',
+                        }} 
+                        placeholder='AI text here?' />
+                        <FormControl className='txtInput'>
+                            <Input type='text' sx={{
+                                    backgroundColor: 'white',
+                                    borderRadius: '1rem',
+                                    marginTop: '5px',
+                                }}
+                                placeholder='What do you want to say?'
+                            />
+                        </FormControl>
                     </Box>
                 </Stack>
             </CardBody>
