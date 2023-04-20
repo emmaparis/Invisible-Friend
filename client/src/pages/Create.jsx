@@ -1,6 +1,26 @@
 import React, {useState} from 'react';
-import { Container, FormControl, FormLabel, Input } from '@chakra-ui/react';
+import { Container, 
+  FormControl, 
+  FormLabel, 
+  Input,
+  HStack, 
+  RadioGroup, 
+  Radio,  
+  FormHelperText, 
+
+} from '@chakra-ui/react';
 import { Select } from 'chakra-react-select';
+import avatar1 from '../assets/images/avatars/avatar-1.png'
+import avatar2 from '../assets/images/avatars/avatar-2.png'
+import avatar3 from '../assets/images/avatars/avatar-3.png'
+import avatar4 from '../assets/images/avatars/avatar-4.png'
+import avatar5 from '../assets/images/avatars/avatar-5.png'
+import avatar6 from '../assets/images/avatars/avatar-6.png'
+
+const avatarImages = [ ]
+for (let x=1; x<=6; x++){
+  avatarImages.push('avatar' + x)
+};
 
 const friendTypeOptions = [
   { value: 'Friend', label: 'Friend' },
@@ -145,6 +165,19 @@ export default function Create() {
           onChange={handleLanguageSelect}
           value={languageSelect}
         />
+      </FormControl>
+      <FormControl as='fieldset'>
+        <FormLabel as='legend' htmlFor={null}>
+          Favorite Naruto Character
+        </FormLabel>
+        <RadioGroup defaultValue='Itachi'>
+          <HStack spacing='24px'>
+            <Radio value='Avatar1' > 
+              <img src={avatar1}/>
+            </Radio>
+          </HStack>
+        </RadioGroup>
+        <FormHelperText>Select only if you're a fan.</FormHelperText>
       </FormControl>
     </Container>
   );
