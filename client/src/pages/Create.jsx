@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Container, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { Select } from 'chakra-react-select';
 
@@ -39,6 +39,27 @@ const languageOptions = [
 ];
 
 export default function Create() {
+  const [friendSelect, setFriendSelect] = useState('')
+  const [temperamentSelect, setTemperamentSelect] = useState('')
+  const [ageSelect, setAgeSelect] = useState('')
+  const [languageSelect, setLanguageSelect] = useState('')
+
+  const handleFriendSelect = (option) => {
+    setFriendSelect(option);
+  }
+
+  const handleTemperamentSelect = (option) => {
+    setTemperamentSelect(option);
+  }
+
+  const handleAgeSelect = (option) => {
+    setAgeSelect(option);
+  }
+
+  const handleLanguageSelect = (option) => {
+    setLanguageSelect(option);
+  }
+
   return (
     <Container mb={16}>
       <FormControl p={4}>
@@ -58,6 +79,8 @@ export default function Create() {
               },
             }),
           }}
+          onChange={handleFriendSelect}
+          value={friendSelect}
         />
       </FormControl>
       <FormControl p={4}>
@@ -77,6 +100,8 @@ export default function Create() {
               },
             }),
           }}
+          onChange={handleTemperamentSelect}
+          value={temperamentSelect}
         />
       </FormControl>
       <FormControl p={4}>
@@ -96,6 +121,8 @@ export default function Create() {
               },
             }),
           }}
+          onChange={handleAgeSelect}
+          value={ageSelect}
         />
       </FormControl>
       <FormControl p={4}>
@@ -115,6 +142,8 @@ export default function Create() {
               },
             }),
           }}
+          onChange={handleLanguageSelect}
+          value={languageSelect}
         />
       </FormControl>
     </Container>
