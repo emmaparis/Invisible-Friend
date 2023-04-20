@@ -156,17 +156,32 @@ export default function PromptJ() {
                   />
                 ))}
               </div>
-              <FormControl className="txtInput">
+              <InputGroup className="txtInput">
                 <Input
                   type="text"
                   sx={{
                     backgroundColor: 'white',
                     borderRadius: '1rem',
                     marginTop: '5px',
+                    maxWidth: '80%',
                   }}
                   placeholder="What do you want to say?"
                 />
-              </FormControl>
+
+                <InputRightElement
+                  style={{ display: 'flex', flexDirection: 'row' }}
+                >
+                  <Button
+                    minWidth={100}
+                    mr={10}
+                    className="genButton"
+                    value="Generate Names"
+                    type="submit"
+                  >
+                    Send
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
             </Box>
           </Stack>
         </CardBody>
