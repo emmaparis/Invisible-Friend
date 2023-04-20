@@ -168,7 +168,7 @@ export default function Create() {
       </FormControl>
       <FormControl as='fieldset'>
         <FormLabel as='legend' htmlFor={null}>
-          Favorite Naruto Character
+          Choose a Friend
         </FormLabel>
         <RadioGroup defaultValue='Itachi'>
           <HStack spacing='24px'>
