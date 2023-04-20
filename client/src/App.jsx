@@ -6,7 +6,7 @@ import './App.css';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Prompt from './pages/Prompt';
-import Create from './pages/Create'
+import Create from './pages/Create';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
 import Home from './pages/Home';
@@ -25,12 +25,6 @@ function App() {
       <ChakraProvider>
         <Router>
           <Header />
-<<<<<<< HEAD
-          <Avatar />
-          {/* <Body /> */}
-          {/* <Prompt /> */}
-=======
->>>>>>> 1cc98257f402670d93056843d17d93942ab859ac
           <Routes>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<LogIn />} />
@@ -40,7 +34,7 @@ function App() {
             <Route path="/promptj" element={<PromptJ />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </Router> 
+        </Router>
       </ChakraProvider>
     </ApolloProvider>
   );
