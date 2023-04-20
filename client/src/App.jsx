@@ -10,7 +10,7 @@ import Create from './pages/Create'
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
 import NotFound from './pages/NotFound';
-
+import PromptJ from './pages/PromptJ';
 
 const client = new ApolloClient({
   uri: 'http://localhost:3001/graphql',
@@ -29,6 +29,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/create" element={<Create />} />
             <Route path="/prompt" element={<Prompt />} />
+            <Route path="/promptj" element={<PromptJ />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Router> 

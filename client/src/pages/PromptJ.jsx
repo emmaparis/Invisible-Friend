@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-
+import { useLazyQuery } from '@apollo/client';
+import { PROMPT } from '../utils/queries';
 import {
   Card,
   CardHeader,
@@ -17,7 +18,9 @@ import {
   Center,
   Text,
   ButtonGroup,
-  Textarea
+  Textarea,
+  InputRightElement,
+  InputGroup,
 } from '@chakra-ui/react';
 
 export default function PromptJ() {
@@ -54,32 +57,40 @@ export default function PromptJ() {
                     <Box >
                         <div style={{display:'flex', flexDirecion:'row', justifyContent:'center', alignContent:'center'}}>
                             <FormControl 
-                            // onSubmit={onSubmit} className='txtInput'
                             >
-                                <Form onSubmit={onSubmit} >
+                                <form onSubmit={onSubmit} >
                                 <Center>
                                     <FormLabel>Name my Pet</FormLabel>
                                 </Center>
-                                <Input type='text' 
-                                sx={{
-                                    backgroundColor: 'white',
-                                    borderRadius: '1rem',
-                                    marginTop: '5px',
-                                    maxWidth: '80%',
-                                }}
-                                placeholder='Enter an animal'
-                                name="animal"
-                                // value={userInput}
-                                // onChange={(e) => setUserInput(e.target.value)}
-                                />
-                                {/* <FormHelperText>We'll never share your email.</FormHelperText> */}
-                            <Button colorScheme='teal' size='sm' ml={2}>
-                                <Input type="submit" value="Generate names" sx={{display:'none'}}/>
-                                Generate Names
-                            </Button>
-                            </Form>
+                                <InputGroup>
+                                    <Input type='text' 
+                                    sx={{
+                                        backgroundColor: 'white',
+                                        borderRadius: '1rem',
+                                        marginTop: '5px',
+                                        maxWidth: '80%',
+                                    }}
+                                    placeholder='Enter an animal'
+                                    name="animal"
+                                    value={userInput}
+                                    onChange={(e) => setUserInput(e.target.value)}
+                                    />
+                                    <InputRightElement style={{display:'flex', flexDirection:'row'}}>
+                                        <Button
+                                            // onClick={subscribe}
+                                            minWidth={100}
+                                            mr={10}
+                                            className='genButton'
+                                            value="Generate Names"
+                                            type="submit"
+                                            >
+                                            Generate
+                                        </Button>
+                                    </InputRightElement>
+                                </InputGroup>
+                            </form>
                             </FormControl>
-                            {/* <div>{loading ? <div>Loading...</div> : <p>{promptResponse}</p>}</div> */}
+                            <div>{loading ? <div>Loading...</div> : <p>{promptResponse}</p>}</div>
                         </div>
                     </Box>
                     <Box>

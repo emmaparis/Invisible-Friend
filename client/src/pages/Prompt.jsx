@@ -7,13 +7,6 @@ import PromptJ from './PromptJ';
 export default function Prompt() {
   const [userInput, setUserInput] = useState('');
   const [promptResponse, setPromptResponse] = useState('');
-  // const [getPromptResponse, {data, loading}] = useLazyQuery(PROMPT);
-  // const body = data?.body || "";
-  // useEffect(() => {
-  //   if (data) {
-  //     console.log(data.prompt);
-  //   }
-  // }, [data]);
   const [getPromptResponse, { loading, error, data }] = useLazyQuery(PROMPT);
 
   async function onSubmit(event) {
@@ -60,7 +53,6 @@ export default function Prompt() {
               <Input placeholder='large size' size='lg' />
           </div>
       </div>
-          <PromptJ/>
       </div>
     )
 }
