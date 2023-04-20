@@ -194,7 +194,6 @@ export default function Create() {
             </Radio>
           </HStack>
         </RadioGroup>
-        <FormHelperText>Select only if you're a fan.</FormHelperText>
       </FormControl>
     </Container>
   );
