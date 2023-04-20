@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, FormControl, FormLabel, Input } from '@chakra-ui/react';
+import { Container, FormControl, FormLabel } from '@chakra-ui/react';
 import { Select } from 'chakra-react-select';
 
 const friendTypeOptions = [
