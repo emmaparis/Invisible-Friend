@@ -54,57 +54,19 @@ export default function Prompt(props) {
             }}
         >
         <CardHeader>
-            <Heading fontSize="5xl" size="md" m={8}>
+            <Heading fontSize="5xl" size="md" m={3} mb={0}>
             Talk to 'Friend Name'
             </Heading>
         </CardHeader>
             <CardBody>
                 <Stack divider={<StackDivider />} spacing="4">
-                    <Box >
-                        <div style={{display:'flex', flexDirecion:'row', justifyContent:'center', alignContent:'center'}}>
-                            <FormControl 
-                            >
-                                <form onSubmit={onSubmit} >
-                                <Center>
-                                    <FormLabel>Name my Pet</FormLabel>
-                                </Center>
-                                <InputGroup>
-                                    <Input type='text' 
-                                    sx={{
-                                        backgroundColor: 'white',
-                                        borderRadius: '1rem',
-                                        marginTop: '5px',
-                                        maxWidth: '80%',
-                                    }}
-                                    placeholder='Enter an animal'
-                                    name="animal"
-                                    value={userInput}
-                                    onChange={(e) => setUserInput(e.target.value)}
-                                    />
-                                    <InputRightElement style={{display:'flex', flexDirection:'row'}}>
-                                        <Button
-                                            // onClick={subscribe}
-                                            minWidth={100}
-                                            mr={10}
-                                            className='genButton'
-                                            value="Generate Names"
-                                            type="submit"
-                                            >
-                                            Generate
-                                        </Button>
-                                    </InputRightElement>
-                                </InputGroup>
-                            </form>
-                            </FormControl>
-                            <div>{loading ? <div>Loading...</div> : <p>{promptResponse}</p>}</div>
-                        </div>
-                    </Box>
+                    
                     <Box>
                         <div style={{display:'flex', flexDirecion:'row', justifyContent:'center', alignContent:'center'}}>
-                            <Text fontSize='md'>Friend Name</Text>
+                            <Text fontSize='lg'>Friend Name</Text>
                             &emsp;
                             <ButtonGroup>
-                                <Button colorScheme='teal' size='sm'>
+                                <Button colorScheme='teal' style={{color:'white'}} size='sm'>
                                     Save Friend
                                 </Button>
                                 <Button colorScheme='teal' size='sm'>
@@ -117,20 +79,49 @@ export default function Prompt(props) {
                         </div>
                     </Box>
                     <Box>
-                        <Textarea sx={{height:'300px',
+                        <Card sx={{height:'300px',
                             backgroundColor: 'white',
                             borderRadius: '1rem',
+                            color: 'black'
                         }} 
-                        placeholder='AI text here?' />
-                        <FormControl className='txtInput'>
-                            <Input type='text' sx={{
-                                    backgroundColor: 'white',
-                                    borderRadius: '1rem',
-                                    marginTop: '5px',
-                                }}
-                                placeholder='What do you want to say?'
-                            />
-                        </FormControl>
+                        >
+                        {loading ? <div>Loading...</div> : <p>{promptResponse}</p>}
+                        </Card>
+                        <Box mt={5}>
+                        <div style={{display:'flex', flexDirecion:'row', justifyContent:'center', alignContent:'center'}}>
+                            <FormControl>
+                                <form onSubmit={onSubmit} >
+                                <InputGroup>
+                                    <Input type='text' 
+                                    sx={{
+                                        backgroundColor: 'white',
+                                        borderRadius: '1rem',
+                                        marginTop: '5px',
+                                        maxWidth: '80%',
+                                    }}
+                                    placeholder='What do you want to say?'
+                                    name="request"
+                                    value={userInput}
+                                    onChange={(e) => setUserInput(e.target.value)}
+                                    />
+                                    <InputRightElement style={{display:'flex', flexDirection:'row'}}>
+                                        <Button
+                                            // onClick={subscribe}
+                                            minWidth={100}
+                                            mr={10}
+                                            className='genButton'
+                                            value="Generate"
+                                            type="submit"
+                                            >
+                                            Generate
+                                        </Button>
+                                    </InputRightElement>
+                                </InputGroup>
+                            </form>
+                            </FormControl>
+                            {/* <div>{loading ? <div>Loading...</div> : <p>{promptResponse}</p>}</div> */}
+                        </div>
+                    </Box>
                     </Box>
                 </Stack>
             </CardBody>
