@@ -142,7 +142,6 @@ export const ADD_EXPERT = gql`
     $language: String!
     $expertise: String!
     $user: String!
-    $avatar: String!
     $history: [inputMessage]
   ) {
     addExpert(
@@ -191,7 +190,7 @@ export const UPDATE_EXPERT = gql`
       history: $history
     ) {
       _id
-      name
+      username
       language
       expertise
       avatar
@@ -212,19 +211,6 @@ export const DELETE_EXPERT = gql`
   mutation deleteExpert($_id: ID!) {
     deleteExpert(_id: $_id) {
       _id
-      name
-      language
-      expertise
-      avatar
-      user {
-        _id
-        name
-        email
-      }
-      history {
-        role
-        content
-      }
     }
   }
 `;

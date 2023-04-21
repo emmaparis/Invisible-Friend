@@ -292,11 +292,6 @@ const resolvers = {
 
     addExpert: async (parent, args) => {
       try {
-        const { error, value } = expertSchema.validate(args);
-        if (error) {
-          throw new Error(expertErrorMessages.validationError);
-        }
-
         // Find user by id
         const user = await User.findById(args.user);
         if (!user) {

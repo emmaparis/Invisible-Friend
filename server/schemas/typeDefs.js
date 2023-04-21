@@ -38,7 +38,6 @@ const typeDefs = gql`
     expertise: String!
     user: User!
     history: [Message!]
-    avatar: String!
   }
 
   type Auth {

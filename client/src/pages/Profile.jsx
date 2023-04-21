@@ -19,13 +19,14 @@ import { QUERY_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 import { UPDATE_USER } from '../utils/actions';
 import { UPDATE_USERDATA } from '../utils/mutations';
+import { DELETE_EXPERT } from '../utils/mutations';
 
 function Profile() {
   const [state, dispatch] = useStoreContext();
   const [usernameFlag, setUsernameFlag] = useBoolean();
-  const [newUsernameState, setNewUsernameState] = useState('');
+  const [newUsernameState, setNewUsernameState] = useState(state.user.username);
   const [emailFlag, setEmailFlag] = useBoolean();
-  const [newEmailState, setNewEmailState] = useState('');
+  const [newEmailState, setNewEmailState] = useState(state.user.email);
   const userData = state.user;
   const [loadUserData, { called, loading, data }] = useLazyQuery(QUERY_ME, {
     context: {
@@ -40,6 +41,8 @@ function Profile() {
       });
     },
   });
+
+  console.log(Auth.getToken());
 
   const [updateEmail, { emailData, emailLoading, emailError }] = useMutation(
     UPDATE_USERDATA,
@@ -64,6 +67,15 @@ function Profile() {
         username: newUsernameState,
         email: userData.email,
       },
+      context: {
+        headers: {
+          Authorization: `Bearer ${Auth.getToken()}`,
+        },
+      },
+    });
+
+  const [deleteExpert, { deleteData, deleteLoading, deleteError }] =
+    useMutation(DELETE_EXPERT, {
       context: {
         headers: {
           Authorization: `Bearer ${Auth.getToken()}`,
@@ -110,6 +122,15 @@ function Profile() {
     });
     updateEmail();
     loadUserData(), setEmailFlag.off();
+  };
+
+  const handleDeleteExpert = async (id) => {
+    await deleteExpert({
+      variables: {
+        _id: id,
+      },
+    });
+    loadUserData();
   };
 
   return (
@@ -260,6 +281,9 @@ function Profile() {
                       colorScheme="red"
                       size="sm"
                       key={`delete${expert._id}`}
+                      onClick={() => {
+                        handleDeleteExpert(expert._id);
+                      }}
                     >
                       Delete
                     </Button>
