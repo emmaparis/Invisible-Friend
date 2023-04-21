@@ -60,6 +60,15 @@ const languageOptions = [
   { value: 'Portugese', label: 'Portugese' },
 ];
 
+const avatarOptions = [
+  { value: avatar1, label: 'avatar1' },
+  { value: avatar2, label: 'avatar2' },
+  { value: avatar3, label: 'avatar3' },
+  { value: avatar4, label: 'avatar4' },
+  { value: avatar5, label: 'avatar5' },
+  { value: avatar6, label: 'avatar6' },
+];
+
 export default function Create(props) {
   const {friendSelect, temperamentSelect, ageSelect, languageSelect, promptEntered, setFriendSelect, setTemperamentSelect, setAgeSelect, setLanguageSelect, setPromptEntered} = props
 
