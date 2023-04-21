@@ -37,22 +37,24 @@ function Home() {
   const allBots = [...state.user.friends, ...state.user.experts];
 
   return (
-    <ButtonGroup
-      style={{
-        marginTop: '150px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignSelf: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <Link to={Auth.loggedIn() ? '/create' : '/login'} colorscheme="teal">
-        <CreateFriendButton />
-      </Link>
-      {allBots.map((bot) => (
-        <SavedFriendButton key={bot._id} botName={bot.name} />
-      ))}
-    </ButtonGroup>
+    <div className='mainPage'>
+      <ButtonGroup
+        style={{
+          marginTop: '150px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignSelf: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Link to={Auth.loggedIn() ? '/create' : '/login'} colorscheme="teal">
+          <CreateFriendButton />
+        </Link>
+        {allBots.map((bot) => (
+          <SavedFriendButton key={bot._id} botName={bot.name} />
+        ))}
+      </ButtonGroup>
+    </div>
   );
 }
 
