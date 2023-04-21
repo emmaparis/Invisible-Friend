@@ -13,10 +13,9 @@ import logo from '../assets/images/ifLogoMini.png';
 import Auth from '../utils/auth';
 
 export default function Header() {
-  const logout = async (event) => {
+  const logout = (event) => {
     event.preventDefault();
-    await Auth.logout();
-    window.location.href = '/';
+    Auth.logout();
   };
   return (
     <header
@@ -66,19 +65,12 @@ export default function Header() {
               </Button>
             </>
           ) : (
-            <>
-              <Button sx={{ backgroundColor: '#319795', color: 'white' }}>
-                <Link to="/profile" colorscheme="teal">
-                  Profile
-                </Link>
-              </Button>
-              <Button
-                sx={{ backgroundColor: '#319795', color: 'white' }}
-                onClick={logout}
-              >
-                Log Out
-              </Button>
-            </>
+            <Button
+              sx={{ backgroundColor: '#319795', color: 'white' }}
+              onClick={logout}
+            >
+              Log Out
+            </Button>
           )}
         </ButtonGroup>
       </Flex>

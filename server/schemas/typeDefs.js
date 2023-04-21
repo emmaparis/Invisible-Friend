@@ -3,8 +3,8 @@ const { gql } = require('apollo-server-express');
 const typeDefs = gql`
   type User {
     _id: ID!
-    username: String!
-    email: String!
+    username: String
+    email: String
     password: String!
     friends: [Friend]
     experts: [Expert]
@@ -28,7 +28,6 @@ const typeDefs = gql`
     mood: String!
     user: User!
     history: [Message!]
-    avatar: String!
   }
 
   type Expert {
@@ -38,7 +37,6 @@ const typeDefs = gql`
     expertise: String!
     user: User!
     history: [Message!]
-    avatar: String!
   }
 
   type Auth {
@@ -59,20 +57,13 @@ const typeDefs = gql`
     friend(_id: ID!): Friend
     experts: [Expert]
     expert(_id: ID!): Expert
-    prompt(
-      input: String!
-      friendType: String!
-      temperament: String!
-      age: Int!
-      language: String!
-      avatar: String!
-    ): String
+    prompt(input: String!, friendType: String!, temperament: String!, age: Int!, language: String!): String
   }
 
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    updateUser(_id: ID!, username: String!, email: String!): User
+    updateUser(_id: ID!, name: String!, email: String!, password: String!): User
     deleteUser(_id: ID!): User
     addFriend(
       name: String!
@@ -81,7 +72,6 @@ const typeDefs = gql`
       mood: String!
       user: String!
       history: [inputMessage]
-      avatar: String!
     ): Friend
     updateFriend(
       _id: ID!
@@ -91,7 +81,6 @@ const typeDefs = gql`
       mood: String!
       user: String!
       history: [inputMessage]
-      avatar: String!
     ): Friend
     updateFriendHistory(_id: ID!, message: inputMessage): Friend
     updateExpertHistory(_id: ID!, message: inputMessage): Expert
@@ -102,7 +91,6 @@ const typeDefs = gql`
       expertise: String!
       user: String!
       history: [inputMessage]
-      avatar: String!
     ): Expert
     updateExpert(
       _id: ID!
@@ -111,7 +99,6 @@ const typeDefs = gql`
       expertise: String!
       user: String!
       history: [inputMessage]
-      avatar: String!
     ): Expert
     deleteExpert(_id: ID!): Expert
   }

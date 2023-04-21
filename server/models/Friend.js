@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const { messageSchema } = require('./Message');
+const { messageSchema } = require('./Message.js');
 
 const friendSchema = new Schema({
   name: {
@@ -29,10 +29,6 @@ const friendSchema = new Schema({
   history: {
     type: [messageSchema],
     default: [],
-  },
-  avatar: {
-    type: String,
-    trim: true,
   },
 });
 
