@@ -3,6 +3,7 @@ import { useLazyQuery, useQuery } from '@apollo/client';
 import { useSpeechSynthesis } from 'react-speech-kit';
 import { PROMPT, QUERY_FRIEND } from '../utils/queries';
 import Message from '../subcomponents/Message';
+import audioIcon from '../assets/images/audioIcon.png'
 import {
   Card,
   CardHeader,
@@ -23,6 +24,7 @@ import {
   Textarea,
   InputRightElement,
   InputGroup,
+  HStack
 } from '@chakra-ui/react';
 
 export default function Prompt(props) {
@@ -170,7 +172,8 @@ export default function Prompt(props) {
                             backgroundColor: 'white',
                             borderRadius: '1rem',
                             marginTop: '5px',
-                            maxWidth: '80%',
+                            width: '70%',
+                            marginRight:'0'
                           }}
                           placeholder="What do you want to say?"
                           name="request"
@@ -178,17 +181,17 @@ export default function Prompt(props) {
                           onChange={(e) => setUserInput(e.target.value)}
                         />
                         <InputRightElement
-                          style={{ display: 'flex', flexDirection: 'row' }}
+                          style={{ display: 'flex', flexDirection: 'row', width:'30%'}}
                         >
                           <Button
-                            minWidth={100}
-                            mr={10}
+                            minWidth={20}
+                            mr={5}
                             className="genButton"
                             value="Play"
                             type="button"
                             onClick={()=>{handleOnClick()}}
                           >
-                            Play Sound
+                              <img src={audioIcon} style={{height:'100%'}} alt='volume button.'></img>
                           </Button>
                           <Button
                             minWidth={100}
