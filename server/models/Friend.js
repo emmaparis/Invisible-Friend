@@ -32,13 +32,8 @@ const friendSchema = new Schema({
   },
   avatar: {
     type: String,
-<<<<<<< HEAD
     trim: true,
   },
-=======
-    trim: true, 
-  }
->>>>>>> 54e88de84a81e76e8d3f55f26415e519cc3247f1
 });
 
 const Friend = model('Friend', friendSchema);
