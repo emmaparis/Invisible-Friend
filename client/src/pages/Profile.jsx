@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useEffect, Fragment } from 'react';
 import {
   Card,
   CardHeader,
@@ -11,29 +11,34 @@ import {
   StackDivider,
   Button,
 } from '@chakra-ui/react';
+import { useLazyQuery } from '@apollo/client';
 import { useStoreContext } from '../utils/GlobalState';
 import { QUERY_ME } from '../utils/queries';
+import Auth from '../utils/auth';
+import { UPDATE_USER } from '../utils/actions';
 
 function Profile() {
   const [state, dispatch] = useStoreContext();
   const userData = state.user;
-
-  if (!userData) {
-    const { error, data } = useQuery(QUERY_ME, {
-      context: {
-        headers: {
-          Authorization: `Bearer ${Auth.getToken()}`,
-        },
+  const [loadUserData, { called, loading, data }] = useLazyQuery(QUERY_ME, {
+    context: {
+      headers: {
+        Authorization: `Bearer ${Auth.getToken()}`,
       },
-    });
-    dispatch({
-      type: UPDATE_USER,
-      user: data.me,
-    });
-  }
+    },
+    onCompleted: (data) => {
+      dispatch({
+        type: UPDATE_USER,
+        user: data.me,
+      });
+    },
+  });
 
-  console.log('state', userData);
-  console.log(userData.username);
+  useEffect(() => {
+    if (state.user.username === '') {
+      loadUserData();
+    }
+  }, [state.user.username]);
 
   return (
     <div className="mainPage">
@@ -73,14 +78,19 @@ function Profile() {
               </Heading>
               <Stack direction="row" justify="space-between">
                 {userData?.friends?.map((friend) => (
-                  <>
+                  <Fragment key={friend._id}>
                     <Text pt="2" fontSize="sm" key={friend._id}>
                       {friend.name}
                     </Text>
-                    <Button variant="solid" colorScheme="red" size="sm">
+                    <Button
+                      variant="solid"
+                      colorScheme="red"
+                      size="sm"
+                      key={`delete${friend._id}`}
+                    >
                       Delete
                     </Button>
-                  </>
+                  </Fragment>
                 ))}
               </Stack>
             </Box>
@@ -90,14 +100,19 @@ function Profile() {
               </Heading>
               <Stack direction="row" justify="space-between">
                 {userData?.experts?.map((expert) => (
-                  <>
+                  <Fragment key={expert._id}>
                     <Text pt="2" fontSize="sm" key={expert._id}>
                       {expert.name}
                     </Text>
-                    <Button variant="solid" colorScheme="red" size="sm">
+                    <Button
+                      variant="solid"
+                      colorScheme="red"
+                      size="sm"
+                      key={`delete${expert._id}`}
+                    >
                       Delete
                     </Button>
-                  </>
+                  </Fragment>
                 ))}
               </Stack>
             </Box>
