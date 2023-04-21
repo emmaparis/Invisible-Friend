@@ -65,6 +65,7 @@ export const QUERY_ME = gql`
   query me {
     me {
       username
+      email
       friends {
         _id
         name
