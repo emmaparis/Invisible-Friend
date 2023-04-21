@@ -70,7 +70,19 @@ const avatarOptions = [
 ];
 
 export default function Create(props) {
-  const {friendSelect, temperamentSelect, ageSelect, languageSelect, promptEntered, setFriendSelect, setTemperamentSelect, setAgeSelect, setLanguageSelect, setPromptEntered} = props
+  const {friendSelect, 
+    temperamentSelect, 
+    ageSelect, 
+    languageSelect, 
+    promptEntered, 
+    avatarSelect,
+    setFriendSelect, 
+    setTemperamentSelect, 
+    setAgeSelect, 
+    setLanguageSelect, 
+    setPromptEntered,
+    setAvatarSelect,
+  } = props
 
   const handleFriendSelect = (option) => {
     setFriendSelect(option);
@@ -87,6 +99,9 @@ export default function Create(props) {
   const handleLanguageSelect = (option) => {
     setLanguageSelect(option);
   }
+  const handleAvatarSelect = (option) => {
+    setAvatarSelect(option);
+  };
 
   return (
     <div className='mainPage'>
@@ -180,30 +195,34 @@ export default function Create(props) {
             <FormLabel ml={10} as='legend' htmlFor={null}>
               Choose a Friend
             </FormLabel>
-          <RadioGroup defaultValue='Itachi'>
-            <HStack spacing='24px'>
-              <Radio value='Avatar1' > 
-                <img src={avatar1}/>
-              </Radio>
-              <Radio value='Avatar2' > 
-                <img src={avatar2}/>
-              </Radio>
-              <Radio value='Avatar3' > 
-                <img src={avatar3}/>
-              </Radio>
-            </HStack>
-            <HStack spacing='24px'>
-              <Radio value='Avatar4' > 
-                <img src={avatar4}/>
-              </Radio>
-              <Radio value='Avatar5' > 
-                <img src={avatar5}/>
-              </Radio>
-              <Radio value='Avatar6' > 
-                <img src={avatar6}/>
-              </Radio>
-            </HStack>
-          </RadioGroup>
+          <RadioGroup
+          defaultValue="Itachi"
+          onChange={handleAvatarSelect}
+          value={avatarSelect}
+        >
+          <HStack spacing="24px">
+            <Radio value={avatar1}>
+              <img src={avatar1} />
+            </Radio>
+            <Radio value={avatar2}>
+              <img src={avatar2} />
+            </Radio>
+            <Radio value={avatar3}>
+              <img src={avatar3} />
+            </Radio>
+          </HStack>
+          <HStack spacing="24px">
+            <Radio value={avatar4}>
+              <img src={avatar4} />
+            </Radio>
+            <Radio value={avatar5}>
+              <img src={avatar5} />
+            </Radio>
+            <Radio value={avatar6}>
+              <img src={avatar6} />
+            </Radio>
+          </HStack>
+        </RadioGroup>
         </FormControl>
         <Link to='/prompt' colorscheme="teal">
         <Button mt={6} style={{backgroundColor:'#319795'}}>Initiate Friend</Button>
