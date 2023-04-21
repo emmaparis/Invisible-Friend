@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
-import { useSpeechSynthesis } from 'react-speech-kit';
 import { StoreProvider } from './utils/GlobalState';
 import './App.css';
 import Header from './components/Header';
