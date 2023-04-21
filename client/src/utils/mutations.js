@@ -114,6 +114,27 @@ export const UPDATE_FRIEND = gql`
   }
 `;
 
+export const UPDATE_FRIEND_HISTORY = gql`
+  mutation updateFriendHistory($_id: ID!, $message: inputMessage!) {
+    updateFriendHistory(_id: $_id, message: $message) {
+      _id
+      name
+      language
+      age
+      mood
+      user {
+        _id
+        username
+        email
+      }
+      history {
+        role
+        content
+      }
+    }
+  }
+`;
+
 export const DELETE_FRIEND = gql`
   mutation deleteFriend($_id: ID!) {
     deleteFriend(_id: $_id) {
