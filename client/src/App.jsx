@@ -2,6 +2,7 @@ import React from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
+import { useSpeechSynthesis } from 'react-speech-kit';
 import './App.css';
 import Header from './components/Header';
 import Home from './pages/Home';
