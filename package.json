@@ -36,7 +36,8 @@
     "chakra-react-select": "^4.6.0",
     "dotenv": "^16.0.3",
     "framer-motion": "^10.12.4",
+    "jwt-decode": "^3.1.2",
     "openai": "^3.2.1",
-    "jwt-decode": "^3.1.2"
+    "react-speech-kit": "^3.0.1"
   }
 }

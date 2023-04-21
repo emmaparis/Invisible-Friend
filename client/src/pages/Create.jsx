@@ -107,6 +107,7 @@ export default function Create(props) {
 
   return (
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     <div className='mainPage'>
       <Container className='mainCard' sx={{width:'100%'}} p={15} mb={16}>
         <Heading>Build Your Friend</Heading>
@@ -229,6 +230,8 @@ export default function Create(props) {
       </Container>
     </div>
 =======
+=======
+>>>>>>> Stashed changes
     <Container className="mainCard" sx={{ width: '100%' }} p={15} mb={16}>
       <Heading>Build Your Friend</Heading>
       <FormControl p={4}>
@@ -354,6 +357,9 @@ export default function Create(props) {
         </Button>
       </Link>
     </Container>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   );
 }

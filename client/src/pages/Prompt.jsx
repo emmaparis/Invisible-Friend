@@ -1,6 +1,7 @@
 <<<<<<< Updated upstream
 import React, { useState, useEffect } from 'react';
 import { useLazyQuery, useQuery } from '@apollo/client';
+import { useSpeechSynthesis } from 'react-speech-kit';
 import { PROMPT, QUERY_FRIEND } from '../utils/queries';
 import Message from '../subcomponents/Message';
 =======
@@ -8,6 +9,9 @@ import React, { useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { PROMPT } from '../utils/queries';
 import avatar from '../assets/images/avatars/avatar-1.png';
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 import {
   Card,
@@ -37,6 +41,7 @@ export default function Prompt(props) {
   const [messages, setMessages] = useState([]);
   const [getPromptResponse, { loading, error, data }] = useLazyQuery(PROMPT);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
   const friendId = '6442ae591be626f5ceda3483';
   const loggedInUserId = '6442acd01be626f5ceda347a';
@@ -48,12 +53,18 @@ export default function Prompt(props) {
 
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
   const {
     friendSelect,
     temperamentSelect,
     ageSelect,
     languageSelect,
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+    avatarSelect,
+>>>>>>> Stashed changes
 =======
     avatarSelect,
 >>>>>>> Stashed changes
@@ -68,12 +79,15 @@ export default function Prompt(props) {
   async function onSubmit(event) {
     event.preventDefault();
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const userInputLocal = userInput;
     setUserInput('');
     const response = await getPromptResponse({
       variables: {
         input: userInputLocal,
 =======
+=======
+>>>>>>> Stashed changes
     console.log(props);
     console.log(userInput);
     // const {
@@ -82,6 +96,9 @@ export default function Prompt(props) {
     const response = await getPromptResponse({
       variables: {
         input: userInput,
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         friendType: friendSelect.value,
         temperament: temperamentSelect.value,
@@ -90,6 +107,7 @@ export default function Prompt(props) {
       },
     });
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 =======
     console.log(response.data.prompt);
@@ -112,6 +130,17 @@ export default function Prompt(props) {
     onLoad();
   }, [friendData, friendError, friendLoading]);
 
+  const [text,setText] = useState('Hello this is a test');
+  const {speak} = useSpeechSynthesis();
+
+  const handleOnClick = () => {
+    speak({text:text})
+=======
+    console.log(response.data.prompt);
+    setPromptResponse(response.data.prompt);
+>>>>>>> Stashed changes
+  }
+
   return (
     <div className="mainPage">
       <Card
@@ -126,6 +155,10 @@ export default function Prompt(props) {
         <CardHeader>
           <Heading fontSize="5xl" size="md" m={3} mb={0}>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+            <img src={avatarSelect} />
+>>>>>>> Stashed changes
 =======
             <img src={avatarSelect} />
 >>>>>>> Stashed changes
@@ -164,6 +197,7 @@ export default function Prompt(props) {
             </Box>
             <Box>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
               <div id="chat-container">
                 {messages.map((message, index) => (
                   <Message
@@ -179,6 +213,8 @@ export default function Prompt(props) {
                 )}
               </div>
 =======
+=======
+>>>>>>> Stashed changes
               <Card
                 sx={{
                   height: '300px',
@@ -222,6 +258,19 @@ export default function Prompt(props) {
                             minWidth={100}
                             mr={10}
                             className="genButton"
+<<<<<<< Updated upstream
+                            value="Play"
+                            type="button"
+                            onClick={()=>{handleOnClick()}}
+                          >
+                            Play Sound
+                          </Button>
+                          <Button
+                            minWidth={100}
+                            mr={10}
+                            className="genButton"
+=======
+>>>>>>> Stashed changes
                             value="Generate"
                             type="submit"
                           >
