@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { PROMPT, QUERY_FRIEND } from '../utils/queries';
+import Message from '../subcomponents/Message';
 import {
   Card,
   CardHeader,
@@ -26,7 +27,17 @@ import {
 export default function Prompt(props) {
   const [userInput, setUserInput] = useState('');
   const [promptResponse, setPromptResponse] = useState('');
+  const [messages, setMessages] = useState([]);
   const [getPromptResponse, { loading, error, data }] = useLazyQuery(PROMPT);
+
+  const friendId = '6442ae591be626f5ceda3483';
+  const loggedInUserId = '6442acd01be626f5ceda347a';
+
+  const [
+    getFriend,
+    { data: friendData, error: friendError, loading: friendLoading },
+  ] = useLazyQuery(QUERY_FRIEND);
+
   const {
     friendSelect,
     temperamentSelect,
@@ -42,16 +53,11 @@ export default function Prompt(props) {
 
   async function onSubmit(event) {
     event.preventDefault();
-    const userInputLocal = userInput;
-    setUserInput('');
     console.log(props);
-    console.log(userInputLocal);
-    // const {
-    //   data: { prompt },
-    // }
+    console.log(userInput);
     const response = await getPromptResponse({
       variables: {
-        input: userInputLocal,
+        input: userInput,
         friendType: friendSelect.value,
         temperament: temperamentSelect.value,
         age: parseInt(ageSelect.value),
@@ -63,44 +69,20 @@ export default function Prompt(props) {
     setPromptResponse(response.data.prompt);
   }
 
-  //displaying the messages in the screen
-  const friendId = '6441b39ca4329807ba3f32b5';
-  const loggedInUserId = '6441736451f5db0da79c37ee';
+  async function onLoad() {
+    const friend = await getFriend({
+      variables: {
+        id: friendId,
+      },
+    });
 
-  // const {
-  //   data: friendData,
-  //   error: friendError,
-  //   loading: friendLoading,
-  // } = useQuery(QUERY_FRIEND, {
-  //   variables: { _id: friendId },
-  // });
-
-  const { data: friendData, error: friendError, loading: friendLoading } = '';
-
-  const [messages, setMessages] = useState([]);
-  function OnLoad() {
-    if (!friendLoading && !friendError && friendData) {
-      const friend = friendData.getFriendById;
-      if (friend.user !== loggedInUserId) {
-        console.error('Friend belongs to another user');
-        return;
-      }
-      setMessages(friend.history);
-    } else if (!friendLoading && !friendData) {
-      const messagesData = [
-        { type: 'user', content: 'Hello!' },
-        { type: 'system', content: 'Welcome to the chat.' },
-      ];
-      setMessages(messagesData);
-    }
+    console.log(friend.data.friend.history);
+    //setMessage(friend.data.history);
   }
+
   useEffect(() => {
-    OnLoad();
-  }, [friendData, friendError]);
-
-  function Message({ type, content }) {
-    return <div className={`message ${type}`}>{content}</div>;
-  }
+    onLoad();
+  }, [friendData, friendError, friendLoading]);
 
   return (
     <div className="mainPage">
@@ -149,20 +131,16 @@ export default function Prompt(props) {
               </div>
             </Box>
             <Box>
-              <div id="chat-container">
-                {messages.map((message, index) => (
-                  <Message
-                    key={index}
-                    type={message.type}
-                    content={message.content}
-                  />
-                ))}
-                {loading ? (
-                  <Message type={'system'} content={'Loading'} />
-                ) : (
-                  <Message type={'system'} content={promptResponse} />
-                )}
-              </div>
+              <Card
+                sx={{
+                  height: '300px',
+                  backgroundColor: 'white',
+                  borderRadius: '1rem',
+                  color: 'black',
+                }}
+              >
+                {loading ? <div>Loading...</div> : <p>{promptResponse}</p>}
+              </Card>
               <Box mt={5}>
                 <div
                   style={{
