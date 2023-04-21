@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_FRIEND } from '../utils/mutations';
+import { useNavigate } from 'react-router-dom';
+import { useStoreContext } from '../utils/GlobalState';
 import {
   Container,
   FormControl,
@@ -86,10 +88,11 @@ export default function Create(props) {
     setLanguageSelect,
     setPromptEntered,
     setAvatarSelect,
-    state,
   } = props;
+  const [state, dispatch] = useStoreContext();
 
   const [addFriend, { data, loading, error }] = useMutation(ADD_FRIEND);
+  const navigate = useNavigate();
 
   const handleFriendSelect = (option) => {
     setFriendSelect(option);
@@ -112,25 +115,32 @@ export default function Create(props) {
 
   const handleAddFriend = async () => {
     try {
+      console.log(
+        'This is the data',
+        languageSelect,
+        ageSelect,
+        temperamentSelect,
+        state.user._id
+      );
+
       const { data } = await addFriend({
         variables: {
           name: 'system',
-          language: languageSelect,
-          age: ageSelect,
-          mood: temperamentSelect,
+          language: languageSelect.value,
+          age: parseInt(ageSelect.value),
+          mood: temperamentSelect.value,
           user: state.user._id,
-          history: [
-            {
-              role: 'user',
-              content: 'Hello',
-            },
-          ],
+          // history: [],
+          avatar: avatarSelect.value,
         },
       });
 
       console.log('New friend added:', data.addFriend);
+      // Navigate to the /prompt/:id route using the newly added friend's _id
+      navigate(`/prompt/${data.addFriend._id}`);
     } catch (error) {
       console.error('Error adding friend:', error);
+      navigate(`/404`);
     }
   };
 
@@ -255,7 +265,7 @@ export default function Create(props) {
             </HStack>
           </RadioGroup>
         </FormControl>
-        <Link to="/prompt" colorscheme="teal">
+        <Link colorscheme="teal">
           <Button
             onClick={handleAddFriend}
             mt={6}

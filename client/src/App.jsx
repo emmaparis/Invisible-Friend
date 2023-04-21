@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
-import { StoreProvider, useStoreContext } from './utils/GlobalState';
+import { StoreProvider } from './utils/GlobalState';
 import './App.css';
 import Header from './components/Header';
 import Home from './pages/Home';
@@ -39,7 +39,6 @@ function App() {
     setPromptEntered,
     setAvatarSelect,
   };
-  const { state, dispatch } = useStoreContext();
 
   return (
     <ApolloProvider client={client}>

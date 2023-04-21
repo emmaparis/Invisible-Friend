@@ -30,7 +30,7 @@ export const DELETE_USER = gql`
   mutation deleteUser($_id: ID!) {
     deleteUser(_id: $_id) {
       _id
-      name
+      username
       email
     }
   }
@@ -63,7 +63,7 @@ export const ADD_FRIEND = gql`
       avatar
       user {
         _id
-        name
+        username
         email
       }
       history {
@@ -103,7 +103,7 @@ export const UPDATE_FRIEND = gql`
       avatar
       user {
         _id
-        name
+        username
         email
       }
       history {
@@ -146,7 +146,7 @@ export const DELETE_FRIEND = gql`
       avatar
       user {
         _id
-        name
+        username
         email
       }
       history {
@@ -181,7 +181,7 @@ export const ADD_EXPERT = gql`
       avatar
       user {
         _id
-        name
+        username
         email
       }
       history {
@@ -218,7 +218,7 @@ export const UPDATE_EXPERT = gql`
       avatar
       user {
         _id
-        name
+        username
         email
       }
       history {
@@ -239,7 +239,7 @@ export const DELETE_EXPERT = gql`
       avatar
       user {
         _id
-        name
+        username
         email
       }
       history {
