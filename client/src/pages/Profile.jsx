@@ -1,4 +1,4 @@
-import { React, useEffect, Fragment } from 'react';
+import { React, useEffect, Fragment, useState } from 'react';
 import {
   Card,
   CardHeader,
@@ -10,6 +10,8 @@ import {
   Box,
   StackDivider,
   Button,
+  useBoolean,
+  Input,
 } from '@chakra-ui/react';
 import { useLazyQuery } from '@apollo/client';
 import { useStoreContext } from '../utils/GlobalState';
@@ -19,6 +21,8 @@ import { UPDATE_USER } from '../utils/actions';
 
 function Profile() {
   const [state, dispatch] = useStoreContext();
+  const [usernameFlag, setUsernameFlag] = useBoolean();
+  const [newUsernameState, setNewUsernameState] = useState('');
   const userData = state.user;
   const [loadUserData, { called, loading, data }] = useLazyQuery(QUERY_ME, {
     context: {
@@ -40,21 +44,70 @@ function Profile() {
     }
   }, [state.user.username]);
 
+  const handleUsernameChange = () => {
+    const { value } = event.target;
+
+    setNewUsernameState(value);
+    console.log('value', value);
+  };
+
+  useEffect(() => {;
+  }, [handleUsernameChange]);
+
   return (
     <div className="mainPage">
       <Card className="mainCard">
         <CardHeader>
-          <Stack direction="row" justify="space-between">
-            <Heading size="md">{userData.username}</Heading>
-            <Stack spacing={4} direction="row" justify="right">
-              <Button variant="solid" colorScheme="teal" size="sm">
-                Edit
-              </Button>
-              <Button colorScheme="red" size="sm">
-                Delete
-              </Button>
+          {usernameFlag ? (
+            <Stack direction="row" justify="space-between">
+              <Heading size="md">
+                <Input
+                  sx={{
+                    backgroundColor: 'white',
+                    borderRadius: '1rem',
+                    paddingLeft: '5px',
+                    margin: '5px',
+                    width: 'fit-content',
+                  }}
+                  placeholder={userData.username}
+                  name="newUsername"
+                  type="text"
+                  value={newUsernameState}
+                  onChange={handleUsernameChange}
+                />
+              </Heading>
+              <Stack spacing={4} direction="row" justify="right">
+                <Button
+                  variant="solid"
+                  colorScheme="teal"
+                  size="sm"
+                  onClick={setUsernameFlag.off}
+                >
+                  Save
+                </Button>
+                <Button colorScheme="red" size="sm">
+                  Delete
+                </Button>
+              </Stack>
             </Stack>
-          </Stack>
+          ) : (
+            <Stack direction="row" justify="space-between">
+              <Heading size="md">{userData.username}</Heading>
+              <Stack spacing={4} direction="row" justify="right">
+                <Button
+                  variant="solid"
+                  colorScheme="teal"
+                  size="sm"
+                  onClick={setUsernameFlag.on}
+                >
+                  Edit
+                </Button>
+                <Button colorScheme="red" size="sm">
+                  Delete
+                </Button>
+              </Stack>
+            </Stack>
+          )}
         </CardHeader>
 
         <CardBody>
