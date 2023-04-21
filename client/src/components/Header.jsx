@@ -13,9 +13,10 @@ import logo from '../assets/images/ifLogoMini.png';
 import Auth from '../utils/auth';
 
 export default function Header() {
-  const logout = (event) => {
+  const logout = async (event) => {
     event.preventDefault();
-    Auth.logout();
+    await Auth.logout();
+    window.location.href = '/';
   };
   return (
     <header
