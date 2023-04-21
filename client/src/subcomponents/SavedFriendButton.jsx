@@ -10,7 +10,9 @@ export default function SavedFriendButton({ botName }) {
       &emsp;
       {botName}
       &emsp;
-      <img className="icon" src={removeIcon} alt="Remove icon" />
-    </Button>
+      <Button>
+        <img className="icon" src={removeIcon} alt="Remove icon" /> 
+      </Button>
+      </Button>
   );
 }
