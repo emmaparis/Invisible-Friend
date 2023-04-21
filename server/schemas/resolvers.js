@@ -81,12 +81,12 @@ const resolvers = {
       }
     },
 
-    prompt: async (parent, { input, friendType, temperament, age, language }) => {
+    prompt: async (parent, { input, friendType, temperament, age, language, avatar }) => {
       try {
-        console.log('userInput', input, friendType, temperament, age, language);
+        console.log('userInput', input, friendType, temperament, age, language, avatar);
         const completion = await openai.createCompletion({
           model: 'text-davinci-003',
-          prompt: generatePrompt(input, friendType, temperament, age, language),
+          prompt: generatePrompt(input, friendType, temperament, age, language, avatar),
           temperature: 0.6,
         });
         console.log(completion);
@@ -189,7 +189,7 @@ const resolvers = {
 
     updateFriend: async (
       parent,
-      { _id, name, language, age, mood, user, history }
+      { _id, name, language, age, mood, user, history, avatar }
     ) => {
       try {
         const { error, value } = friendSchema.validate({
@@ -199,6 +199,7 @@ const resolvers = {
           mood,
           user,
           history,
+          avatar,
         });
         if (error) {
           throw new Error(friendErrorMessages.validationError);
@@ -298,7 +299,7 @@ const resolvers = {
 
     updateExpert: async (
       parent,
-      { _id, name, language, expertise, user, history }
+      { _id, name, language, expertise, user, history, avatar }
     ) => {
       try {
         const { error, value } = expertSchema.validate({
@@ -307,6 +308,7 @@ const resolvers = {
           expertise,
           user,
           history,
+          avatar,
         });
         if (error) {
           throw new Error(expertErrorMessages.validationError);
