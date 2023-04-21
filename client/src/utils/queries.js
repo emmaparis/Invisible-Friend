@@ -88,7 +88,7 @@ export const QUERY_FRIENDS = gql`
       mood
       user {
         _id
-        name
+        username
         email
       }
       history {
@@ -109,7 +109,7 @@ export const QUERY_FRIEND = gql`
       mood
       user {
         _id
-        name
+        username
         email
       }
       history {
