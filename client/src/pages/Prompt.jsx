@@ -84,7 +84,7 @@ export default function Prompt(props) {
     onLoad();
   }, [friendData, friendError, friendLoading]);
 
-  const [text,setText] = useState('Hello this is s test');
+  const [text,setText] = useState('Hello this is a test');
   const {speak} = useSpeechSynthesis();
 
   const handleOnClick = () => {
