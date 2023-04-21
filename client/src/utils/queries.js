@@ -68,7 +68,9 @@ export const USER = gql`
 export const QUERY_ME = gql`
   query me {
     me {
+      _id
       username
+      email
       friends {
         _id
         name
