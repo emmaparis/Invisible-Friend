@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
+const { string } = require('joi');
 
 const userSchema = new Schema({
   username: {
@@ -20,8 +21,7 @@ const userSchema = new Schema({
     minlength: 5,
   },
   image: {
-    type: Image,
-    required: true,
+    type: String,
     trim: true,
   },
   friends: [

@@ -27,8 +27,7 @@ const friendSchema = new Schema({
     ref: 'User',
   },
   image: {
-    type: Image,
-    required: true,
+    type: String,
     trim: true,
   },
   history: {

@@ -80,7 +80,10 @@ const resolvers = {
       }
     },
 
-    prompt: async (parent, { input, friendType, temperament, age, language }) => {
+    prompt: async (
+      parent,
+      { input, friendType, temperament, age, language }
+    ) => {
       try {
         console.log('userInput', input, friendType, temperament, age, language);
         const completion = await openai.createCompletion({

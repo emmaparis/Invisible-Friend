@@ -1,28 +1,29 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, 
-  FormControl, 
-  FormLabel, 
+import {
+  Container,
+  FormControl,
+  FormLabel,
   Input,
-  HStack, 
-  RadioGroup, 
-  Radio,  
-  FormHelperText, 
+  HStack,
+  RadioGroup,
+  Radio,
+  FormHelperText,
   Button,
   Heading,
 } from '@chakra-ui/react';
 import { Select } from 'chakra-react-select';
-import avatar1 from '../assets/images/avatars/avatar-1.png'
-import avatar2 from '../assets/images/avatars/avatar-2.png'
-import avatar3 from '../assets/images/avatars/avatar-3.png'
-import avatar4 from '../assets/images/avatars/avatar-4.png'
-import avatar5 from '../assets/images/avatars/avatar-5.png'
-import avatar6 from '../assets/images/avatars/avatar-6.png'
+import avatar1 from '../assets/images/avatars/avatar-1.png';
+import avatar2 from '../assets/images/avatars/avatar-2.png';
+import avatar3 from '../assets/images/avatars/avatar-3.png';
+import avatar4 from '../assets/images/avatars/avatar-4.png';
+import avatar5 from '../assets/images/avatars/avatar-5.png';
+import avatar6 from '../assets/images/avatars/avatar-6.png';
 
-const avatarImages = [ ]
-for (let x=1; x<=6; x++){
-  avatarImages.push('avatar' + x)
-};
+const avatarImages = [];
+for (let x = 1; x <= 6; x++) {
+  avatarImages.push('avatar' + x);
+}
 
 const friendTypeOptions = [
   { value: 'Friend', label: 'Friend' },
@@ -60,26 +61,52 @@ const languageOptions = [
   { value: 'Portugese', label: 'Portugese' },
 ];
 
+const avatarOptions = [
+  { value: avatar1, label: 'avatar1' },
+  { value: avatar2, label: 'avatar2' },
+  { value: avatar3, label: 'avatar3' },
+  { value: avatar4, label: 'avatar4' },
+  { value: avatar5, label: 'avatar5' },
+  { value: avatar6, label: 'avatar6' },
+];
+
 export default function Create(props) {
-  const {friendSelect, temperamentSelect, ageSelect, languageSelect, promptEntered, setFriendSelect, setTemperamentSelect, setAgeSelect, setLanguageSelect, setPromptEntered} = props
+  const {
+    friendSelect,
+    temperamentSelect,
+    ageSelect,
+    languageSelect,
+    promptEntered,
+    setFriendSelect,
+    setTemperamentSelect,
+    setAgeSelect,
+    setLanguageSelect,
+    setAvatarSelect,
+    avatarSelect,
+    setPromptEntered,
+  } = props;
 
   const handleFriendSelect = (option) => {
     setFriendSelect(option);
-  }
+  };
 
   const handleTemperamentSelect = (option) => {
     setTemperamentSelect(option);
-  }
+  };
 
   const handleAgeSelect = (option) => {
     setAgeSelect(option);
-  }
+  };
 
   const handleLanguageSelect = (option) => {
     setLanguageSelect(option);
-  }
+  };
+  const handleAvatarSelect = (option) => {
+    setAvatarSelect(option);
+  };
 
   return (
+<<<<<<< Updated upstream
     <div className='mainPage'>
       <Container className='mainCard' sx={{width:'100%'}} p={15} mb={16}>
         <Heading>Build Your Friend</Heading>
@@ -201,5 +228,132 @@ export default function Create(props) {
         </Link>
       </Container>
     </div>
+=======
+    <Container className="mainCard" sx={{ width: '100%' }} p={15} mb={16}>
+      <Heading>Build Your Friend</Heading>
+      <FormControl p={4}>
+        <Select
+          name="colors"
+          classNamePrefix="Friend-Type-Select"
+          options={friendTypeOptions}
+          placeholder="Friend Type"
+          closeMenuOnSelect={true}
+          size="lg"
+          chakraStyles={{
+            dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
+              ...prev,
+              '> svg': {
+                transitionDuration: 'normal',
+                transform: `rotate(${menuIsOpen ? -180 : 0}deg)`,
+              },
+            }),
+          }}
+          onChange={handleFriendSelect}
+          value={friendSelect}
+        />
+      </FormControl>
+      <FormControl p={4}>
+        <Select
+          name="colors"
+          classNamePrefix="Temperament-Select"
+          options={temperamentOptions}
+          placeholder="Temperament"
+          closeMenuOnSelect={true}
+          size="lg"
+          chakraStyles={{
+            dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
+              ...prev,
+              '> svg': {
+                transitionDuration: 'normal',
+                transform: `rotate(${menuIsOpen ? -180 : 0}deg)`,
+              },
+            }),
+          }}
+          onChange={handleTemperamentSelect}
+          value={temperamentSelect}
+        />
+      </FormControl>
+      <FormControl p={4}>
+        <Select
+          name="colors"
+          classNamePrefix="Age-Select"
+          options={ageOptions}
+          placeholder="Age"
+          closeMenuOnSelect={true}
+          size="lg"
+          chakraStyles={{
+            dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
+              ...prev,
+              '> svg': {
+                transitionDuration: 'normal',
+                transform: `rotate(${menuIsOpen ? -180 : 0}deg)`,
+              },
+            }),
+          }}
+          onChange={handleAgeSelect}
+          value={ageSelect}
+        />
+      </FormControl>
+      <FormControl p={4}>
+        <Select
+          name="colors"
+          classNamePrefix="Language-Select"
+          options={languageOptions}
+          placeholder="Language"
+          closeMenuOnSelect={true}
+          size="lg"
+          chakraStyles={{
+            dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
+              ...prev,
+              '> svg': {
+                transitionDuration: 'normal',
+                transform: `rotate(${menuIsOpen ? -180 : 0}deg)`,
+              },
+            }),
+          }}
+          onChange={handleLanguageSelect}
+          value={languageSelect}
+        />
+      </FormControl>
+      <FormControl as="fieldset">
+        <FormLabel ml={10} as="legend" htmlFor={null}>
+          Choose a Friend
+        </FormLabel>
+        <RadioGroup
+          defaultValue="Itachi"
+          onChange={handleAvatarSelect}
+          value={avatarSelect}
+        >
+          <HStack spacing="24px">
+            <Radio value={avatar1}>
+              <img src={avatar1} />
+            </Radio>
+            <Radio value={avatar2}>
+              <img src={avatar2} />
+            </Radio>
+            <Radio value={avatar3}>
+              <img src={avatar3} />
+            </Radio>
+          </HStack>
+          <HStack spacing="24px">
+            <Radio value={avatar4}>
+              <img src={avatar4} />
+            </Radio>
+            <Radio value={avatar5}>
+              <img src={avatar5} />
+            </Radio>
+            <Radio value={avatar6}>
+              <img src={avatar6} />
+            </Radio>
+          </HStack>
+        </RadioGroup>
+      </FormControl>
+      <Link to="/prompt" colorscheme="teal">
+        <Button mt={6} style={{ backgroundColor: '#319795' }}>
+          Initiate Friend
+        </Button>
+      </Link>
+    </Container>
+>>>>>>> Stashed changes
   );
 }

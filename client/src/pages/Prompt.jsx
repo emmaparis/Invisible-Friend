@@ -1,7 +1,14 @@
+<<<<<<< Updated upstream
 import React, { useState, useEffect } from 'react';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { PROMPT, QUERY_FRIEND } from '../utils/queries';
 import Message from '../subcomponents/Message';
+=======
+import React, { useState } from 'react';
+import { useLazyQuery } from '@apollo/client';
+import { PROMPT } from '../utils/queries';
+import avatar from '../assets/images/avatars/avatar-1.png';
+>>>>>>> Stashed changes
 import {
   Card,
   CardHeader,
@@ -29,6 +36,7 @@ export default function Prompt(props) {
   const [promptResponse, setPromptResponse] = useState('');
   const [messages, setMessages] = useState([]);
   const [getPromptResponse, { loading, error, data }] = useLazyQuery(PROMPT);
+<<<<<<< Updated upstream
 
   const friendId = '6442ae591be626f5ceda3483';
   const loggedInUserId = '6442acd01be626f5ceda347a';
@@ -38,11 +46,17 @@ export default function Prompt(props) {
     { data: friendData, error: friendError, loading: friendLoading },
   ] = useLazyQuery(QUERY_FRIEND);
 
+=======
+>>>>>>> Stashed changes
   const {
     friendSelect,
     temperamentSelect,
     ageSelect,
     languageSelect,
+<<<<<<< Updated upstream
+=======
+    avatarSelect,
+>>>>>>> Stashed changes
     promptEntered,
     setFriendSelect,
     setTemperamentSelect,
@@ -53,11 +67,22 @@ export default function Prompt(props) {
 
   async function onSubmit(event) {
     event.preventDefault();
+<<<<<<< Updated upstream
     const userInputLocal = userInput;
     setUserInput('');
     const response = await getPromptResponse({
       variables: {
         input: userInputLocal,
+=======
+    console.log(props);
+    console.log(userInput);
+    // const {
+    //   data: { prompt },
+    // }
+    const response = await getPromptResponse({
+      variables: {
+        input: userInput,
+>>>>>>> Stashed changes
         friendType: friendSelect.value,
         temperament: temperamentSelect.value,
         age: parseInt(ageSelect.value),
@@ -65,6 +90,10 @@ export default function Prompt(props) {
       },
     });
 
+<<<<<<< Updated upstream
+=======
+    console.log(response.data.prompt);
+>>>>>>> Stashed changes
     setPromptResponse(response.data.prompt);
   }
 
@@ -96,6 +125,10 @@ export default function Prompt(props) {
       >
         <CardHeader>
           <Heading fontSize="5xl" size="md" m={3} mb={0}>
+<<<<<<< Updated upstream
+=======
+            <img src={avatarSelect} />
+>>>>>>> Stashed changes
             Talk to 'Friend Name'
           </Heading>
         </CardHeader>
@@ -130,6 +163,7 @@ export default function Prompt(props) {
               </div>
             </Box>
             <Box>
+<<<<<<< Updated upstream
               <div id="chat-container">
                 {messages.map((message, index) => (
                   <Message
@@ -144,6 +178,18 @@ export default function Prompt(props) {
                   <Message role={'system'} content={promptResponse} />
                 )}
               </div>
+=======
+              <Card
+                sx={{
+                  height: '300px',
+                  backgroundColor: 'white',
+                  borderRadius: '1rem',
+                  color: 'black',
+                }}
+              >
+                {loading ? <div>Loading...</div> : <p>{promptResponse}</p>}
+              </Card>
+>>>>>>> Stashed changes
               <Box mt={5}>
                 <div
                   style={{

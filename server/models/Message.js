@@ -10,8 +10,7 @@ const messageSchema = new Schema({
     required: true,
   },
   image: {
-    type: Image,
-    required: true,
+    type: String,
     trim: true,
   },
 });
