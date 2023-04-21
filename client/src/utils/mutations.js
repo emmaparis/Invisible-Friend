@@ -16,7 +16,7 @@ export const ADD_USER = gql`
   }
 `;
 
-export const UPDATE_USER = gql`
+export const UPDATE_USERDATA = gql`
   mutation updateUser(
     $_id: ID!
     $name: String!

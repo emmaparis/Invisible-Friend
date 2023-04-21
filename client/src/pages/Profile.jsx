@@ -13,11 +13,12 @@ import {
   useBoolean,
   Input,
 } from '@chakra-ui/react';
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import { useStoreContext } from '../utils/GlobalState';
 import { QUERY_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 import { UPDATE_USER } from '../utils/actions';
+import { UPDATE_USERDATA } from '../utils/mutations';
 
 function Profile() {
   const [state, dispatch] = useStoreContext();
@@ -40,6 +41,14 @@ function Profile() {
     },
   });
 
+  const [updateEmail, { data, loading, error }] = useMutation(UPDATE_USERDATA
+    {
+      variables: {
+        ...userData,
+        email: newEmailState
+      }
+    });
+
   useEffect(() => {
     if (state.user.username === '') {
       loadUserData();
@@ -60,6 +69,11 @@ function Profile() {
   };
 
   useEffect(() => {}, [handleEmailChange, handleUsernameChange]);
+
+  const handleEditEmailSubmit = () => {
+    updateEmail()
+    setEmailFlag(off)
+  };
 
   return (
     <div className="mainPage">
@@ -145,7 +159,7 @@ function Profile() {
                     variant="solid"
                     colorScheme="teal"
                     size="sm"
-                    onClick={setEmailFlag.off}
+                    onClick={handleEditEmailSubmit}
                   >
                     Save
                   </Button>
