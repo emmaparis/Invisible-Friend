@@ -26,6 +26,11 @@ const friendSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
+  image: {
+    type: Image,
+    required: true,
+    trim: true,
+  },
   history: [messageSchema],
 });
 
