@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
+import { QUERY_FRIEND } from '../utils/queries';
 import { PROMPT } from '../utils/queries';
 import {
   Card,
@@ -61,21 +62,42 @@ export default function Prompt(props) {
     setPromptResponse(response.data.prompt);
   }
 
+  //displaying the messages in the screen
+  const friendId = '6441b39ca4329807ba3f32b5';
+  const loggedInUserId = '6441736451f5db0da79c37ee';
+
+  const {
+    data: friendData,
+    error: friendError,
+    loading: friendLoading,
+  } = useQuery(QUERY_FRIEND, {
+    variables: { _id: friendId },
+  });
+
   const [messages, setMessages] = useState([]);
-  async function onLoad() {
-    const messagesData = [
-      { type: 'user', content: 'Hello!' },
-      { type: 'system', content: 'Welcome to the chat.' },
-    ];
-    setMessages(messagesData);
+  function OnLoad() {
+    if (!friendLoading && !friendError && friendData) {
+      const friend = friendData.getFriendById;
+      if (friend.user !== loggedInUserId) {
+        console.error('Friend belongs to another user');
+        return;
+      }
+      setMessages(friend.history);
+    } else if (!friendLoading && !friendData) {
+      const messagesData = [
+        { type: 'user', content: 'Hello!' },
+        { type: 'system', content: 'Welcome to the chat.' },
+      ];
+      setMessages(messagesData);
+    }
   }
+  useEffect(() => {
+    OnLoad();
+  }, [data, error]);
 
   function Message({ type, content }) {
     return <div className={`message ${type}`}>{content}</div>;
   }
-  useEffect(() => {
-    onLoad();
-  }, []);
 
   return (
     <div className="mainPage">
@@ -132,6 +154,7 @@ export default function Prompt(props) {
                     content={message.content}
                   />
                 ))}
+                {loading ? <div>Loading...</div> : <p>{promptResponse}</p>}
               </div>
               <Box mt={5}>
                 <div
@@ -182,43 +205,4 @@ export default function Prompt(props) {
       </Card>
     </div>
   );
-}
-
-{
-  /* <Box>
-<div id="chat-container">
-  {messages.map((message, index) => (
-    <Message
-      key={index}
-      type={message.type}
-      content={message.content}
-    />
-  ))}
-</div>
-<InputGroup className="txtInput">
-  <Input
-    type="text"
-    sx={{
-      backgroundColor: 'white',
-      borderRadius: '1rem',
-      marginTop: '5px',
-      maxWidth: '80%',
-    }}
-    placeholder="What do you want to say?"
-  />
-
-  <InputRightElement
-    style={{ display: 'flex', flexDirection: 'row' }}
-  >
-    <Button
-      minWidth={100}
-      mr={10}
-      className="genButton"
-      value="Generate Names"
-      type="submit"
-    >
-      Send
-    </Button>
-  </InputRightElement>
-</InputGroup> */
 }
