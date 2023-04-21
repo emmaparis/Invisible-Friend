@@ -48,6 +48,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/create" element={<Create {...options}/>} />
               <Route path="/prompt" element={<Prompt {...options}/>} />
+              {/* <Route path={`/prompt/${friendId}`} element={<Prompt {...options}/>} /> */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </StoreProvider>
