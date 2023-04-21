@@ -1,28 +1,31 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, 
-  FormControl, 
-  FormLabel, 
+import { useMutation } from '@apollo/client';
+import { ADD_FRIEND } from '../utils/mutations';
+import {
+  Container,
+  FormControl,
+  FormLabel,
   Input,
-  HStack, 
-  RadioGroup, 
-  Radio,  
-  FormHelperText, 
+  HStack,
+  RadioGroup,
+  Radio,
+  FormHelperText,
   Button,
   Heading,
 } from '@chakra-ui/react';
 import { Select } from 'chakra-react-select';
-import avatar1 from '../assets/images/avatars/avatar-1.png'
-import avatar2 from '../assets/images/avatars/avatar-2.png'
-import avatar3 from '../assets/images/avatars/avatar-3.png'
-import avatar4 from '../assets/images/avatars/avatar-4.png'
-import avatar5 from '../assets/images/avatars/avatar-5.png'
-import avatar6 from '../assets/images/avatars/avatar-6.png'
+import avatar1 from '../assets/images/avatars/avatar-1.png';
+import avatar2 from '../assets/images/avatars/avatar-2.png';
+import avatar3 from '../assets/images/avatars/avatar-3.png';
+import avatar4 from '../assets/images/avatars/avatar-4.png';
+import avatar5 from '../assets/images/avatars/avatar-5.png';
+import avatar6 from '../assets/images/avatars/avatar-6.png';
 
-const avatarImages = [ ]
-for (let x=1; x<=6; x++){
-  avatarImages.push('avatar' + x)
-};
+const avatarImages = [];
+for (let x = 1; x <= 6; x++) {
+  avatarImages.push('avatar' + x);
+}
 
 const friendTypeOptions = [
   { value: 'Friend', label: 'Friend' },
@@ -70,42 +73,70 @@ const avatarOptions = [
 ];
 
 export default function Create(props) {
-  const {friendSelect, 
-    temperamentSelect, 
-    ageSelect, 
-    languageSelect, 
-    promptEntered, 
+  const {
+    friendSelect,
+    temperamentSelect,
+    ageSelect,
+    languageSelect,
+    promptEntered,
     avatarSelect,
-    setFriendSelect, 
-    setTemperamentSelect, 
-    setAgeSelect, 
-    setLanguageSelect, 
+    setFriendSelect,
+    setTemperamentSelect,
+    setAgeSelect,
+    setLanguageSelect,
     setPromptEntered,
     setAvatarSelect,
-  } = props
+    state,
+  } = props;
+
+  const [addFriend, { data, loading, error }] = useMutation(ADD_FRIEND);
 
   const handleFriendSelect = (option) => {
     setFriendSelect(option);
-  }
+  };
 
   const handleTemperamentSelect = (option) => {
     setTemperamentSelect(option);
-  }
+  };
 
   const handleAgeSelect = (option) => {
     setAgeSelect(option);
-  }
+  };
 
   const handleLanguageSelect = (option) => {
     setLanguageSelect(option);
-  }
+  };
   const handleAvatarSelect = (option) => {
     setAvatarSelect(option);
   };
 
+  const handleAddFriend = async () => {
+    try {
+      const { data } = await addFriend({
+        variables: {
+          name: 'system',
+          language: languageSelect,
+          age: ageSelect,
+          mood: temperamentSelect,
+          user: state.user._id,
+          history: [
+            {
+              role: 'user',
+              content: 'Hello',
+            },
+          ],
+        },
+      });
+
+      console.log('New friend added:', data.addFriend);
+    } catch (error) {
+      console.error('Error adding friend:', error);
+    }
+  };
+
   return (
-    <div className='mainPage'>
-      <Container className='mainCard' sx={{width:'100%'}} p={15} mb={16}>
+    <div className="mainPage">
+      <Container className="mainCard" sx={{ width: '100%' }} p={15} mb={16}>
         <Heading>Build Your Friend</Heading>
         <FormControl p={4}>
           <Select
@@ -128,7 +159,7 @@ export default function Create(props) {
             value={friendSelect}
           />
         </FormControl>
-        <FormControl p={4} >
+        <FormControl p={4}>
           <Select
             name="colors"
             classNamePrefix="Temperament-Select"
@@ -149,7 +180,7 @@ export default function Create(props) {
             value={temperamentSelect}
           />
         </FormControl>
-        <FormControl p={4} >
+        <FormControl p={4}>
           <Select
             name="colors"
             classNamePrefix="Age-Select"
@@ -170,7 +201,7 @@ export default function Create(props) {
             value={ageSelect}
           />
         </FormControl>
-        <FormControl p={4} >
+        <FormControl p={4}>
           <Select
             name="colors"
             classNamePrefix="Language-Select"
@@ -191,41 +222,47 @@ export default function Create(props) {
             value={languageSelect}
           />
         </FormControl>
-        <FormControl as='fieldset'>
-            <FormLabel ml={10} as='legend' htmlFor={null}>
-              Choose a Friend
-            </FormLabel>
+        <FormControl as="fieldset">
+          <FormLabel ml={10} as="legend" htmlFor={null}>
+            Choose a Friend
+          </FormLabel>
           <RadioGroup
-          defaultValue="Itachi"
-          onChange={handleAvatarSelect}
-          value={avatarSelect}
-        >
-          <HStack spacing="24px">
-            <Radio value={avatar1}>
-              <img src={avatar1} />
-            </Radio>
-            <Radio value={avatar2}>
-              <img src={avatar2} />
-            </Radio>
-            <Radio value={avatar3}>
-              <img src={avatar3} />
-            </Radio>
-          </HStack>
-          <HStack spacing="24px">
-            <Radio value={avatar4}>
-              <img src={avatar4} />
-            </Radio>
-            <Radio value={avatar5}>
-              <img src={avatar5} />
-            </Radio>
-            <Radio value={avatar6}>
-              <img src={avatar6} />
-            </Radio>
-          </HStack>
-        </RadioGroup>
+            defaultValue="Itachi"
+            onChange={handleAvatarSelect}
+            value={avatarSelect}
+          >
+            <HStack spacing="24px">
+              <Radio value={avatar1}>
+                <img src={avatar1} />
+              </Radio>
+              <Radio value={avatar2}>
+                <img src={avatar2} />
+              </Radio>
+              <Radio value={avatar3}>
+                <img src={avatar3} />
+              </Radio>
+            </HStack>
+            <HStack spacing="24px">
+              <Radio value={avatar4}>
+                <img src={avatar4} />
+              </Radio>
+              <Radio value={avatar5}>
+                <img src={avatar5} />
+              </Radio>
+              <Radio value={avatar6}>
+                <img src={avatar6} />
+              </Radio>
+            </HStack>
+          </RadioGroup>
         </FormControl>
-        <Link to='/prompt' colorscheme="teal">
-        <Button mt={6} style={{backgroundColor:'#319795'}}>Initiate Friend</Button>
+        <Link to="/prompt" colorscheme="teal">
+          <Button
+            onClick={handleAddFriend}
+            mt={6}
+            style={{ backgroundColor: '#319795' }}
+          >
+            Initiate Friend
+          </Button>
         </Link>
       </Container>
     </div>

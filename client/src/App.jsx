@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
-import { StoreProvider } from './utils/GlobalState';
+import { StoreProvider, useStoreContext } from './utils/GlobalState';
 import './App.css';
 import Header from './components/Header';
 import Home from './pages/Home';
@@ -39,6 +39,7 @@ function App() {
     setPromptEntered,
     setAvatarSelect,
   };
+  const { state, dispatch } = useStoreContext();
 
   return (
     <ApolloProvider client={client}>
@@ -51,7 +52,7 @@ function App() {
               <Route path="/login" element={<LogIn />} />
               <Route path="/" element={<Home />} />
               <Route path="/create" element={<Create {...options} />} />
-              <Route path="/prompt" element={<Prompt {...options} />} />
+              <Route path="/prompt/:id" element={<Prompt {...options} />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
