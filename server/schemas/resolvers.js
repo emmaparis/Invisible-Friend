@@ -80,7 +80,10 @@ const resolvers = {
       }
     },
 
-    prompt: async (parent, { input, friendType, temperament, age, language }) => {
+    prompt: async (
+      parent,
+      { input, friendType, temperament, age, language }
+    ) => {
       try {
         console.log('userInput', input, friendType, temperament, age, language);
         const completion = await openai.createCompletion({
@@ -137,13 +140,13 @@ const resolvers = {
 
     updateUser: async (parent, args) => {
       try {
-        const { error, value } = userSchema.validate(args);
-        if (error) {
-          throw new Error(userErrorMessages.validationError);
-        }
+        // const { error, value } = userSchema.validate(args);
+        // if (error) {
+        //   throw new Error(userErrorMessages.validationError);
+        // }
         const updatedUser = await User.findOneAndUpdate(
           { _id: args._id },
-          { $set: { ...value } },
+          { $set: { ...args } },
           { runValidators: true, new: true }
         );
         return updatedUser;

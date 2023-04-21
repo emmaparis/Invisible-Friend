@@ -41,13 +41,19 @@ function Profile() {
     },
   });
 
-  const [updateEmail, { data, loading, error }] = useMutation(UPDATE_USERDATA
+  const [updateEmail, { emailData, emailLoading, emailError }] = useMutation(
+    UPDATE_USERDATA,
     {
       variables: {
-        ...userData,
-        email: newEmailState
-      }
-    });
+        _id: userData._id,
+        username: userData.username,
+        email: newEmailState,
+      },
+      headers: {
+        Authorization: `Bearer ${Auth.getToken()}`,
+      },
+    }
+  );
 
   useEffect(() => {
     if (state.user.username === '') {
@@ -71,8 +77,13 @@ function Profile() {
   useEffect(() => {}, [handleEmailChange, handleUsernameChange]);
 
   const handleEditEmailSubmit = () => {
-    updateEmail()
-    setEmailFlag(off)
+    console.log({
+      _id: userData._id,
+      username: userData.username,
+      email: newEmailState,
+    });
+    updateEmail();
+    loadUserData(), setEmailFlag.off;
   };
 
   return (
