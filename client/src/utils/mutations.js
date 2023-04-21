@@ -219,15 +219,3 @@ export const DELETE_EXPERT = gql`
     }
   }
 `;
-
-export const GET_FRIEND_BY_ID = gql`
-  query friend($id: ID!) {
-    friend(id: $id) {
-      user
-      history {
-        type
-        content
-      }
-    }
-  }
-`;

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLazyQuery, useQuery } from '@apollo/client';
-import { QUERY_FRIEND } from '../utils/queries';
-import { PROMPT } from '../utils/queries';
+import { PROMPT, QUERY_FRIEND } from '../utils/queries';
 import {
   Card,
   CardHeader,
@@ -66,13 +65,15 @@ export default function Prompt(props) {
   const friendId = '6441b39ca4329807ba3f32b5';
   const loggedInUserId = '6441736451f5db0da79c37ee';
 
-  const {
-    data: friendData,
-    error: friendError,
-    loading: friendLoading,
-  } = useQuery(QUERY_FRIEND, {
-    variables: { _id: friendId },
-  });
+  // const {
+  //   data: friendData,
+  //   error: friendError,
+  //   loading: friendLoading,
+  // } = useQuery(QUERY_FRIEND, {
+  //   variables: { _id: friendId },
+  // });
+
+  const { data: friendData, error: friendError, loading: friendLoading } = '';
 
   const [messages, setMessages] = useState([]);
   function OnLoad() {
@@ -93,7 +94,7 @@ export default function Prompt(props) {
   }
   useEffect(() => {
     OnLoad();
-  }, [data, error]);
+  }, [friendData, friendError]);
 
   function Message({ type, content }) {
     return <div className={`message ${type}`}>{content}</div>;
@@ -154,7 +155,11 @@ export default function Prompt(props) {
                     content={message.content}
                   />
                 ))}
-                {loading ? <div>Loading...</div> : <p>{promptResponse}</p>}
+                {loading ? (
+                  <Message type={'system'} content={'Loading'} />
+                ) : (
+                  <Message type={'system'} content={promptResponse} />
+                )}
               </div>
               <Box mt={5}>
                 <div
