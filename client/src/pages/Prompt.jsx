@@ -42,14 +42,16 @@ export default function Prompt(props) {
 
   async function onSubmit(event) {
     event.preventDefault();
+    const userInputLocal = userInput;
+    setUserInput('');
     console.log(props);
-    console.log(userInput);
+    console.log(userInputLocal);
     // const {
     //   data: { prompt },
     // }
     const response = await getPromptResponse({
       variables: {
-        input: userInput,
+        input: userInputLocal,
         friendType: friendSelect.value,
         temperament: temperamentSelect.value,
         age: parseInt(ageSelect.value),
