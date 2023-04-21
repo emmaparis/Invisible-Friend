@@ -4,6 +4,7 @@ const { signToken } = require('../utils/auth');
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
+const { AuthenticationError } = require('apollo-server-express');
 const openai = new OpenAIApi(configuration);
 const { User, Friend, Expert } = require('../models');
 const {
