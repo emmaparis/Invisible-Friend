@@ -30,6 +30,10 @@ const friendSchema = new Schema({
     type: [messageSchema],
     default: [],
   },
+  avatar: {
+    type: String,
+    trim: true,
+  },
 });
 
 const Friend = model('Friend', friendSchema);
