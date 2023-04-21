@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLazyQuery, useQuery } from '@apollo/client';
+import { useSpeechSynthesis } from 'react-speech-kit';
 import { PROMPT, QUERY_FRIEND } from '../utils/queries';
 import Message from '../subcomponents/Message';
 import {
@@ -82,6 +83,13 @@ export default function Prompt(props) {
   useEffect(() => {
     onLoad();
   }, [friendData, friendError, friendLoading]);
+
+  const [text,setText] = useState('Hello this is a test');
+  const {speak} = useSpeechSynthesis();
+
+  const handleOnClick = () => {
+    speak({text:text})
+  }
 
   return (
     <div className="mainPage">
@@ -172,6 +180,16 @@ export default function Prompt(props) {
                         <InputRightElement
                           style={{ display: 'flex', flexDirection: 'row' }}
                         >
+                          <Button
+                            minWidth={100}
+                            mr={10}
+                            className="genButton"
+                            value="Play"
+                            type="button"
+                            onClick={()=>{handleOnClick()}}
+                          >
+                            Play Sound
+                          </Button>
                           <Button
                             minWidth={100}
                             mr={10}
