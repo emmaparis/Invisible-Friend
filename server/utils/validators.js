@@ -17,7 +17,6 @@ const friendSchema = Joi.object({
   age: Joi.number().min(1).max(100).required(),
   mood: Joi.string().min(3).max(30).required(),
   user: Joi.string().min(3).max(30).required(),
-  avatar: Joi.string().min(6).max(15)
 });
 
 const friendErrorMessages = {
@@ -30,7 +29,6 @@ const expertSchema = Joi.object({
   language: Joi.string().min(3).max(30).required(),
   expertise: Joi.string().min(3).max(30).required(),
   user: Joi.string().min(3).max(30).required(),
-  avatar: Joi.string().min(6).max(15)
 });
 
 const expertErrorMessages = {

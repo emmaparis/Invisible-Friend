@@ -12,7 +12,6 @@ export const QUERY_USERS = gql`
         language
         age
         mood
-        avatar
         history {
           role
           content
@@ -23,7 +22,6 @@ export const QUERY_USERS = gql`
         name
         language
         expertise
-        avatar
         history {
           role
           content
@@ -44,7 +42,6 @@ export const USER = gql`
         language
         age
         mood
-        avatar
         history {
           role
           content
@@ -55,7 +52,6 @@ export const USER = gql`
         name
         language
         expertise
-        avatar
         history {
           role
           content
@@ -89,7 +85,6 @@ export const QUERY_FRIENDS = gql`
       language
       age
       mood
-      avatar
       user {
         _id
         username
@@ -111,7 +106,6 @@ export const QUERY_FRIEND = gql`
       language
       age
       mood
-      avatar
       user {
         _id
         username
@@ -132,7 +126,6 @@ export const QUERY_EXPERTS = gql`
       name
       language
       expertise
-      avatar
       user {
         _id
         name
@@ -153,7 +146,6 @@ export const QUERY_EXPERT = gql`
       name
       language
       expertise
-      avatar
       user {
         _id
         name
@@ -173,7 +165,6 @@ export const PROMPT = gql`
     $friendType: String!
     $temperament: String!
     $age: Int!
-    $avatar : String!
     $language: String!
   ) {
     prompt(
@@ -182,7 +173,6 @@ export const PROMPT = gql`
       temperament: $temperament
       age: $age
       language: $language
-      avatar: $avatar
     )
   }
 `;
