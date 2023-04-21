@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function Message({ type, content }) {
-  return <div className={`message ${type}`}>{content}</div>;
+export default function Message({ role, content }) {
+  return <div className={`message ${role}`}>{content}</div>;
 }

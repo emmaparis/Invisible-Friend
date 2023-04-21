@@ -53,11 +53,11 @@ export default function Prompt(props) {
 
   async function onSubmit(event) {
     event.preventDefault();
-    console.log(props);
-    console.log(userInput);
+    const userInputLocal = userInput;
+    setUserInput('');
     const response = await getPromptResponse({
       variables: {
-        input: userInput,
+        input: userInputLocal,
         friendType: friendSelect.value,
         temperament: temperamentSelect.value,
         age: parseInt(ageSelect.value),
@@ -65,7 +65,6 @@ export default function Prompt(props) {
       },
     });
 
-    console.log(response.data.prompt);
     setPromptResponse(response.data.prompt);
   }
 
@@ -77,7 +76,7 @@ export default function Prompt(props) {
     });
 
     console.log(friend.data.friend.history);
-    //setMessage(friend.data.history);
+    setMessages(friend.data.friend.history);
   }
 
   useEffect(() => {
@@ -131,16 +130,20 @@ export default function Prompt(props) {
               </div>
             </Box>
             <Box>
-              <Card
-                sx={{
-                  height: '300px',
-                  backgroundColor: 'white',
-                  borderRadius: '1rem',
-                  color: 'black',
-                }}
-              >
-                {loading ? <div>Loading...</div> : <p>{promptResponse}</p>}
-              </Card>
+              <div id="chat-container">
+                {messages.map((message, index) => (
+                  <Message
+                    key={index}
+                    role={message.role}
+                    content={message.content}
+                  />
+                ))}{' '}
+                {loading ? (
+                  <Message role={'system'} content={'Loading'} />
+                ) : (
+                  <Message role={'system'} content={promptResponse} />
+                )}
+              </div>
               <Box mt={5}>
                 <div
                   style={{
