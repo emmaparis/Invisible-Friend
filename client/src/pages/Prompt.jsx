@@ -10,6 +10,9 @@ import { useLazyQuery } from '@apollo/client';
 import { PROMPT } from '../utils/queries';
 import avatar from '../assets/images/avatars/avatar-1.png';
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -42,6 +45,7 @@ export default function Prompt(props) {
   const [getPromptResponse, { loading, error, data }] = useLazyQuery(PROMPT);
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
   const friendId = '6442ae591be626f5ceda3483';
   const loggedInUserId = '6442acd01be626f5ceda347a';
@@ -55,6 +59,8 @@ export default function Prompt(props) {
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
   const {
     friendSelect,
     temperamentSelect,
@@ -62,6 +68,10 @@ export default function Prompt(props) {
     languageSelect,
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+    avatarSelect,
+>>>>>>> Stashed changes
 =======
     avatarSelect,
 >>>>>>> Stashed changes
@@ -80,12 +90,15 @@ export default function Prompt(props) {
     event.preventDefault();
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     const userInputLocal = userInput;
     setUserInput('');
     const response = await getPromptResponse({
       variables: {
         input: userInputLocal,
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     console.log(props);
@@ -97,6 +110,9 @@ export default function Prompt(props) {
       variables: {
         input: userInput,
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -107,6 +123,7 @@ export default function Prompt(props) {
       },
     });
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 =======
@@ -139,6 +156,10 @@ export default function Prompt(props) {
     console.log(response.data.prompt);
     setPromptResponse(response.data.prompt);
 >>>>>>> Stashed changes
+=======
+    console.log(response.data.prompt);
+    setPromptResponse(response.data.prompt);
+>>>>>>> Stashed changes
   }
 
   return (
@@ -156,6 +177,10 @@ export default function Prompt(props) {
           <Heading fontSize="5xl" size="md" m={3} mb={0}>
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+            <img src={avatarSelect} />
+>>>>>>> Stashed changes
 =======
             <img src={avatarSelect} />
 >>>>>>> Stashed changes
@@ -198,6 +223,7 @@ export default function Prompt(props) {
             <Box>
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
               <div id="chat-container">
                 {messages.map((message, index) => (
                   <Message
@@ -213,6 +239,8 @@ export default function Prompt(props) {
                 )}
               </div>
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
               <Card
@@ -259,6 +287,7 @@ export default function Prompt(props) {
                             mr={10}
                             className="genButton"
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                             value="Play"
                             type="button"
                             onClick={()=>{handleOnClick()}}
@@ -269,6 +298,8 @@ export default function Prompt(props) {
                             minWidth={100}
                             mr={10}
                             className="genButton"
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
                             value="Generate"
