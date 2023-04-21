@@ -9,6 +9,11 @@ const messageSchema = new Schema({
     type: String,
     required: true,
   },
+  image: {
+    type: Image,
+    required: true,
+    trim: true,
+  },
 });
 
 const Message = model('Message', messageSchema);
