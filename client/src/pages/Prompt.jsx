@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { useSpeechSynthesis } from 'react-speech-kit';
 import { PROMPT, QUERY_FRIEND } from '../utils/queries';
+import { useMutation } from '@apollo/client';
+import { UPDATE_FRIEND_HISTORY } from '../utils/mutations';
 import Message from '../subcomponents/Message';
-import audioIcon from '../assets/images/audioIcon.png'
+import audioIcon from '../assets/images/audioIcon.png';
 import {
   Card,
   CardHeader,
@@ -24,7 +26,7 @@ import {
   Textarea,
   InputRightElement,
   InputGroup,
-  HStack
+  HStack,
 } from '@chakra-ui/react';
 
 export default function Prompt(props) {
@@ -32,14 +34,22 @@ export default function Prompt(props) {
   const [promptResponse, setPromptResponse] = useState('');
   const [messages, setMessages] = useState([]);
   const [getPromptResponse, { loading, error, data }] = useLazyQuery(PROMPT);
-
-  const friendId = '6442ae591be626f5ceda3483';
-  const loggedInUserId = '6442acd01be626f5ceda347a';
-
   const [
     getFriend,
     { data: friendData, error: friendError, loading: friendLoading },
   ] = useLazyQuery(QUERY_FRIEND);
+  const [
+    updateFriend,
+    { data: updateData, error: updateError, loading: updateLoading },
+  ] = useMutation(UPDATE_FRIEND_HISTORY);
+  // const [friendId, setFriendId] = useState('')
+
+  const friendId = '6442d19f3909f5e455d96e3d';
+  const loggedInUserId = '6442ce783909f5e455d96e31';
+
+  // if window.location.hash friend doesnt exist 404
+  // if friend does not match user 404
+  // else run
 
   const {
     friendSelect,
@@ -57,6 +67,10 @@ export default function Prompt(props) {
   async function onSubmit(event) {
     event.preventDefault();
     const userInputLocal = userInput;
+    const message = { role: 'user', content: userInputLocal };
+    await updateFriend({
+      variables: { _id: friendId, message: message },
+    });
     setUserInput('');
     const response = await getPromptResponse({
       variables: {
@@ -69,6 +83,15 @@ export default function Prompt(props) {
     });
 
     setPromptResponse(response.data.prompt);
+
+    try {
+      const sysMessage = { role: 'system', content: response.data.prompt };
+      await updateFriend({
+        variables: { _id: friendId, message: sysMessage },
+      });
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   async function onLoad() {
@@ -80,18 +103,20 @@ export default function Prompt(props) {
 
     console.log(friend.data.friend.history);
     setMessages(friend.data.friend.history);
+    // console.log(friend.data.friend._id);
+    // setFriendId(friend.data.friend._id)
   }
 
   useEffect(() => {
     onLoad();
   }, [friendData, friendError, friendLoading]);
 
-  const [text,setText] = useState('Hello this is a test');
-  const {speak} = useSpeechSynthesis();
+  const [text, setText] = useState('Hello this is a test');
+  const { speak } = useSpeechSynthesis();
 
-  const handleOnClick = () => {
-    speak({text:text})
-  }
+  const handleOnClick = (text) => {
+    speak({ text: text });
+  };
 
   return (
     <div className="mainPage">
@@ -151,7 +176,19 @@ export default function Prompt(props) {
                 {loading ? (
                   <Message role={'system'} content={'Loading'} />
                 ) : (
-                  <Message role={'system'} content={promptResponse} />
+                  <>
+                    {/* <Message role={'system'} content={promptResponse} /> */}
+                    {/* <Button
+                  minWidth={20}
+                  mr={5}
+                  className="genButton"
+                  value="Play"
+                  type="button"
+                  onClick={()=>{handleOnClick(promptResponse)}}
+                  >
+                      <img src={audioIcon} style={{height:'100%'}} alt='volume button.'></img>
+                  </Button> */}
+                  </>
                 )}
               </div>
               <Box mt={5}>
@@ -173,7 +210,7 @@ export default function Prompt(props) {
                             borderRadius: '1rem',
                             marginTop: '5px',
                             width: '70%',
-                            marginRight:'0'
+                            marginRight: '0',
                           }}
                           placeholder="What do you want to say?"
                           name="request"
@@ -181,18 +218,12 @@ export default function Prompt(props) {
                           onChange={(e) => setUserInput(e.target.value)}
                         />
                         <InputRightElement
-                          style={{ display: 'flex', flexDirection: 'row', width:'30%'}}
+                          style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            width: '30%',
+                          }}
                         >
-                          <Button
-                            minWidth={20}
-                            mr={5}
-                            className="genButton"
-                            value="Play"
-                            type="button"
-                            onClick={()=>{handleOnClick()}}
-                          >
-                              <img src={audioIcon} style={{height:'100%'}} alt='volume button.'></img>
-                          </Button>
                           <Button
                             minWidth={100}
                             mr={10}

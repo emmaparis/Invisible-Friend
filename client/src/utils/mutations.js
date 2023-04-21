@@ -43,7 +43,7 @@ export const ADD_FRIEND = gql`
     $age: Int!
     $mood: String!
     $user: String!
-    $avatar: String!
+    $avatar: String
     $history: [inputMessage]
   ) {
     addFriend(
@@ -82,7 +82,7 @@ export const UPDATE_FRIEND = gql`
     $age: Int!
     $mood: String!
     $user: String!
-    $avatar: String!
+    $avatar: String
     $history: [inputMessage]
   ) {
     updateFriend(
@@ -104,6 +104,27 @@ export const UPDATE_FRIEND = gql`
       user {
         _id
         name
+        email
+      }
+      history {
+        role
+        content
+      }
+    }
+  }
+`;
+
+export const UPDATE_FRIEND_HISTORY = gql`
+  mutation updateFriendHistory($_id: ID!, $message: inputMessage!) {
+    updateFriendHistory(_id: $_id, message: $message) {
+      _id
+      name
+      language
+      age
+      mood
+      user {
+        _id
+        username
         email
       }
       history {
@@ -142,6 +163,7 @@ export const ADD_EXPERT = gql`
     $language: String!
     $expertise: String!
     $user: String!
+    $avatar: String
     $history: [inputMessage]
   ) {
     addExpert(
@@ -177,7 +199,7 @@ export const UPDATE_EXPERT = gql`
     $language: String!
     $expertise: String!
     $user: String!
-    $avatar: String!
+    $avatar: String
     $history: [inputMessage]
   ) {
     updateExpert(
