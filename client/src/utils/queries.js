@@ -87,7 +87,7 @@ export const QUERY_FRIENDS = gql`
       mood
       user {
         _id
-        name
+        username
         email
       }
       history {
@@ -108,7 +108,7 @@ export const QUERY_FRIEND = gql`
       mood
       user {
         _id
-        name
+        username
         email
       }
       history {
@@ -160,7 +160,19 @@ export const QUERY_EXPERT = gql`
 `;
 
 export const PROMPT = gql`
-  query Query($input: String!) {
-    prompt(input: $input)
+  query Query(
+    $input: String!
+    $friendType: String!
+    $temperament: String!
+    $age: Int!
+    $language: String!
+  ) {
+    prompt(
+      input: $input
+      friendType: $friendType
+      temperament: $temperament
+      age: $age
+      language: $language
+    )
   }
 `;

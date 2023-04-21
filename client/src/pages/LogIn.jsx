@@ -1,5 +1,6 @@
 import { React, useState } from 'react';
 import { useMutation } from '@apollo/client';
+
 import { Link } from 'react-router-dom';
 import {
   Card,
@@ -12,7 +13,6 @@ import {
   StackDivider,
   Input,
 } from '@chakra-ui/react';
-
 import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
@@ -30,16 +30,14 @@ const LogIn = (props) => {
     });
   };
 
-  // submit form
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState);
     try {
       const { data } = await login({
         variables: { ...formState },
       });
-
       Auth.login(data.login.token);
+      // get user info and update global state
     } catch (e) {
       console.error(e);
     }
@@ -67,7 +65,11 @@ const LogIn = (props) => {
           </Heading>
         </CardHeader>
         <CardBody
-        sx={{ display: 'flex', justifyContent: 'center', alignSelf: 'center' }}
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignSelf: 'center',
+          }}
         >
           <Stack divider={<StackDivider />} spacing="4">
             <form onSubmit={handleFormSubmit}>
