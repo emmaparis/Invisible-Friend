@@ -176,6 +176,15 @@ export default function Prompt(props) {
                             minWidth={100}
                             mr={10}
                             className="genButton"
+                            value="Play"
+                            type="button"
+                          >
+                            Play Sound
+                          </Button>
+                          <Button
+                            minWidth={100}
+                            mr={10}
+                            className="genButton"
                             value="Generate"
                             type="submit"
                           >
