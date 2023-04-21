@@ -22,6 +22,10 @@ const expertSchema = new Schema({
     ref: 'User',
   },
   history: [messageSchema],
+  avatar: {
+    type: String,
+    trim: true,
+  },
 });
 
 const Expert = model('Expert', expertSchema);
