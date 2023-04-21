@@ -80,30 +80,12 @@ const resolvers = {
       }
     },
 
-    prompt: async (
-      parent,
-      { input, friendType, temperament, age, language, avatar }
-    ) => {
+    prompt: async (parent, { input, friendType, temperament, age, language }) => {
       try {
-        console.log(
-          'userInput',
-          input,
-          friendType,
-          temperament,
-          age,
-          language,
-          avatar
-        );
+        console.log('userInput', input, friendType, temperament, age, language);
         const completion = await openai.createCompletion({
           model: 'text-davinci-003',
-          prompt: generatePrompt(
-            input,
-            friendType,
-            temperament,
-            age,
-            language,
-            avatar
-          ),
+          prompt: generatePrompt(input, friendType, temperament, age, language),
           temperature: 0.6,
         });
         console.log(completion);
@@ -155,13 +137,13 @@ const resolvers = {
 
     updateUser: async (parent, args) => {
       try {
-        // const { error, value } = userSchema.validate(args);
-        // if (error) {
-        //   throw new Error(userErrorMessages.validationError);
-        // }
+        const { error, value } = userSchema.validate(args);
+        if (error) {
+          throw new Error(userErrorMessages.validationError);
+        }
         const updatedUser = await User.findOneAndUpdate(
           { _id: args._id },
-          { $set: { ...args } },
+          { $set: { ...value } },
           { runValidators: true, new: true }
         );
         return updatedUser;
