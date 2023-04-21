@@ -28,7 +28,7 @@ const typeDefs = gql`
     mood: String!
     user: User!
     history: [Message!]
-    avatar: String!
+    avatar: String
   }
 
   type Expert {
@@ -38,7 +38,7 @@ const typeDefs = gql`
     expertise: String!
     user: User!
     history: [Message!]
-    avatar: String!
+    avatar: String
   }
 
   type Auth {
@@ -65,7 +65,7 @@ const typeDefs = gql`
       temperament: String!
       age: Int!
       language: String!
-      avatar: String!
+      avatar: String
     ): String
   }
 
@@ -81,7 +81,7 @@ const typeDefs = gql`
       mood: String!
       user: String!
       history: [inputMessage]
-      avatar: String!
+      avatar: String
     ): Friend
     updateFriend(
       _id: ID!
@@ -91,7 +91,7 @@ const typeDefs = gql`
       mood: String!
       user: String!
       history: [inputMessage]
-      avatar: String!
+      avatar: String
     ): Friend
     updateFriendHistory(_id: ID!, message: inputMessage): Friend
     updateExpertHistory(_id: ID!, message: inputMessage): Expert
@@ -102,7 +102,7 @@ const typeDefs = gql`
       expertise: String!
       user: String!
       history: [inputMessage]
-      avatar: String!
+      avatar: String
     ): Expert
     updateExpert(
       _id: ID!
@@ -111,7 +111,7 @@ const typeDefs = gql`
       expertise: String!
       user: String!
       history: [inputMessage]
-      avatar: String!
+      avatar: String
     ): Expert
     deleteExpert(_id: ID!): Expert
   }

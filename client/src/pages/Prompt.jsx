@@ -3,7 +3,7 @@ import { useLazyQuery, useQuery } from '@apollo/client';
 import { useSpeechSynthesis } from 'react-speech-kit';
 import { PROMPT, QUERY_FRIEND } from '../utils/queries';
 import Message from '../subcomponents/Message';
-import audioIcon from '../assets/images/audioIcon.png'
+import audioIcon from '../assets/images/audioIcon.png';
 import {
   Card,
   CardHeader,
@@ -24,7 +24,7 @@ import {
   Textarea,
   InputRightElement,
   InputGroup,
-  HStack
+  HStack,
 } from '@chakra-ui/react';
 
 export default function Prompt(props) {
@@ -33,8 +33,8 @@ export default function Prompt(props) {
   const [messages, setMessages] = useState([]);
   const [getPromptResponse, { loading, error, data }] = useLazyQuery(PROMPT);
 
-  const friendId = '6442ae591be626f5ceda3483';
-  const loggedInUserId = '6442acd01be626f5ceda347a';
+  const friendId = '6442cc0f4d559f71b7d62ada';
+  const loggedInUserId = '6442cc0f4d559f71b7d62ab6';
 
   const [
     getFriend,
@@ -86,12 +86,12 @@ export default function Prompt(props) {
     onLoad();
   }, [friendData, friendError, friendLoading]);
 
-  const [text,setText] = useState('Hello this is a test');
-  const {speak} = useSpeechSynthesis();
+  const [text, setText] = useState('Hello this is a test');
+  const { speak } = useSpeechSynthesis();
 
   const handleOnClick = () => {
-    speak({text:text})
-  }
+    speak({ text: text });
+  };
 
   return (
     <div className="mainPage">
@@ -173,7 +173,7 @@ export default function Prompt(props) {
                             borderRadius: '1rem',
                             marginTop: '5px',
                             width: '70%',
-                            marginRight:'0'
+                            marginRight: '0',
                           }}
                           placeholder="What do you want to say?"
                           name="request"
@@ -181,7 +181,11 @@ export default function Prompt(props) {
                           onChange={(e) => setUserInput(e.target.value)}
                         />
                         <InputRightElement
-                          style={{ display: 'flex', flexDirection: 'row', width:'30%'}}
+                          style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            width: '30%',
+                          }}
                         >
                           <Button
                             minWidth={20}
@@ -189,9 +193,15 @@ export default function Prompt(props) {
                             className="genButton"
                             value="Play"
                             type="button"
-                            onClick={()=>{handleOnClick()}}
+                            onClick={() => {
+                              handleOnClick();
+                            }}
                           >
-                              <img src={audioIcon} style={{height:'100%'}} alt='volume button.'></img>
+                            <img
+                              src={audioIcon}
+                              style={{ height: '100%' }}
+                              alt="volume button."
+                            ></img>
                           </Button>
                           <Button
                             minWidth={100}

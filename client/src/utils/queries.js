@@ -175,7 +175,7 @@ export const PROMPT = gql`
     $friendType: String!
     $temperament: String!
     $age: Int!
-    $avatar : String!
+    $avatar: String
     $language: String!
   ) {
     prompt(
