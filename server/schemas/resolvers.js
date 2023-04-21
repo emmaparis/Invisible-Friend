@@ -81,19 +81,30 @@ const resolvers = {
       }
     },
 
-<<<<<<< HEAD
     prompt: async (
       parent,
-      { input, friendType, temperament, age, language }
+      { input, friendType, temperament, age, language, avatar }
     ) => {
-=======
-    prompt: async (parent, { input, friendType, temperament, age, language, avatar }) => {
->>>>>>> 35331e6f56f62c78104730a85c36e9ed1db2aab7
       try {
-        console.log('userInput', input, friendType, temperament, age, language, avatar);
+        console.log(
+          'userInput',
+          input,
+          friendType,
+          temperament,
+          age,
+          language,
+          avatar
+        );
         const completion = await openai.createCompletion({
           model: 'text-davinci-003',
-          prompt: generatePrompt(input, friendType, temperament, age, language, avatar),
+          prompt: generatePrompt(
+            input,
+            friendType,
+            temperament,
+            age,
+            language,
+            avatar
+          ),
           temperature: 0.6,
         });
         console.log(completion);

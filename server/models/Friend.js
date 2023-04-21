@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const { messageSchema } = require('./Message.js');
+const { messageSchema } = require('./Message');
 
 const friendSchema = new Schema({
   name: {

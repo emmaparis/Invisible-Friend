@@ -28,7 +28,7 @@ const typeDefs = gql`
     mood: String!
     user: User!
     history: [Message!]
-    avatar : String!
+    avatar: String!
   }
 
   type Expert {
@@ -37,8 +37,8 @@ const typeDefs = gql`
     language: String!
     expertise: String!
     user: User!
-    history: [Message!],
-    avatar : String!
+    history: [Message!]
+    avatar: String!
   }
 
   type Auth {
@@ -59,17 +59,14 @@ const typeDefs = gql`
     friend(_id: ID!): Friend
     experts: [Expert]
     expert(_id: ID!): Expert
-<<<<<<< HEAD
     prompt(
       input: String!
       friendType: String!
       temperament: String!
       age: Int!
       language: String!
+      avatar: String!
     ): String
-=======
-    prompt(input: String!, friendType: String!, temperament: String!, age: Int!, language: String!, avatar: String!): String
->>>>>>> 35331e6f56f62c78104730a85c36e9ed1db2aab7
   }
 
   type Mutation {
@@ -84,7 +81,7 @@ const typeDefs = gql`
       mood: String!
       user: String!
       history: [inputMessage]
-      avatar : String!
+      avatar: String!
     ): Friend
     updateFriend(
       _id: ID!
@@ -94,7 +91,7 @@ const typeDefs = gql`
       mood: String!
       user: String!
       history: [inputMessage]
-      avatar : String!
+      avatar: String!
     ): Friend
     updateFriendHistory(_id: ID!, message: inputMessage): Friend
     updateExpertHistory(_id: ID!, message: inputMessage): Expert
@@ -105,7 +102,7 @@ const typeDefs = gql`
       expertise: String!
       user: String!
       history: [inputMessage]
-      avatar : String!
+      avatar: String!
     ): Expert
     updateExpert(
       _id: ID!
@@ -114,7 +111,7 @@ const typeDefs = gql`
       expertise: String!
       user: String!
       history: [inputMessage]
-      avatar : String!
+      avatar: String!
     ): Expert
     deleteExpert(_id: ID!): Expert
   }
