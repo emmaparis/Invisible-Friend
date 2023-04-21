@@ -57,19 +57,43 @@ function Profile() {
     }
   );
 
+  const [updateUsername, { usernameData, usernameLoading, usernameError }] =
+    useMutation(UPDATE_USERDATA, {
+      variables: {
+        _id: userData._id,
+        username: newUsernameState,
+        email: userData.email,
+      },
+      context: {
+        headers: {
+          Authorization: `Bearer ${Auth.getToken()}`,
+        },
+      },
+    });
+
   useEffect(() => {
     if (state.user.username === '') {
       loadUserData();
     }
   }, [state.user.username]);
 
-  const handleUsernameChange = () => {
+  const handleUsernameChange = (event) => {
     const { value } = event.target;
 
     setNewUsernameState(value);
   };
 
-  const handleEmailChange = () => {
+  const handleEditUsernameSubmit = () => {
+    console.log({
+      _id: userData._id,
+      username: newUsernameState,
+      email: userData.email,
+    });
+    updateUsername();
+    loadUserData(), setUsernameFlag.off();
+  };
+
+  const handleEmailChange = (event) => {
     const { value } = event.target;
 
     setNewEmailState(value);
@@ -115,7 +139,7 @@ function Profile() {
                   variant="solid"
                   colorScheme="teal"
                   size="sm"
-                  onClick={setUsernameFlag.off}
+                  onClick={handleEditUsernameSubmit}
                 >
                   Save
                 </Button>
