@@ -23,6 +23,8 @@ function Profile() {
   const [state, dispatch] = useStoreContext();
   const [usernameFlag, setUsernameFlag] = useBoolean();
   const [newUsernameState, setNewUsernameState] = useState('');
+  const [emailFlag, setEmailFlag] = useBoolean();
+  const [newEmailState, setNewEmailState] = useState('');
   const userData = state.user;
   const [loadUserData, { called, loading, data }] = useLazyQuery(QUERY_ME, {
     context: {
@@ -48,11 +50,16 @@ function Profile() {
     const { value } = event.target;
 
     setNewUsernameState(value);
+  };
+
+  const handleEmailChange = () => {
+    const { value } = event.target;
+
+    setNewEmailState(value);
     console.log('value', value);
   };
 
-  useEffect(() => {;
-  }, [handleUsernameChange]);
+  useEffect(() => {}, [handleEmailChange, handleUsernameChange]);
 
   return (
     <div className="mainPage">
@@ -67,7 +74,7 @@ function Profile() {
                     borderRadius: '1rem',
                     paddingLeft: '5px',
                     margin: '5px',
-                    width: 'fit-content',
+                    width: '150%',
                   }}
                   placeholder={userData.username}
                   name="newUsername"
@@ -112,19 +119,59 @@ function Profile() {
 
         <CardBody>
           <Stack divider={<StackDivider />} spacing="4">
-            <Box>
-              <Heading size="xs" textTransform="uppercase" align="left">
-                E-mail
-              </Heading>
-              <Stack direction="row" justify="space-between">
-                <Text pt="2" fontSize="sm">
-                  {userData.email}
-                </Text>
-                <Button variant="solid" colorScheme="teal" size="sm">
-                  Edit
-                </Button>
-              </Stack>
-            </Box>
+            {emailFlag ? (
+              <Box>
+                <Heading size="xs" textTransform="uppercase" align="left">
+                  E-mail
+                </Heading>
+                <Stack direction="row" justify="space-between">
+                  <Text pt="2" fontSize="sm">
+                    <Input
+                      sx={{
+                        backgroundColor: 'white',
+                        borderRadius: '1rem',
+                        paddingLeft: '5px',
+                        margin: '5px',
+                        width: '150%',
+                      }}
+                      placeholder={userData.email}
+                      name="newEmail"
+                      type="text"
+                      value={newEmailState}
+                      onChange={handleEmailChange}
+                    />
+                  </Text>
+                  <Button
+                    variant="solid"
+                    colorScheme="teal"
+                    size="sm"
+                    onClick={setEmailFlag.off}
+                  >
+                    Save
+                  </Button>
+                </Stack>
+              </Box>
+            ) : (
+              <Box>
+                <Heading size="xs" textTransform="uppercase" align="left">
+                  E-mail
+                </Heading>
+                <Stack direction="row" justify="space-between">
+                  <Text pt="2" fontSize="sm">
+                    {userData.email}
+                  </Text>
+                  <Button
+                    variant="solid"
+                    colorScheme="teal"
+                    size="sm"
+                    onClick={setEmailFlag.on}
+                  >
+                    Edit
+                  </Button>
+                </Stack>
+              </Box>
+            )}
+
             <Box>
               <Heading size="xs" textTransform="uppercase" align="left">
                 Saved Friends
