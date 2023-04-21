@@ -26,7 +26,10 @@ const friendSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
-  history: [messageSchema],
+  history: {
+    type: [messageSchema],
+    default: [],
+  },
 });
 
 const Friend = model('Friend', friendSchema);
