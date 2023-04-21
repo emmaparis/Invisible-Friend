@@ -49,8 +49,10 @@ function Profile() {
         username: userData.username,
         email: newEmailState,
       },
-      headers: {
-        Authorization: `Bearer ${Auth.getToken()}`,
+      context: {
+        headers: {
+          Authorization: `Bearer ${Auth.getToken()}`,
+        },
       },
     }
   );
@@ -83,7 +85,7 @@ function Profile() {
       email: newEmailState,
     });
     updateEmail();
-    loadUserData(), setEmailFlag.off;
+    loadUserData(), setEmailFlag.off();
   };
 
   return (
