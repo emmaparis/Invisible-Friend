@@ -31,7 +31,10 @@ const friendSchema = new Schema({
     required: true,
     trim: true,
   },
-  history: [messageSchema],
+  history: {
+    type: [messageSchema],
+    default: [],
+  },
 });
 
 const Friend = model('Friend', friendSchema);

@@ -167,7 +167,19 @@ const resolvers = {
         if (error) {
           throw new Error(friendErrorMessages.validationError);
         }
+
+        // Find user by id
+        const user = await User.findById(args.user);
+        if (!user) {
+          throw new Error('User not found');
+        }
+
+        // Create a new friend
         const friend = await Friend.create(value);
+
+        // Add the friend to the user's friend list
+        user.friends.push(friend);
+        await user.save();
         return friend;
       } catch (err) {
         throw new Error(friendErrorMessages.validationError);
@@ -264,7 +276,19 @@ const resolvers = {
         if (error) {
           throw new Error(expertErrorMessages.validationError);
         }
+
+        // Find user by id
+        const user = await User.findById(args.user);
+        if (!user) {
+          throw new Error('User not found');
+        }
+
+        // Create a new friend
         const expert = await Expert.create(value);
+
+        // Add the friend to the user's friend list
+        user.experts.push(expert);
+        await user.save();
         return expert;
       } catch (err) {
         throw new Error(expertErrorMessages.validationError);
