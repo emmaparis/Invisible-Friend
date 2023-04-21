@@ -57,20 +57,6 @@ function Profile() {
     }
   );
 
-  const [updateUsername, { usernameData, usernameLoading, usernameError }] =
-    useMutation(UPDATE_USERDATA, {
-      variables: {
-        _id: userData._id,
-        username: newUsernameState,
-        email: userData.email,
-      },
-      context: {
-        headers: {
-          Authorization: `Bearer ${Auth.getToken()}`,
-        },
-      },
-    });
-
   useEffect(() => {
     if (state.user.username === '') {
       loadUserData();
@@ -83,11 +69,6 @@ function Profile() {
     setNewUsernameState(value);
   };
 
-  const handleEditUsernameSubmit = () => {
-    updateUsername();
-    loadUserData(), setUsernameFlag.off();
-  };
-
   const handleEmailChange = () => {
     const { value } = event.target;
 
@@ -98,6 +79,11 @@ function Profile() {
   useEffect(() => {}, [handleEmailChange, handleUsernameChange]);
 
   const handleEditEmailSubmit = () => {
+    console.log({
+      _id: userData._id,
+      username: userData.username,
+      email: newEmailState,
+    });
     updateEmail();
     loadUserData(), setEmailFlag.off();
   };
@@ -129,7 +115,7 @@ function Profile() {
                   variant="solid"
                   colorScheme="teal"
                   size="sm"
-                  onClick={handleEditUsernameSubmit}
+                  onClick={setUsernameFlag.off}
                 >
                   Save
                 </Button>
