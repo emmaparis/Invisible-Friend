@@ -11,6 +11,7 @@ import Create from './pages/Create';
 import SignUp from './pages/SignUp';
 import LogIn from './pages/LogIn';
 import NotFound from './pages/NotFound';
+import Profile from './pages/Profile';
 
 const client = new ApolloClient({
   uri: 'http://localhost:3001/graphql',
@@ -46,9 +47,9 @@ function App() {
               <Route path="/signup" element={<SignUp />} />
               <Route path="/login" element={<LogIn />} />
               <Route path="/" element={<Home />} />
-              <Route path="/create" element={<Create {...options}/>} />
-              <Route path="/prompt" element={<Prompt {...options}/>} />
-              {/* <Route path={`/prompt/${friendId}`} element={<Prompt {...options}/>} /> */}
+              <Route path="/create" element={<Create {...options} />} />
+              <Route path="/prompt" element={<Prompt {...options} />} />
+              <Route path="/profile" element={<Profile />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </StoreProvider>
