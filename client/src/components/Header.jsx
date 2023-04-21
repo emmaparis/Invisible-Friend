@@ -65,12 +65,19 @@ export default function Header() {
               </Button>
             </>
           ) : (
-            <Button
-              sx={{ backgroundColor: '#319795', color: 'white' }}
-              onClick={logout}
-            >
-              Log Out
-            </Button>
+            <>
+              <Button sx={{ backgroundColor: '#319795', color: 'white' }}>
+                <Link to="/profile" colorscheme="teal">
+                  Profile
+                </Link>
+              </Button>
+              <Button
+                sx={{ backgroundColor: '#319795', color: 'white' }}
+                onClick={logout}
+              >
+                Log Out
+              </Button>
+            </>
           )}
         </ButtonGroup>
       </Flex>
