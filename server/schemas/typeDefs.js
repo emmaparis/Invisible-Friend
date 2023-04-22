@@ -67,6 +67,13 @@ const typeDefs = gql`
       language: String!
       avatar: String
     ): String
+    expertPrompt(
+      input: String!
+      friendType: String!
+      expertise: String!
+      language: String!
+      avatar: String
+    ): String
   }
 
   type Mutation {

@@ -21,7 +21,10 @@ const expertSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
-  history: [messageSchema],
+  history: {
+    type: [messageSchema],
+    default: [],
+  },
   avatar: {
     type: String,
     trim: true,

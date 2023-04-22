@@ -40,7 +40,7 @@ function App() {
     setLanguageSelect,
     setPromptEntered,
     setAvatarSelect,
-    setExpertiseSelect
+    setExpertiseSelect,
   };
 
   return (
@@ -54,7 +54,10 @@ function App() {
               <Route path="/login" element={<LogIn />} />
               <Route path="/" element={<Home />} />
               <Route path="/create" element={<Create {...options} />} />
-              <Route path="/prompt/:id" element={<Prompt {...options} />} />
+              <Route
+                path="/prompt/:type/:id"
+                element={<Prompt {...options} />}
+              />
               <Route path="/profile" element={<Profile />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
