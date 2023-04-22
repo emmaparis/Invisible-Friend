@@ -28,9 +28,7 @@ function Profile() {
   const [emailFlag, setEmailFlag] = useBoolean();
   const [newEmailState, setNewEmailState] = useState(state.user.email);
   const [newExpertState, setNewExpertState] = useState(state.user.experts);
-  const [expertFlag, setExpertFlag] = useBoolean();
   const userData = state.user;
-  const deleteRef = useRef(null);
   const [loadUserData, { called, loading, data }] = useLazyQuery(QUERY_ME, {
     context: {
       headers: {
@@ -134,7 +132,7 @@ function Profile() {
     loadUserData(), setEmailFlag.off();
   };
 
-  const handleDeleteExpert = async (id) => {
+  const handleDeleteExpert = async (id, event) => {
     console.log('id', id);
     await deleteExpert({
       variables: {
@@ -149,7 +147,7 @@ function Profile() {
       },
     });
 
-    deleteRef.current.remove();
+    event.target.parentNode.remove();
   };
 
   return (
@@ -291,7 +289,7 @@ function Profile() {
               </Heading>
               <Stack direction="row" justify="space-between">
                 {userData?.experts?.map((expert) => (
-                  <div key={expert._id} ref={deleteRef}>
+                  <div key={expert._id}>
                     <Text pt="2" fontSize="sm" key={expert._id}>
                       {expert.name}
                     </Text>
@@ -300,8 +298,8 @@ function Profile() {
                       colorScheme="red"
                       size="sm"
                       key={`delete${expert._id}`}
-                      onClick={() => {
-                        handleDeleteExpert(expert._id);
+                      onClick={(event) => {
+                        handleDeleteExpert(expert._id, event);
                       }}
                     >
                       Delete
