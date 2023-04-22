@@ -330,9 +330,13 @@ function Profile() {
               <Heading size="xs" textTransform="uppercase" align="left">
                 Saved Friends
               </Heading>
-              <Stack direction="row" justify="space-between">
+              <Stack direction="column" justify="space-between" width="100%">
                 {userData?.friends?.map((friend) => (
-                  <Fragment key={friend._id}>
+                  <Stack
+                    key={friend._id}
+                    direction="row"
+                    justify="space-between"
+                  >
                     <Text pt="2" fontSize="sm" key={friend._id}>
                       {friend.name}
                     </Text>
@@ -347,7 +351,7 @@ function Profile() {
                     >
                       Delete
                     </Button>
-                  </Fragment>
+                  </Stack>
                 ))}
               </Stack>
             </Box>
@@ -355,9 +359,13 @@ function Profile() {
               <Heading size="xs" textTransform="uppercase" align="left">
                 Saved Teachers
               </Heading>
-              <Stack direction="row" justify="space-between">
+              <Stack direction="column" justify="space-between">
                 {userData?.experts?.map((expert) => (
-                  <div key={expert._id}>
+                  <Stack
+                    key={expert._id}
+                    direction="row"
+                    justify="space-between"
+                  >
                     <Text pt="2" fontSize="sm" key={expert._id}>
                       {expert.name}
                     </Text>
@@ -372,7 +380,7 @@ function Profile() {
                     >
                       Delete
                     </Button>
-                  </div>
+                  </Stack>
                 ))}
               </Stack>
             </Box>
