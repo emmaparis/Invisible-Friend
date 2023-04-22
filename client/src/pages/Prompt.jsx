@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { useSpeechSynthesis } from 'react-speech-kit';
 import {
   PROMPT_FRIEND,
@@ -102,6 +102,12 @@ export default function Prompt(props) {
     const message = { role: 'user', content: userInputLocal };
     let response;
     if (type === 'Friend') {
+      const friend = await getFriend({
+        variables: {
+          id: typeId,
+        },
+      });
+      console.log('FFFFFFFFFFFFFFFFFFFFFF', friend);
       await updateFriend({
         variables: { _id: typeId, message: message },
       });
@@ -110,9 +116,9 @@ export default function Prompt(props) {
         variables: {
           input: userInputLocal,
           friendType: type,
-          temperament: temperamentSelect.value,
-          age: parseInt(ageSelect.value),
-          language: languageSelect.value,
+          temperament: friend.data.friend.mood,
+          age: friend.data.friend.age,
+          language: friend.data.friend.language,
         },
       });
       console.log('This is the response ', response);
