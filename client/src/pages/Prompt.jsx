@@ -121,7 +121,7 @@ export default function Prompt(props) {
           language: friend.data.friend.language,
         },
       });
-      console.log('This is the response ', response);
+      console.log('This is the response ', response.data.prompt);
       setPromptResponse(response.data.prompt);
     } else {
       await updateExpert({
