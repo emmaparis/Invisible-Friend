@@ -20,6 +20,7 @@ function Home() {
         Authorization: `Bearer ${Auth.getToken()}`,
       },
     },
+    fetchPolicy: 'network-only',
   });
 
   console.log('query data', data);
