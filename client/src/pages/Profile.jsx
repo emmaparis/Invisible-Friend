@@ -169,8 +169,6 @@ function Profile() {
         experts: newExpertState,
       },
     });
-
-    event.target.parentNode.remove();
   };
 
   const handleDeleteFriend = async (id, event) => {
@@ -187,8 +185,6 @@ function Profile() {
         newFriendState,
       },
     });
-
-    event.target.parentNode.remove();
   };
 
   const handleDeleteUser = async () => {
