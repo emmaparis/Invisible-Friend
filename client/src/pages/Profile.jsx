@@ -1,4 +1,4 @@
-import { React, useEffect, Fragment, useState, useRef } from 'react';
+import { React, useEffect, useState } from 'react';
 import {
   Card,
   CardHeader,
@@ -27,8 +27,8 @@ import {
 function Profile() {
   const [state, dispatch] = useStoreContext();
   const [usernameFlag, setUsernameFlag] = useBoolean();
-  const [newUsernameState, setNewUsernameState] = useState(state.user.username);
   const [emailFlag, setEmailFlag] = useBoolean();
+  const [newUsernameState, setNewUsernameState] = useState(state.user.username);
   const [newEmailState, setNewEmailState] = useState(state.user.email);
   const [newExpertState, setNewExpertState] = useState(state.user.experts);
   const [newFriendState, setNewFriendState] = useState(state.user.friends);
@@ -137,11 +137,6 @@ function Profile() {
   };
 
   const handleEditUsernameSubmit = () => {
-    console.log({
-      _id: userData._id,
-      username: newUsernameState,
-      email: userData.email,
-    });
     updateUsername();
     loadUserData(), setUsernameFlag.off();
   };
@@ -150,23 +145,16 @@ function Profile() {
     const { value } = event.target;
 
     setNewEmailState(value);
-    console.log('value', value);
   };
 
   useEffect(() => {}, [handleEmailChange, handleUsernameChange, deleteExpert]);
 
   const handleEditEmailSubmit = () => {
-    console.log({
-      _id: userData._id,
-      username: userData.username,
-      email: newEmailState,
-    });
     updateEmail();
     loadUserData(), setEmailFlag.off();
   };
 
   const handleDeleteExpert = async (id, event) => {
-    console.log('id', id);
     await deleteExpert({
       variables: {
         _id: id,
@@ -185,7 +173,6 @@ function Profile() {
   };
 
   const handleDeleteFriend = async (id, event) => {
-    console.log('id', id);
     await deleteFriend({
       variables: {
         _id: id,
