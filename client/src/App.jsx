@@ -25,6 +25,7 @@ function App() {
   const [languageSelect, setLanguageSelect] = useState('');
   const [promptEntered, setPromptEntered] = useState('');
   const [avatarSelect, setAvatarSelect] = useState('');
+  const [expertiseSelect, setExpertiseSelect] = useState('');
   const options = {
     friendSelect,
     temperamentSelect,
@@ -32,12 +33,14 @@ function App() {
     languageSelect,
     promptEntered,
     avatarSelect,
+    expertiseSelect,
     setFriendSelect,
     setTemperamentSelect,
     setAgeSelect,
     setLanguageSelect,
     setPromptEntered,
     setAvatarSelect,
+    setExpertiseSelect
   };
 
   return (
