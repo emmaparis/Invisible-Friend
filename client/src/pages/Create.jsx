@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { Container, 
   FormControl, 
@@ -39,6 +39,13 @@ const temperamentOptions = [
   { value: 'Impaired', label: 'Impaired' },
 ];
 
+const expertiseOptions = [
+  { value: 'Mathematics', label: 'Mathematics' },
+  { value: 'Science', label: 'Science' },
+  { value: 'Social Studies', label: 'Social Studies' },
+  { value: 'Languages', label: 'Languages' },
+];
+
 const ageOptions = [
   { value: '5', label: '5' },
   { value: '10', label: '10' },
@@ -70,6 +77,8 @@ const avatarOptions = [
 ];
 
 export default function Create(props) {
+  const [showTemperament, setShowTemperament] = useState(false);
+  const [showExpertise, setShowExpertise] = useState(false);
   const {friendSelect, 
     temperamentSelect, 
     ageSelect, 
@@ -103,13 +112,26 @@ export default function Create(props) {
     setAvatarSelect(option);
   };
 
+  useEffect(() => {
+    if (friendSelect && friendSelect.value === 'Friend') {
+      setShowTemperament(true);
+      setShowExpertise(false);
+    } else if (friendSelect && friendSelect.value === 'Teacher') {
+      setShowTemperament(false);
+      setShowExpertise(true);
+    } else {
+      setShowTemperament(false);
+      setShowExpertise(false);
+    }
+  }, [friendSelect]);
+
   return (
     <div className='mainPage'>
       <Container className='mainCard' sx={{width:'100%'}} p={15} mb={16}>
         <Heading>Build Your Friend</Heading>
         <FormControl p={4}>
           <Select
-            name="colors"
+            name="type"
             classNamePrefix="Friend-Type-Select"
             options={friendTypeOptions}
             placeholder="Friend Type"
@@ -128,9 +150,10 @@ export default function Create(props) {
             value={friendSelect}
           />
         </FormControl>
+        {showTemperament && (
         <FormControl p={4} >
           <Select
-            name="colors"
+            name="temperament"
             classNamePrefix="Temperament-Select"
             options={temperamentOptions}
             placeholder="Temperament"
@@ -149,9 +172,34 @@ export default function Create(props) {
             value={temperamentSelect}
           />
         </FormControl>
+        )}
+        {showExpertise && (
         <FormControl p={4} >
           <Select
-            name="colors"
+            name="expertise"
+            classNamePrefix="Expertise-Select"
+            options={expertiseOptions}
+            placeholder="Expertise"
+            closeMenuOnSelect={true}
+            size="lg"
+            chakraStyles={{
+              dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
+                ...prev,
+                '> svg': {
+                  transitionDuration: 'normal',
+                  transform: `rotate(${menuIsOpen ? -180 : 0}deg)`,
+                },
+              }),
+            }}
+            onChange={handleTemperamentSelect}
+            value={temperamentSelect}
+          />
+        </FormControl>
+        )}
+        {!showExpertise && (
+        <FormControl p={4} >
+          <Select
+            name="age"
             classNamePrefix="Age-Select"
             options={ageOptions}
             placeholder="Age"
@@ -170,9 +218,10 @@ export default function Create(props) {
             value={ageSelect}
           />
         </FormControl>
+        )}
         <FormControl p={4} >
           <Select
-            name="colors"
+            name="language"
             classNamePrefix="Language-Select"
             options={languageOptions}
             placeholder="Language"
