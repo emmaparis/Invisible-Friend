@@ -1,9 +1,8 @@
-import { React, useEffect, Fragment, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   Text,
   Heading,
   Stack,
@@ -12,6 +11,13 @@ import {
   Button,
   useBoolean,
   Input,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { useStoreContext } from '../utils/GlobalState';
@@ -28,12 +34,34 @@ import {
 function Profile() {
   const [state, dispatch] = useStoreContext();
   const [usernameFlag, setUsernameFlag] = useBoolean();
-  const [newUsernameState, setNewUsernameState] = useState(state.user.username);
   const [emailFlag, setEmailFlag] = useBoolean();
+  const [newUsernameState, setNewUsernameState] = useState(state.user.username);
   const [newEmailState, setNewEmailState] = useState(state.user.email);
   const [newExpertState, setNewExpertState] = useState(state.user.experts);
   const [newFriendState, setNewFriendState] = useState(state.user.friends);
+  const [isOpen, setIsOpen] = useState(false);
+  const [expertData, setExpertData] = useState({
+    name: '',
+    id: '',
+    type: '',
+  });
   const userData = state.user;
+
+  const cancelRef = React.useRef();
+
+  const onOpen = (name, id, type) => {
+    setExpertData({
+      name,
+      id,
+      type,
+    });
+    setIsOpen(true);
+  };
+
+  const onClose = () => {
+    setIsOpen(false);
+  };
+
   const [loadUserData, { called, loading, data }] = useLazyQuery(QUERY_ME, {
     context: {
       headers: {
@@ -46,6 +74,9 @@ function Profile() {
         user: data.me,
       });
     },
+    fetchPolicy: 'network-only',
+    pollInterval: 500,
+    notifyOnNetworkStatusChange: true,
   });
 
   const [updateEmail, { emailData, emailLoading, emailError }] = useMutation(
@@ -78,7 +109,7 @@ function Profile() {
       },
     });
 
-  const [updateExpert, { expertData, expertLoading, expertError }] =
+  const [updateExpert, { upExpertData, expertLoading, expertError }] =
     useMutation(UPDATE_USERDATA, {
       context: {
         headers: {
@@ -96,7 +127,7 @@ function Profile() {
       },
     });
 
-  const [updateFriend, { friendData, friendLoading, friendError }] =
+  const [updateFriend, { upFriendData, friendLoading, friendError }] =
     useMutation(UPDATE_USERDATA, {
       context: {
         headers: {
@@ -129,7 +160,7 @@ function Profile() {
     if (state.user.username === '') {
       loadUserData();
     }
-  }, [state.user]);
+  }, [state.user.username, loadUserData]);
 
   const handleUsernameChange = (event) => {
     const { value } = event.target;
@@ -138,11 +169,6 @@ function Profile() {
   };
 
   const handleEditUsernameSubmit = () => {
-    console.log({
-      _id: userData._id,
-      username: newUsernameState,
-      email: userData.email,
-    });
     updateUsername();
     loadUserData(), setUsernameFlag.off();
   };
@@ -151,23 +177,16 @@ function Profile() {
     const { value } = event.target;
 
     setNewEmailState(value);
-    console.log('value', value);
   };
 
   useEffect(() => {}, [handleEmailChange, handleUsernameChange, deleteExpert]);
 
   const handleEditEmailSubmit = () => {
-    console.log({
-      _id: userData._id,
-      username: userData.username,
-      email: newEmailState,
-    });
     updateEmail();
     loadUserData(), setEmailFlag.off();
   };
 
   const handleDeleteExpert = async (id, event) => {
-    console.log('id', id);
     await deleteExpert({
       variables: {
         _id: id,
@@ -182,11 +201,10 @@ function Profile() {
       },
     });
 
-    event.target.parentNode.remove();
+    onClose();
   };
 
   const handleDeleteFriend = async (id, event) => {
-    console.log('id', id);
     await deleteFriend({
       variables: {
         _id: id,
@@ -197,11 +215,11 @@ function Profile() {
     updateFriend({
       variables: {
         ...userData,
-        newFriendState,
+        friends: newFriendState,
       },
     });
 
-    event.target.parentNode.remove();
+    onClose();
   };
 
   const handleDeleteUser = async () => {
@@ -247,9 +265,6 @@ function Profile() {
                 >
                   Save
                 </Button>
-                <Button colorScheme="red" size="sm">
-                  Delete
-                </Button>
               </Stack>
             </Stack>
           ) : (
@@ -264,9 +279,46 @@ function Profile() {
                 >
                   Edit
                 </Button>
-                <Button colorScheme="red" size="sm" onClick={handleDeleteUser}>
-                  Delete
-                </Button>
+                <>
+                  <Button colorScheme="red" onClick={onOpen} size="sm">
+                    Delete
+                  </Button>
+
+                  <AlertDialog
+                    isOpen={isOpen}
+                    leastDestructiveRef={cancelRef}
+                    onClose={onClose}
+                  >
+                    <AlertDialogOverlay>
+                      <AlertDialogContent>
+                        <AlertDialogHeader
+                          fontSize="lg"
+                          fontWeight="bold"
+                          size="sm"
+                        >
+                          Delete Yourself
+                        </AlertDialogHeader>
+
+                        <AlertDialogBody>
+                          Are you sure you want to delete yourself?
+                        </AlertDialogBody>
+
+                        <AlertDialogFooter>
+                          <Button ref={cancelRef} onClick={onClose}>
+                            Cancel
+                          </Button>
+                          <Button
+                            colorScheme="red"
+                            onClick={handleDeleteUser}
+                            ml={3}
+                          >
+                            Delete
+                          </Button>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialogOverlay>
+                  </AlertDialog>
+                </>
               </Stack>
             </Stack>
           )}
@@ -331,24 +383,66 @@ function Profile() {
               <Heading size="xs" textTransform="uppercase" align="left">
                 Saved Friends
               </Heading>
-              <Stack direction="row" justify="space-between">
+              <Stack direction="column" justify="space-between" width="100%">
                 {userData?.friends?.map((friend) => (
-                  <Fragment key={friend._id}>
+                  <Stack
+                    key={friend._id}
+                    direction="row"
+                    justify="space-between"
+                  >
                     <Text pt="2" fontSize="sm" key={friend._id}>
                       {friend.name}
                     </Text>
-                    <Button
-                      variant="solid"
-                      colorScheme="red"
-                      size="sm"
-                      key={`delete${friend._id}`}
-                      onClick={(event) => {
-                        handleDeleteFriend(friend._id, event);
-                      }}
-                    >
-                      Delete
-                    </Button>
-                  </Fragment>
+                    <>
+                      <Button
+                        key={`delete${friend._id}`}
+                        colorScheme="red"
+                        onClick={() =>
+                          onOpen(friend.name, friend._id, 'friend')
+                        }
+                        size="sm"
+                      >
+                        Delete
+                      </Button>
+
+                      <AlertDialog
+                        isOpen={isOpen && expertData.type === 'friend'}
+                        leastDestructiveRef={cancelRef}
+                        onClose={onClose}
+                      >
+                        <AlertDialogOverlay>
+                          <AlertDialogContent>
+                            <AlertDialogHeader
+                              fontSize="lg"
+                              fontWeight="bold"
+                              size="sm"
+                            >
+                              Delete
+                            </AlertDialogHeader>
+
+                            <AlertDialogBody>
+                              Are you sure you want to delete {expertData.name}
+                            </AlertDialogBody>
+
+                            <AlertDialogFooter>
+                              <Button ref={cancelRef} onClick={onClose}>
+                                Cancel
+                              </Button>
+                              <Button
+                                colorScheme="red"
+                                onClick={(event) => {
+                                  handleDeleteFriend(expertData.id, event);
+                                }}
+                                ml={3}
+                              >
+                                Delete
+                              </Button>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialogOverlay>
+                      </AlertDialog>
+                    </>
+                  </Stack>
                 ))}
               </Stack>
             </Box>
@@ -356,24 +450,66 @@ function Profile() {
               <Heading size="xs" textTransform="uppercase" align="left">
                 Saved Teachers
               </Heading>
-              <Stack direction="row" justify="space-between">
+              <Stack direction="column" justify="space-between">
                 {userData?.experts?.map((expert) => (
-                  <div key={expert._id}>
+                  <Stack
+                    key={expert._id}
+                    direction="row"
+                    justify="space-between"
+                  >
                     <Text pt="2" fontSize="sm" key={expert._id}>
                       {expert.name}
                     </Text>
-                    <Button
-                      variant="solid"
-                      colorScheme="red"
-                      size="sm"
-                      key={`delete${expert._id}`}
-                      onClick={(event) => {
-                        handleDeleteExpert(expert._id, event);
-                      }}
-                    >
-                      Delete
-                    </Button>
-                  </div>
+                    <>
+                      <Button
+                        key={`delete${expert._id}`}
+                        colorScheme="red"
+                        onClick={() =>
+                          onOpen(expert.name, expert._id, 'expert')
+                        }
+                        size="sm"
+                      >
+                        Delete
+                      </Button>
+
+                      <AlertDialog
+                        isOpen={isOpen && expertData.type === 'expert'}
+                        leastDestructiveRef={cancelRef}
+                        onClose={onClose}
+                      >
+                        <AlertDialogOverlay>
+                          <AlertDialogContent>
+                            <AlertDialogHeader
+                              fontSize="lg"
+                              fontWeight="bold"
+                              size="sm"
+                            >
+                              Delete
+                            </AlertDialogHeader>
+
+                            <AlertDialogBody>
+                              Are you sure you want to delete {expertData.name}?
+                            </AlertDialogBody>
+
+                            <AlertDialogFooter>
+                              <Button ref={cancelRef} onClick={onClose}>
+                                Cancel
+                              </Button>
+                              <Button
+                                colorScheme="red"
+                                onClick={(event) => {
+                                  handleDeleteExpert(expertData.id, event);
+                                }}
+                                ml={3}
+                              >
+                                Delete
+                              </Button>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialogOverlay>
+                      </AlertDialog>
+                    </>
+                  </Stack>
                 ))}
               </Stack>
             </Box>
