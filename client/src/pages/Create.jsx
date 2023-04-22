@@ -108,8 +108,13 @@ export default function Create(props) {
   const handleLanguageSelect = (option) => {
     setLanguageSelect(option);
   }
+
   const handleAvatarSelect = (option) => {
     setAvatarSelect(option);
+  };
+
+  const handleExpertiseSelect = (option) => {
+    setExpertiseSelect(option);
   };
 
   useEffect(() => {
@@ -191,7 +196,7 @@ export default function Create(props) {
                 },
               }),
             }}
-            onChange={handleTemperamentSelect}
+            onChange={handleExpertiseSelect}
             value={temperamentSelect}
           />
         </FormControl>
