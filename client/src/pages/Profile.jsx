@@ -18,8 +18,11 @@ import { useStoreContext } from '../utils/GlobalState';
 import { QUERY_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 import { UPDATE_USER } from '../utils/actions';
-import { UPDATE_USERDATA } from '../utils/mutations';
-import { DELETE_EXPERT } from '../utils/mutations';
+import {
+  UPDATE_USERDATA,
+  DELETE_EXPERT,
+  DELETE_FRIEND,
+} from '../utils/mutations';
 
 function Profile() {
   const [state, dispatch] = useStoreContext();
@@ -90,6 +93,17 @@ function Profile() {
         },
       },
     });
+
+  const [
+    deleteFriend,
+    { deleteFriendData, deleteFriendLoading, deleteFriendError },
+  ] = useMutation(DELETE_FRIEND, {
+    context: {
+      headers: {
+        Authorization: `Bearer ${Auth.getToken()}`,
+      },
+    },
+  });
 
   useEffect(() => {
     if (state.user.username === '') {

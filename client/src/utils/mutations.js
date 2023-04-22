@@ -160,20 +160,6 @@ export const DELETE_FRIEND = gql`
   mutation deleteFriend($_id: ID!) {
     deleteFriend(_id: $_id) {
       _id
-      name
-      language
-      age
-      mood
-      avatar
-      user {
-        _id
-        username
-        email
-      }
-      history {
-        role
-        content
-      }
     }
   }
 `;
