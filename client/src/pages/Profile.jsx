@@ -1,4 +1,4 @@
-import { React, useEffect, Fragment, useState } from 'react';
+import { React, useEffect, Fragment, useState, useRef } from 'react';
 import {
   Card,
   CardHeader,
@@ -30,6 +30,7 @@ function Profile() {
   const [newExpertState, setNewExpertState] = useState(state.user.experts);
   const [expertFlag, setExpertFlag] = useBoolean();
   const userData = state.user;
+  const deleteRef = useRef(null);
   const [loadUserData, { called, loading, data }] = useLazyQuery(QUERY_ME, {
     context: {
       headers: {
@@ -43,8 +44,6 @@ function Profile() {
       });
     },
   });
-
-  console.log(Auth.getToken());
 
   const [updateEmail, { emailData, emailLoading, emailError }] = useMutation(
     UPDATE_USERDATA,
@@ -150,7 +149,7 @@ function Profile() {
       },
     });
 
-    document.getElementById(`${id}fragment`).remove();
+    deleteRef.current.remove();
   };
 
   return (
@@ -292,12 +291,11 @@ function Profile() {
               </Heading>
               <Stack direction="row" justify="space-between">
                 {userData?.experts?.map((expert) => (
-                  <Fragment  key={expert._id}>
-                    <div id={`${expert._id}fragment`} />
-                      <Text pt="2" fontSize="sm" key={expert._id}>
+                  <div key={expert._id} ref={deleteRef}>
+                    <Text pt="2" fontSize="sm" key={expert._id}>
                       {expert.name}
-                      </Text>
-                      <Button
+                    </Text>
+                    <Button
                       variant="solid"
                       colorScheme="red"
                       size="sm"
@@ -308,8 +306,7 @@ function Profile() {
                     >
                       Delete
                     </Button>
-                    </div>
-                  </Fragment>
+                  </div>
                 ))}
               </Stack>
             </Box>

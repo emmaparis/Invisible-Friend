@@ -100,7 +100,7 @@ const typeDefs = gql`
       name: String!
       language: String!
       expertise: String!
-      user: String!
+      user: String
       history: [inputMessage]
       avatar: String
     ): Expert

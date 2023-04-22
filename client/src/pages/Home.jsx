@@ -1,7 +1,7 @@
 import { React, useEffect } from 'react';
 import { ButtonGroup } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import SavedFriendButton from '../subcomponents/SavedFriendButton';
 import CreateFriendButton from '../subcomponents/CreateFriendButton';
 import Auth from '../utils/auth';
@@ -12,7 +12,7 @@ import { UPDATE_USER } from '../utils/actions';
 function Home() {
   const [state, dispatch] = useStoreContext();
   console.log(state);
-  const { error, data } = useQuery(QUERY_ME, {
+  const { error, data } = useLazyQuery(QUERY_ME, {
     context: {
       headers: {
         Authorization: `Bearer ${Auth.getToken()}`,
