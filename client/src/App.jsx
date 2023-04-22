@@ -15,7 +15,24 @@ import Profile from './pages/Profile';
 
 const client = new ApolloClient({
   uri: 'http://localhost:3001/graphql',
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      User: {
+        fields: {
+          friends: {
+            merge(existing = [], incoming) {
+              return { ...existing, ...incoming };
+            },
+          },
+          experts: {
+            merge(existing = [], incoming) {
+              return { ...existing, ...incoming };
+            },
+          },
+        },
+      },
+    },
+  }),
 });
 
 function App() {

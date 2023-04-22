@@ -79,6 +79,16 @@ function Profile() {
     notifyOnNetworkStatusChange: true,
   });
 
+  useEffect(() => {
+    if (state.user.username === '') {
+      loadUserData();
+    }
+  }, [state]);
+
+  useEffect(() => {
+    loadUserData();
+  }, []);
+
   const [updateEmail, { emailData, emailLoading, emailError }] = useMutation(
     UPDATE_USERDATA,
     {
@@ -155,12 +165,6 @@ function Profile() {
         },
       },
     });
-
-  useEffect(() => {
-    if (state.user.username === '') {
-      loadUserData();
-    }
-  }, [state.user.username, loadUserData]);
 
   const handleUsernameChange = (event) => {
     const { value } = event.target;
