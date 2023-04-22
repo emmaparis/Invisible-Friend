@@ -6,6 +6,7 @@ import { useMutation } from '@apollo/client';
 import { UPDATE_FRIEND_HISTORY } from '../utils/mutations';
 import Message from '../subcomponents/Message';
 import audioIcon from '../assets/images/audioIcon.png';
+import { useParams } from 'react-router-dom';
 import {
   Card,
   CardHeader,
@@ -43,9 +44,9 @@ export default function Prompt(props) {
     { data: updateData, error: updateError, loading: updateLoading },
   ] = useMutation(UPDATE_FRIEND_HISTORY);
   // const [friendId, setFriendId] = useState('')
-
-  const friendId = '6442d19f3909f5e455d96e3d';
-  const loggedInUserId = '6442ce783909f5e455d96e31';
+  const { id } = useParams();
+  const friendId = id;
+  const loggedInUserId = '6442cc0f4d559f71b7d62ab6';
 
   // if window.location.hash friend doesnt exist 404
   // if friend does not match user 404

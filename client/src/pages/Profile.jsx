@@ -27,6 +27,8 @@ function Profile() {
   const [newUsernameState, setNewUsernameState] = useState(state.user.username);
   const [emailFlag, setEmailFlag] = useBoolean();
   const [newEmailState, setNewEmailState] = useState(state.user.email);
+  const [newExpertState, setNewExpertState] = useState(state.user.experts);
+  const [expertFlag, setExpertFlag] = useBoolean();
   const userData = state.user;
   const [loadUserData, { called, loading, data }] = useLazyQuery(QUERY_ME, {
     context: {
@@ -74,6 +76,15 @@ function Profile() {
       },
     });
 
+  const [updateExpert, { expertData, expertLoading, expertError }] =
+    useMutation(UPDATE_USERDATA, {
+      context: {
+        headers: {
+          Authorization: `Bearer ${Auth.getToken()}`,
+        },
+      },
+    });
+
   const [deleteExpert, { deleteData, deleteLoading, deleteError }] =
     useMutation(DELETE_EXPERT, {
       context: {
@@ -87,7 +98,7 @@ function Profile() {
     if (state.user.username === '') {
       loadUserData();
     }
-  }, [state.user.username]);
+  }, [state.user]);
 
   const handleUsernameChange = (event) => {
     const { value } = event.target;
@@ -112,7 +123,7 @@ function Profile() {
     console.log('value', value);
   };
 
-  useEffect(() => {}, [handleEmailChange, handleUsernameChange]);
+  useEffect(() => {}, [handleEmailChange, handleUsernameChange, deleteExpert]);
 
   const handleEditEmailSubmit = () => {
     console.log({
@@ -125,12 +136,21 @@ function Profile() {
   };
 
   const handleDeleteExpert = async (id) => {
+    console.log('id', id);
     await deleteExpert({
       variables: {
         _id: id,
       },
     });
     loadUserData();
+    updateExpert({
+      variables: {
+        ...userData,
+        experts: newExpertState,
+      },
+    });
+
+    document.getElementById(`${id}fragment`).remove();
   };
 
   return (
@@ -272,11 +292,12 @@ function Profile() {
               </Heading>
               <Stack direction="row" justify="space-between">
                 {userData?.experts?.map((expert) => (
-                  <Fragment key={expert._id}>
-                    <Text pt="2" fontSize="sm" key={expert._id}>
+                  <Fragment  key={expert._id}>
+                    <div id={`${expert._id}fragment`} />
+                      <Text pt="2" fontSize="sm" key={expert._id}>
                       {expert.name}
-                    </Text>
-                    <Button
+                      </Text>
+                      <Button
                       variant="solid"
                       colorScheme="red"
                       size="sm"
@@ -287,6 +308,7 @@ function Profile() {
                     >
                       Delete
                     </Button>
+                    </div>
                   </Fragment>
                 ))}
               </Stack>
