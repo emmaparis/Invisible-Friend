@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_FRIEND, ADD_EXPERT } from '../utils/mutations';
@@ -84,11 +84,12 @@ const avatarOptions = [
 export default function Create(props) {
   const [showTemperament, setShowTemperament] = useState(false);
   const [showExpertise, setShowExpertise] = useState(false);
-  const {friendSelect, 
-    temperamentSelect, 
-    ageSelect, 
-    languageSelect, 
-    promptEntered, 
+  const {
+    friendSelect,
+    temperamentSelect,
+    ageSelect,
+    languageSelect,
+    promptEntered,
     avatarSelect,
     setFriendSelect,
     setTemperamentSelect,
@@ -96,6 +97,8 @@ export default function Create(props) {
     setLanguageSelect,
     setPromptEntered,
     setAvatarSelect,
+    expertiseSelect,
+    setExpertiseSelect,
   } = props;
   const [state, dispatch] = useStoreContext();
 
@@ -150,7 +153,8 @@ export default function Create(props) {
         ageSelect,
         temperamentSelect,
         state.user._id,
-        friendSelect
+        friendSelect,
+        expertiseSelect
       );
 
       if (friendSelect.value === 'Friend') {
@@ -164,21 +168,25 @@ export default function Create(props) {
             avatar: avatarSelect.value,
           },
         });
-      } else {
-        // const { data } = await addExpert({
-        //   variables: {
-        //     name: 'system',
-        //     language: languageSelect.value,
-        //     expertise: expertiseSelect.value,
-        //     user: state.user._id,
-        //     avatar: avatarSelect.value,
-        //   },
-        // });
-      }
 
-      console.log('New friend added:', data.addFriend);
-      // Navigate to the /prompt/:id route using the newly added friend's _id
-      navigate(`/prompt/${data.addFriend._id}`);
+        console.log('New friend added:', data.addFriend);
+        // Navigate to the /prompt/:id route using the newly added friend's _id
+        navigate(`/prompt/${data.addFriend._id}`);
+      } else {
+        const { data } = await addExpert({
+          variables: {
+            name: 'system',
+            language: languageSelect.value,
+            expertise: expertiseSelect.value,
+            user: state.user._id,
+            avatar: avatarSelect.value,
+          },
+        });
+
+        console.log('New Expert added:', data.addExpert);
+        // Navigate to the /prompt/:id route using the newly added expert's _id
+        navigate(`/prompt/${data.addExpert._id}`);
+      }
     } catch (error) {
       console.error('Error adding friend:', error);
       navigate(`/404`);
@@ -211,75 +219,75 @@ export default function Create(props) {
           />
         </FormControl>
         {showTemperament && (
-        <FormControl p={4} >
-          <Select
-            name="temperament"
-            classNamePrefix="Temperament-Select"
-            options={temperamentOptions}
-            placeholder="Temperament"
-            closeMenuOnSelect={true}
-            size="lg"
-            chakraStyles={{
-              dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
-                ...prev,
-                '> svg': {
-                  transitionDuration: 'normal',
-                  transform: `rotate(${menuIsOpen ? -180 : 0}deg)`,
-                },
-              }),
-            }}
-            onChange={handleTemperamentSelect}
-            value={temperamentSelect}
-          />
-        </FormControl>
+          <FormControl p={4}>
+            <Select
+              name="temperament"
+              classNamePrefix="Temperament-Select"
+              options={temperamentOptions}
+              placeholder="Temperament"
+              closeMenuOnSelect={true}
+              size="lg"
+              chakraStyles={{
+                dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
+                  ...prev,
+                  '> svg': {
+                    transitionDuration: 'normal',
+                    transform: `rotate(${menuIsOpen ? -180 : 0}deg)`,
+                  },
+                }),
+              }}
+              onChange={handleTemperamentSelect}
+              value={temperamentSelect}
+            />
+          </FormControl>
         )}
         {showExpertise && (
-        <FormControl p={4} >
-          <Select
-            name="expertise"
-            classNamePrefix="Expertise-Select"
-            options={expertiseOptions}
-            placeholder="Expertise"
-            closeMenuOnSelect={true}
-            size="lg"
-            chakraStyles={{
-              dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
-                ...prev,
-                '> svg': {
-                  transitionDuration: 'normal',
-                  transform: `rotate(${menuIsOpen ? -180 : 0}deg)`,
-                },
-              }),
-            }}
-            onChange={handleExpertiseSelect}
-            value={temperamentSelect}
-          />
-        </FormControl>
+          <FormControl p={4}>
+            <Select
+              name="expertise"
+              classNamePrefix="Expertise-Select"
+              options={expertiseOptions}
+              placeholder="Expertise"
+              closeMenuOnSelect={true}
+              size="lg"
+              chakraStyles={{
+                dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
+                  ...prev,
+                  '> svg': {
+                    transitionDuration: 'normal',
+                    transform: `rotate(${menuIsOpen ? -180 : 0}deg)`,
+                  },
+                }),
+              }}
+              onChange={handleExpertiseSelect}
+              value={expertiseSelect}
+            />
+          </FormControl>
         )}
         {!showExpertise && (
-        <FormControl p={4} >
-          <Select
-            name="age"
-            classNamePrefix="Age-Select"
-            options={ageOptions}
-            placeholder="Age"
-            closeMenuOnSelect={true}
-            size="lg"
-            chakraStyles={{
-              dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
-                ...prev,
-                '> svg': {
-                  transitionDuration: 'normal',
-                  transform: `rotate(${menuIsOpen ? -180 : 0}deg)`,
-                },
-              }),
-            }}
-            onChange={handleAgeSelect}
-            value={ageSelect}
-          />
-        </FormControl>
+          <FormControl p={4}>
+            <Select
+              name="age"
+              classNamePrefix="Age-Select"
+              options={ageOptions}
+              placeholder="Age"
+              closeMenuOnSelect={true}
+              size="lg"
+              chakraStyles={{
+                dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
+                  ...prev,
+                  '> svg': {
+                    transitionDuration: 'normal',
+                    transform: `rotate(${menuIsOpen ? -180 : 0}deg)`,
+                  },
+                }),
+              }}
+              onChange={handleAgeSelect}
+              value={ageSelect}
+            />
+          </FormControl>
         )}
-        <FormControl p={4} >
+        <FormControl p={4}>
           <Select
             name="language"
             classNamePrefix="Language-Select"

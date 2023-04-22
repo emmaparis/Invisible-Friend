@@ -167,10 +167,10 @@ export const ADD_EXPERT = gql`
     $history: [inputMessage]
   ) {
     addExpert(
-      name: $String
-      language: $String
-      expertise: $String
-      user: $String
+      name: $name
+      language: $language
+      expertise: $expertise
+      user: $user
       avatar: $avatar
       history: $history
     ) {
