@@ -248,11 +248,6 @@ const resolvers = {
         // Add the message to the history
         friend.history.push(message);
 
-        // If the history array size is over 11, remove elements in positions 1 and 2
-        if (friend.history.length > 11) {
-          friend.history.splice(1, 2);
-        }
-
         // Save the updated friend and return it
         const updatedFriend = await friend.save();
         return updatedFriend;
@@ -271,11 +266,6 @@ const resolvers = {
 
         // Add the message to the history
         expert.history.push(message);
-
-        // If the history array size is over 11, remove elements in positions 1 and 2
-        if (expert.history.length > 11) {
-          expert.history.splice(1, 2);
-        }
 
         // Save the updated expert and return it
         const updatedExpert = await expert.save();

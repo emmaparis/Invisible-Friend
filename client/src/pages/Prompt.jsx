@@ -38,6 +38,7 @@ import {
   HStack,
 } from '@chakra-ui/react';
 
+// Prompt component for interacting with a chatbot (Friend or Expert)
 export default function Prompt(props) {
   const [userInput, setUserInput] = useState('');
   const [promptResponse, setPromptResponse] = useState('');
@@ -96,34 +97,68 @@ export default function Prompt(props) {
     expertiseSelect,
   } = props;
 
+  // Function to handle the chat submission
   async function onSubmit(event) {
     event.preventDefault();
     const userInputLocal = userInput;
+    setUserInput('');
     const message = { role: 'user', content: userInputLocal };
     let response;
     if (type === 'Friend') {
+      // Fetch friend data and update the conversation history
+
+      await updateFriend({
+        variables: { _id: typeId, message: message },
+      });
+
       const friend = await getFriend({
         variables: {
           id: typeId,
         },
       });
 
-      await updateFriend({
-        variables: { _id: typeId, message: message },
-      });
+      // Create context for the bot
+      const history = friend.data.friend.history;
+      const contextArray = [];
+      // Add the 10 most recent messages
+      for (let i = Math.max(history.length - 10, 1); i < history.length; i++) {
+        contextArray.push(history[i]);
+      }
 
+      // Function to estimate token count
+      const estimateTokenCount = (str) => Math.ceil(str.length / 4);
+
+      // Check if the context exceeds the 2000-token limit
+      const tokenLimit = 2000;
+      let context = contextArray
+        .map((message) => `${message.role}: ${message.content}`)
+        .join('\n');
+      let tokenCount = estimateTokenCount(context);
+
+      while (tokenCount > tokenLimit) {
+        // Remove the oldest message (excluding the first message)
+        contextArray.splice(0, 1);
+        context = contextArray
+          .map((message) => `${message.role}: ${message.content}`)
+          .join('\n');
+        tokenCount = estimateTokenCount(context);
+      }
+
+      console.log('This is Context', context);
+
+      // Get the chatbot response
       response = await getFriendPromptResponse({
         variables: {
-          input: userInputLocal,
+          input: context,
           friendType: type,
           temperament: friend.data.friend.mood,
           age: friend.data.friend.age,
           language: friend.data.friend.language,
         },
       });
-      console.log('This is the response ', response);
       setPromptResponse(response.data.prompt);
     } else {
+      // Fetch expert data and update the conversation history
       await updateExpert({
         variables: { _id: typeId, message: message },
       });
@@ -134,21 +169,49 @@ export default function Prompt(props) {
         },
       });
 
+      // Create context for the bot
+      const history = expert.data.expert.history;
+      const contextArray = [];
+
+      // Add the 10 most recent messages
+      for (let i = Math.max(history.length - 10, 1); i < history.length; i++) {
+        contextArray.push(history[i]);
+      }
+
+      // Function to estimate token count
+      const estimateTokenCount = (str) => Math.ceil(str.length / 4);
+
+      // Check if the context exceeds the 2000-token limit
+      const tokenLimit = 2000;
+      let context = contextArray
+        .map((message) => `${message.role}: ${message.content}`)
+        .join('\n');
+      let tokenCount = estimateTokenCount(context);
+
+      while (tokenCount > tokenLimit) {
+        // Remove the oldest message (excluding the first message)
+        contextArray.splice(0, 1);
+        context = contextArray
+          .map((message) => `${message.role}: ${message.content}`)
+          .join('\n');
+        tokenCount = estimateTokenCount(context);
+      }
+      console.log('This is Context', context);
+
+      // Get the chatbot response
       response = await getExpertPromptResponse({
         variables: {
-          input: userInputLocal,
+          input: context,
           friendType: type,
           expertise: expert.data.expert.expertise,
           language: expert.data.expert.language,
         },
       });
-      console.log('This is the response ', response);
       setPromptResponse(response.data.expertPrompt);
     }
 
-    setUserInput('');
-
     try {
+      // Update the conversation history with the chatbot's response
       if (type === 'Friend') {
         const sysMessage = { role: 'system', content: response.data.prompt };
         await updateFriend({
@@ -168,6 +231,7 @@ export default function Prompt(props) {
     }
   }
 
+  // Function to load the chat history when the component is mounted
   async function onLoad() {
     if (type === 'Friend') {
       const friend = await getFriend({
@@ -185,7 +249,7 @@ export default function Prompt(props) {
       setMessages(expert.data.expert.history);
     }
   }
-
+  // Load chat history based on the type (Friend or Expert)
   if (type === 'Friend') {
     useEffect(() => {
       onLoad();
@@ -195,7 +259,7 @@ export default function Prompt(props) {
       onLoad();
     }, [expertData, expertError, expertLoading]);
   }
-
+  // Text-to-speech functionality
   const [text, setText] = useState('Hello this is a test');
   const { speak } = useSpeechSynthesis();
 
