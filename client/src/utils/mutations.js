@@ -135,6 +135,27 @@ export const UPDATE_FRIEND_HISTORY = gql`
   }
 `;
 
+export const UPDATE_EXPERT_HISTORY = gql`
+  mutation updateExpertHistory($_id: ID!, $message: inputMessage!) {
+    updateExpertHistory(_id: $_id, message: $message) {
+      _id
+      name
+      language
+      expertise
+      avatar
+      user {
+        _id
+        username
+        email
+      }
+      history {
+        role
+        content
+      }
+    }
+  }
+`;
+
 export const DELETE_FRIEND = gql`
   mutation deleteFriend($_id: ID!) {
     deleteFriend(_id: $_id) {

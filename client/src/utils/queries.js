@@ -137,7 +137,7 @@ export const QUERY_EXPERTS = gql`
       avatar
       user {
         _id
-        name
+        username
         email
       }
       history {
@@ -158,7 +158,7 @@ export const QUERY_EXPERT = gql`
       avatar
       user {
         _id
-        name
+        username
         email
       }
       history {
@@ -169,7 +169,7 @@ export const QUERY_EXPERT = gql`
   }
 `;
 
-export const PROMPT = gql`
+export const PROMPT_FRIEND = gql`
   query Query(
     $input: String!
     $friendType: String!
@@ -185,6 +185,24 @@ export const PROMPT = gql`
       age: $age
       language: $language
       avatar: $avatar
+    )
+  }
+`;
+
+export const PROMPT_EXPERT = gql`
+  query Query(
+    $input: String!
+    $friendType: String!
+    $avatar: String
+    $language: String!
+    $expertise: String!
+  ) {
+    expertPrompt(
+      input: $input
+      friendType: $friendType
+      language: $language
+      avatar: $avatar
+      expertise: $expertise
     )
   }
 `;

@@ -99,6 +99,25 @@ const resolvers = {
         console.error(error);
       }
     },
+
+    expertPrompt: async (
+      parent,
+      { input, friendType, expertise, language }
+    ) => {
+      try {
+        console.log('userInput', input, friendType, expertise, language);
+        const completion = await openai.createCompletion({
+          model: 'text-davinci-003',
+          prompt: generatePrompt(input, friendType, expertise, language),
+          temperature: 0.6,
+        });
+        console.log(completion);
+        return completion.data.choices[0].text;
+      } catch (error) {
+        // Consider implementing your own error handling logic here
+        console.error(error);
+      }
+    },
   },
 
   Mutation: {

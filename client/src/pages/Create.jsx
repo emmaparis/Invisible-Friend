@@ -171,7 +171,7 @@ export default function Create(props) {
 
         console.log('New friend added:', data.addFriend);
         // Navigate to the /prompt/:id route using the newly added friend's _id
-        navigate(`/prompt/${data.addFriend._id}`);
+        navigate(`/prompt/${friendSelect.value}/${data.addFriend._id}`);
       } else {
         const { data } = await addExpert({
           variables: {
@@ -185,7 +185,7 @@ export default function Create(props) {
 
         console.log('New Expert added:', data.addExpert);
         // Navigate to the /prompt/:id route using the newly added expert's _id
-        navigate(`/prompt/${data.addExpert._id}`);
+        navigate(`/prompt/${friendSelect.value}/${data.addExpert._id}`);
       }
     } catch (error) {
       console.error('Error adding friend:', error);
