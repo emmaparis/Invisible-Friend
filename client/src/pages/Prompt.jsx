@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { useSpeechSynthesis } from 'react-speech-kit';
 import { PROMPT, QUERY_FRIEND } from '../utils/queries';
-import { useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client';
 import { UPDATE_FRIEND_HISTORY } from '../utils/mutations';
 import Message from '../subcomponents/Message';
-import audioIcon from '../assets/images/audioIcon.png'
+import audioIcon from '../assets/images/audioIcon.png';
+import { useParams } from 'react-router-dom';
 import {
   Card,
   CardHeader,
@@ -26,7 +27,7 @@ import {
   Textarea,
   InputRightElement,
   InputGroup,
-  HStack
+  HStack,
 } from '@chakra-ui/react';
 
 export default function Prompt(props) {
@@ -34,12 +35,18 @@ export default function Prompt(props) {
   const [promptResponse, setPromptResponse] = useState('');
   const [messages, setMessages] = useState([]);
   const [getPromptResponse, { loading, error, data }] = useLazyQuery(PROMPT);
-  const [getFriend, { data: friendData, error: friendError, loading: friendLoading }] = useLazyQuery(QUERY_FRIEND);
-  const [updateFriend, { data: updateData,error: updateError, loading: updateLoading }] = useMutation(UPDATE_FRIEND_HISTORY);
+  const [
+    getFriend,
+    { data: friendData, error: friendError, loading: friendLoading },
+  ] = useLazyQuery(QUERY_FRIEND);
+  const [
+    updateFriend,
+    { data: updateData, error: updateError, loading: updateLoading },
+  ] = useMutation(UPDATE_FRIEND_HISTORY);
   // const [friendId, setFriendId] = useState('')
-
-  const friendId = '6442d19f3909f5e455d96e3d';
-  const loggedInUserId = '6442ce783909f5e455d96e31';
+  const { id } = useParams();
+  const friendId = id;
+  const loggedInUserId = '6442cc0f4d559f71b7d62ab6';
 
   // if window.location.hash friend doesnt exist 404
   // if friend does not match user 404
@@ -106,11 +113,11 @@ export default function Prompt(props) {
   }, [friendData, friendError, friendLoading]);
 
   const [text, setText] = useState('Hello this is a test');
-  const {speak} = useSpeechSynthesis();
+  const { speak } = useSpeechSynthesis();
 
   const handleOnClick = (text) => {
-    speak({text:text})
-  }
+    speak({ text: text });
+  };
 
   return (
     <div className="mainPage">
@@ -170,9 +177,9 @@ export default function Prompt(props) {
                 {loading ? (
                   <Message role={'system'} content={'Loading'} />
                 ) : (
-                <>
-                  {/* <Message role={'system'} content={promptResponse} /> */}
-                  {/* <Button
+                  <>
+                    {/* <Message role={'system'} content={promptResponse} /> */}
+                    {/* <Button
                   minWidth={20}
                   mr={5}
                   className="genButton"
@@ -182,7 +189,7 @@ export default function Prompt(props) {
                   >
                       <img src={audioIcon} style={{height:'100%'}} alt='volume button.'></img>
                   </Button> */}
-                </>
+                  </>
                 )}
               </div>
               <Box mt={5}>
@@ -204,7 +211,7 @@ export default function Prompt(props) {
                             borderRadius: '1rem',
                             marginTop: '5px',
                             width: '70%',
-                            marginRight:'0'
+                            marginRight: '0',
                           }}
                           placeholder="What do you want to say?"
                           name="request"
@@ -212,7 +219,11 @@ export default function Prompt(props) {
                           onChange={(e) => setUserInput(e.target.value)}
                         />
                         <InputRightElement
-                          style={{ display: 'flex', flexDirection: 'row', width:'30%'}}
+                          style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            width: '30%',
+                          }}
                         >
                           <Button
                             minWidth={100}
