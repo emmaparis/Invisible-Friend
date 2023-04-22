@@ -22,6 +22,7 @@ import {
   UPDATE_USERDATA,
   DELETE_EXPERT,
   DELETE_FRIEND,
+  DELETE_USER,
 } from '../utils/mutations';
 
 function Profile() {
@@ -115,6 +116,15 @@ function Profile() {
     },
   });
 
+  const [deleteUser, { deleteUserData, deleteUserLoading, deleteUserError }] =
+    useMutation(DELETE_USER, {
+      context: {
+        headers: {
+          Authorization: `Bearer ${Auth.getToken()}`,
+        },
+      },
+    });
+
   useEffect(() => {
     if (state.user.username === '') {
       loadUserData();
@@ -194,6 +204,18 @@ function Profile() {
     event.target.parentNode.remove();
   };
 
+  const handleDeleteUser = async () => {
+    if (window.confirm('Are you sure you want to delete your account?')) {
+      await deleteUser({
+        variables: {
+          _id: userData._id,
+        },
+      });
+      Auth.logout();
+      window.location.assign('/');
+    }
+  };
+
   return (
     <div className="mainPage">
       <Card className="mainCard">
@@ -242,7 +264,7 @@ function Profile() {
                 >
                   Edit
                 </Button>
-                <Button colorScheme="red" size="sm">
+                <Button colorScheme="red" size="sm" onClick={handleDeleteUser}>
                   Delete
                 </Button>
               </Stack>
