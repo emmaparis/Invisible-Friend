@@ -1,4 +1,4 @@
-import { React, useEffect, Fragment, useState } from 'react';
+import { React, useEffect, Fragment, useState, useRef } from 'react';
 import {
   Card,
   CardHeader,
@@ -18,14 +18,21 @@ import { useStoreContext } from '../utils/GlobalState';
 import { QUERY_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 import { UPDATE_USER } from '../utils/actions';
-import { UPDATE_USERDATA } from '../utils/mutations';
+import {
+  UPDATE_USERDATA,
+  DELETE_EXPERT,
+  DELETE_FRIEND,
+  DELETE_USER,
+} from '../utils/mutations';
 
 function Profile() {
   const [state, dispatch] = useStoreContext();
   const [usernameFlag, setUsernameFlag] = useBoolean();
-  const [newUsernameState, setNewUsernameState] = useState('');
+  const [newUsernameState, setNewUsernameState] = useState(state.user.username);
   const [emailFlag, setEmailFlag] = useBoolean();
-  const [newEmailState, setNewEmailState] = useState('');
+  const [newEmailState, setNewEmailState] = useState(state.user.email);
+  const [newExpertState, setNewExpertState] = useState(state.user.experts);
+  const [newFriendState, setNewFriendState] = useState(state.user.friends);
   const userData = state.user;
   const [loadUserData, { called, loading, data }] = useLazyQuery(QUERY_ME, {
     context: {
@@ -57,26 +64,97 @@ function Profile() {
     }
   );
 
+  const [updateUsername, { usernameData, usernameLoading, usernameError }] =
+    useMutation(UPDATE_USERDATA, {
+      variables: {
+        _id: userData._id,
+        username: newUsernameState,
+        email: userData.email,
+      },
+      context: {
+        headers: {
+          Authorization: `Bearer ${Auth.getToken()}`,
+        },
+      },
+    });
+
+  const [updateExpert, { expertData, expertLoading, expertError }] =
+    useMutation(UPDATE_USERDATA, {
+      context: {
+        headers: {
+          Authorization: `Bearer ${Auth.getToken()}`,
+        },
+      },
+    });
+
+  const [deleteExpert, { deleteData, deleteLoading, deleteError }] =
+    useMutation(DELETE_EXPERT, {
+      context: {
+        headers: {
+          Authorization: `Bearer ${Auth.getToken()}`,
+        },
+      },
+    });
+
+  const [updateFriend, { friendData, friendLoading, friendError }] =
+    useMutation(UPDATE_USERDATA, {
+      context: {
+        headers: {
+          Authorization: `Bearer ${Auth.getToken()}`,
+        },
+      },
+    });
+
+  const [
+    deleteFriend,
+    { deleteFriendData, deleteFriendLoading, deleteFriendError },
+  ] = useMutation(DELETE_FRIEND, {
+    context: {
+      headers: {
+        Authorization: `Bearer ${Auth.getToken()}`,
+      },
+    },
+  });
+
+  const [deleteUser, { deleteUserData, deleteUserLoading, deleteUserError }] =
+    useMutation(DELETE_USER, {
+      context: {
+        headers: {
+          Authorization: `Bearer ${Auth.getToken()}`,
+        },
+      },
+    });
+
   useEffect(() => {
     if (state.user.username === '') {
       loadUserData();
     }
-  }, [state.user.username]);
+  }, [state.user]);
 
-  const handleUsernameChange = () => {
+  const handleUsernameChange = (event) => {
     const { value } = event.target;
 
     setNewUsernameState(value);
   };
 
-  const handleEmailChange = () => {
+  const handleEditUsernameSubmit = () => {
+    console.log({
+      _id: userData._id,
+      username: newUsernameState,
+      email: userData.email,
+    });
+    updateUsername();
+    loadUserData(), setUsernameFlag.off();
+  };
+
+  const handleEmailChange = (event) => {
     const { value } = event.target;
 
     setNewEmailState(value);
     console.log('value', value);
   };
 
-  useEffect(() => {}, [handleEmailChange, handleUsernameChange]);
+  useEffect(() => {}, [handleEmailChange, handleUsernameChange, deleteExpert]);
 
   const handleEditEmailSubmit = () => {
     console.log({
@@ -86,6 +164,56 @@ function Profile() {
     });
     updateEmail();
     loadUserData(), setEmailFlag.off();
+  };
+
+  const handleDeleteExpert = async (id, event) => {
+    console.log('id', id);
+    await deleteExpert({
+      variables: {
+        _id: id,
+      },
+    });
+    loadUserData();
+    setNewExpertState(newExpertState.filter((expert) => expert._id !== id));
+    updateExpert({
+      variables: {
+        ...userData,
+        experts: newExpertState,
+      },
+    });
+
+    event.target.parentNode.remove();
+  };
+
+  const handleDeleteFriend = async (id, event) => {
+    console.log('id', id);
+    await deleteFriend({
+      variables: {
+        _id: id,
+      },
+    });
+    loadUserData();
+    setNewFriendState(newFriendState.filter((friend) => friend._id !== id));
+    updateFriend({
+      variables: {
+        ...userData,
+        newFriendState,
+      },
+    });
+
+    event.target.parentNode.remove();
+  };
+
+  const handleDeleteUser = async () => {
+    if (window.confirm('Are you sure you want to delete your account?')) {
+      await deleteUser({
+        variables: {
+          _id: userData._id,
+        },
+      });
+      Auth.logout();
+      window.location.assign('/');
+    }
   };
 
   return (
@@ -115,7 +243,7 @@ function Profile() {
                   variant="solid"
                   colorScheme="teal"
                   size="sm"
-                  onClick={setUsernameFlag.off}
+                  onClick={handleEditUsernameSubmit}
                 >
                   Save
                 </Button>
@@ -136,7 +264,7 @@ function Profile() {
                 >
                   Edit
                 </Button>
-                <Button colorScheme="red" size="sm">
+                <Button colorScheme="red" size="sm" onClick={handleDeleteUser}>
                   Delete
                 </Button>
               </Stack>
@@ -214,6 +342,9 @@ function Profile() {
                       colorScheme="red"
                       size="sm"
                       key={`delete${friend._id}`}
+                      onClick={(event) => {
+                        handleDeleteFriend(friend._id, event);
+                      }}
                     >
                       Delete
                     </Button>
@@ -227,7 +358,7 @@ function Profile() {
               </Heading>
               <Stack direction="row" justify="space-between">
                 {userData?.experts?.map((expert) => (
-                  <Fragment key={expert._id}>
+                  <div key={expert._id}>
                     <Text pt="2" fontSize="sm" key={expert._id}>
                       {expert.name}
                     </Text>
@@ -236,10 +367,13 @@ function Profile() {
                       colorScheme="red"
                       size="sm"
                       key={`delete${expert._id}`}
+                      onClick={(event) => {
+                        handleDeleteExpert(expert._id, event);
+                      }}
                     >
                       Delete
                     </Button>
-                  </Fragment>
+                  </div>
                 ))}
               </Stack>
             </Box>

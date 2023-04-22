@@ -296,11 +296,6 @@ const resolvers = {
 
     addExpert: async (parent, args) => {
       try {
-        const { error, value } = expertSchema.validate(args);
-        if (error) {
-          throw new Error(expertErrorMessages.validationError);
-        }
-
         // Find user by id
         const user = await User.findById(args.user);
         if (!user) {
@@ -308,9 +303,10 @@ const resolvers = {
         }
 
         // Create a new friend
-        const expert = await Expert.create(value);
+        const expert = await Expert.create(args);
 
         // Add the friend to the user's friend list
+
         user.experts.push(expert);
         await user.save();
         return expert;

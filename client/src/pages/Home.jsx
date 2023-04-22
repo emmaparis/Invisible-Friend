@@ -37,7 +37,7 @@ function Home() {
   const allBots = [...state.user.friends, ...state.user.experts];
 
   return (
-    <div className='mainPage'>
+    <div className="mainPage">
       <ButtonGroup
         style={{
           marginTop: '150px',
