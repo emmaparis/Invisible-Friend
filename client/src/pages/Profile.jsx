@@ -45,6 +45,7 @@ function Profile() {
         user: data.me,
       });
     },
+    fetchPolicy: 'network-only',
   });
 
   const [updateEmail, { emailData, emailLoading, emailError }] = useMutation(
