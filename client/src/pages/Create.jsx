@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { ADD_FRIEND } from '../utils/mutations';
+import { ADD_FRIEND, ADD_EXPERT } from '../utils/mutations';
 import { useNavigate } from 'react-router-dom';
 import { useStoreContext } from '../utils/GlobalState';
 import {
@@ -92,6 +92,10 @@ export default function Create(props) {
   const [state, dispatch] = useStoreContext();
 
   const [addFriend, { data, loading, error }] = useMutation(ADD_FRIEND);
+  const [
+    addExpert,
+    { data: expertData, loading: expertLoading, error: expertError },
+  ] = useMutation(ADD_EXPERT);
   const navigate = useNavigate();
 
   const handleFriendSelect = (option) => {
@@ -120,20 +124,32 @@ export default function Create(props) {
         languageSelect,
         ageSelect,
         temperamentSelect,
-        state.user._id
+        state.user._id,
+        friendSelect
       );
 
-      const { data } = await addFriend({
-        variables: {
-          name: 'system',
-          language: languageSelect.value,
-          age: parseInt(ageSelect.value),
-          mood: temperamentSelect.value,
-          user: state.user._id,
-          // history: [],
-          avatar: avatarSelect.value,
-        },
-      });
+      if (friendSelect.value === 'Friend') {
+        const { data } = await addFriend({
+          variables: {
+            name: 'system',
+            language: languageSelect.value,
+            age: parseInt(ageSelect.value),
+            mood: temperamentSelect.value,
+            user: state.user._id,
+            avatar: avatarSelect.value,
+          },
+        });
+      } else {
+        // const { data } = await addExpert({
+        //   variables: {
+        //     name: 'system',
+        //     language: languageSelect.value,
+        //     expertise: expertiseSelect.value,
+        //     user: state.user._id,
+        //     avatar: avatarSelect.value,
+        //   },
+        // });
+      }
 
       console.log('New friend added:', data.addFriend);
       // Navigate to the /prompt/:id route using the newly added friend's _id
