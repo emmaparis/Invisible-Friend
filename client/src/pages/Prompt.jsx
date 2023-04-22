@@ -107,10 +107,6 @@ export default function Prompt(props) {
           id: typeId,
         },
       });
-      console.log('FFFFFFFFFFFFFFFFFFFFFF', friend);
-      await updateFriend({
-        variables: { _id: typeId, message: message },
-      });
 
       response = await getFriendPromptResponse({
         variables: {
@@ -128,12 +124,19 @@ export default function Prompt(props) {
         variables: { _id: typeId, message: message },
       });
 
+      const expert = await getExpert({
+        variables: {
+          id: typeId,
+        },
+      });
+      console.log('FFFFFFFFFFFFFFFFFFFFFFFFF', expert);
+
       response = await getExpertPromptResponse({
         variables: {
           input: userInputLocal,
           friendType: type,
-          expertise: expertiseSelect.value,
-          language: languageSelect.value,
+          expertise: expert.data.expert.expertise,
+          language: expert.data.expert.language,
         },
       });
       console.log('This is the response ', response);
