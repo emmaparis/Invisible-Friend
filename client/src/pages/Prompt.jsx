@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { useSpeechSynthesis } from 'react-speech-kit';
 import {
   PROMPT_FRIEND,
@@ -102,6 +102,12 @@ export default function Prompt(props) {
     const message = { role: 'user', content: userInputLocal };
     let response;
     if (type === 'Friend') {
+      const friend = await getFriend({
+        variables: {
+          id: typeId,
+        },
+      });
+
       await updateFriend({
         variables: { _id: typeId, message: message },
       });
@@ -110,9 +116,9 @@ export default function Prompt(props) {
         variables: {
           input: userInputLocal,
           friendType: type,
-          temperament: temperamentSelect.value,
-          age: parseInt(ageSelect.value),
-          language: languageSelect.value,
+          temperament: friend.data.friend.mood,
+          age: friend.data.friend.age,
+          language: friend.data.friend.language,
         },
       });
       console.log('This is the response ', response);
@@ -122,12 +128,18 @@ export default function Prompt(props) {
         variables: { _id: typeId, message: message },
       });
 
+      const expert = await getExpert({
+        variables: {
+          id: typeId,
+        },
+      });
+
       response = await getExpertPromptResponse({
         variables: {
           input: userInputLocal,
           friendType: type,
-          expertise: expertiseSelect.value,
-          language: languageSelect.value,
+          expertise: expert.data.expert.expertise,
+          language: expert.data.expert.language,
         },
       });
       console.log('This is the response ', response);
@@ -163,7 +175,6 @@ export default function Prompt(props) {
           id: typeId,
         },
       });
-      console.log(friend.data.friend.history);
       setMessages(friend.data.friend.history);
     } else {
       const expert = await getExpert({
@@ -171,7 +182,6 @@ export default function Prompt(props) {
           id: typeId,
         },
       });
-      console.log('This is the expert data', expert);
       setMessages(expert.data.expert.history);
     }
   }
@@ -248,7 +258,7 @@ export default function Prompt(props) {
                     content={message.content}
                   />
                 ))}{' '}
-                {loading ? (
+                {loading || expertPromptLoading ? (
                   <Message role={'system'} content={'Loading'} />
                 ) : (
                   <>
