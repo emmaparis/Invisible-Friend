@@ -108,6 +108,10 @@ export default function Prompt(props) {
         },
       });
 
+      await updateFriend({
+        variables: { _id: typeId, message: message },
+      });
+
       response = await getFriendPromptResponse({
         variables: {
           input: userInputLocal,
@@ -129,7 +133,6 @@ export default function Prompt(props) {
           id: typeId,
         },
       });
-      console.log('FFFFFFFFFFFFFFFFFFFFFFFFF', expert);
 
       response = await getExpertPromptResponse({
         variables: {
@@ -172,7 +175,6 @@ export default function Prompt(props) {
           id: typeId,
         },
       });
-      console.log(friend.data.friend.history);
       setMessages(friend.data.friend.history);
     } else {
       const expert = await getExpert({
@@ -180,7 +182,6 @@ export default function Prompt(props) {
           id: typeId,
         },
       });
-      console.log('This is the expert data', expert);
       setMessages(expert.data.expert.history);
     }
   }
