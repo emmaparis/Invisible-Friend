@@ -8,8 +8,10 @@ import Auth from '../utils/auth';
 import { useStoreContext } from '../utils/GlobalState';
 import { QUERY_ME } from '../utils/queries';
 import { UPDATE_USER } from '../utils/actions';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
+  const navigate = useNavigate();
   const [state, dispatch] = useStoreContext();
   console.log(state);
   const { error, data } = useQuery(QUERY_ME, {
@@ -34,7 +36,12 @@ function Home() {
     }
   }, [data]);
 
-  const allBots = [...state.user.friends, ...state.user.experts];
+  const friendBots = [...state.user.friends];
+  const expertBots = [...state.user.experts];
+
+  const promptBot = async (bot, className) => {
+    navigate(`/prompt/${className}/${bot._id}`);
+  };
 
   return (
     <div className="mainPage">
@@ -50,8 +57,19 @@ function Home() {
         <Link to={Auth.loggedIn() ? '/create' : '/login'} colorscheme="teal">
           <CreateFriendButton />
         </Link>
-        {allBots.map((bot) => (
-          <SavedFriendButton key={bot._id} botName={bot.name} />
+        {friendBots.map((bot) => (
+          <SavedFriendButton
+            key={bot._id}
+            bot={bot}
+            onClick={() => promptBot(bot, 'Friend')}
+          />
+        ))}
+        {expertBots.map((bot) => (
+          <SavedFriendButton
+            key={bot._id}
+            bot={bot}
+            onClick={() => promptBot(bot, 'Teacher')}
+          />
         ))}
       </ButtonGroup>
     </div>

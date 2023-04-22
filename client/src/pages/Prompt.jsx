@@ -257,7 +257,7 @@ export default function Prompt(props) {
                     content={message.content}
                   />
                 ))}{' '}
-                {loading ? (
+                {loading || expertPromptLoading ? (
                   <Message role={'system'} content={'Loading'} />
                 ) : (
                   <>
