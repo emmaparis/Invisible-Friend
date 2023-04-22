@@ -41,7 +41,7 @@ const temperamentOptions = [
   { value: 'Caring', label: 'Caring' },
   { value: 'Stern', label: 'Stern' },
   { value: 'Flirty', label: 'Flirty' },
-  { value: 'Impaired', label: 'Impaired' },
+  { value: 'Drunk', label: 'Drunk' },
 ];
 
 const expertiseOptions = [

@@ -122,6 +122,7 @@ export default function Prompt(props) {
         },
       });
       console.log('This is the response ', response.data.prompt);
+      console.log('This is the response data ', response);
       setPromptResponse(response.data.prompt);
     } else {
       await updateExpert({
