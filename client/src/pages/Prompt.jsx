@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { useSpeechSynthesis } from 'react-speech-kit';
-import { PROMPT, QUERY_FRIEND } from '../utils/queries';
+import {
+  PROMPT_FRIEND,
+  PROMPT_EXPERT,
+  QUERY_FRIEND,
+  QUERY_EXPERT,
+} from '../utils/queries';
 import { useMutation } from '@apollo/client';
-import { UPDATE_FRIEND_HISTORY } from '../utils/mutations';
+import {
+  UPDATE_FRIEND_HISTORY,
+  UPDATE_EXPERT_HISTORY,
+} from '../utils/mutations';
 import Message from '../subcomponents/Message';
 import audioIcon from '../assets/images/audioIcon.png';
 import { useParams } from 'react-router-dom';
@@ -34,18 +42,40 @@ export default function Prompt(props) {
   const [userInput, setUserInput] = useState('');
   const [promptResponse, setPromptResponse] = useState('');
   const [messages, setMessages] = useState([]);
-  const [getPromptResponse, { loading, error, data }] = useLazyQuery(PROMPT);
+  const [getFriendPromptResponse, { loading, error, data }] =
+    useLazyQuery(PROMPT_FRIEND);
+  const [
+    getExpertPromptResponse,
+    {
+      loading: expertPromptLoading,
+      error: expertPromptError,
+      data: expertPromptData,
+    },
+  ] = useLazyQuery(PROMPT_EXPERT);
   const [
     getFriend,
     { data: friendData, error: friendError, loading: friendLoading },
   ] = useLazyQuery(QUERY_FRIEND);
   const [
+    getExpert,
+    { data: expertData, error: expertError, loading: expertLoading },
+  ] = useLazyQuery(QUERY_EXPERT);
+  const [
     updateFriend,
     { data: updateData, error: updateError, loading: updateLoading },
   ] = useMutation(UPDATE_FRIEND_HISTORY);
-  // const [friendId, setFriendId] = useState('')
-  const { id } = useParams();
-  const friendId = id;
+
+  const [
+    updateExpert,
+    {
+      data: updateExpertData,
+      error: updateExpertError,
+      loading: updateExpertLoading,
+    },
+  ] = useMutation(UPDATE_EXPERT_HISTORY);
+  // const [typeId, settypeId] = useState('')
+  const { id, type } = useParams();
+  const typeId = id;
   const loggedInUserId = '6442cc0f4d559f71b7d62ab6';
 
   // if window.location.hash friend doesnt exist 404
@@ -63,54 +93,98 @@ export default function Prompt(props) {
     setAgeSelect,
     setLanguageSelect,
     setPromptEntered,
+    expertiseSelect,
   } = props;
 
   async function onSubmit(event) {
     event.preventDefault();
     const userInputLocal = userInput;
     const message = { role: 'user', content: userInputLocal };
-    await updateFriend({
-      variables: { _id: friendId, message: message },
-    });
-    setUserInput('');
-    const response = await getPromptResponse({
-      variables: {
-        input: userInputLocal,
-        friendType: friendSelect.value,
-        temperament: temperamentSelect.value,
-        age: parseInt(ageSelect.value),
-        language: languageSelect.value,
-      },
-    });
+    let response;
+    if (type === 'Friend') {
+      await updateFriend({
+        variables: { _id: typeId, message: message },
+      });
 
-    setPromptResponse(response.data.prompt);
+      response = await getFriendPromptResponse({
+        variables: {
+          input: userInputLocal,
+          friendType: type,
+          temperament: temperamentSelect.value,
+          age: parseInt(ageSelect.value),
+          language: languageSelect.value,
+        },
+      });
+      console.log('This is the response ', response);
+      setPromptResponse(response.data.prompt);
+    } else {
+      await updateExpert({
+        variables: { _id: typeId, message: message },
+      });
+
+      response = await getExpertPromptResponse({
+        variables: {
+          input: userInputLocal,
+          friendType: type,
+          expertise: expertiseSelect.value,
+          language: languageSelect.value,
+        },
+      });
+      console.log('This is the response ', response);
+      setPromptResponse(response.data.expertPrompt);
+    }
+
+    setUserInput('');
 
     try {
-      const sysMessage = { role: 'system', content: response.data.prompt };
-      await updateFriend({
-        variables: { _id: friendId, message: sysMessage },
-      });
+      if (type === 'Friend') {
+        const sysMessage = { role: 'system', content: response.data.prompt };
+        await updateFriend({
+          variables: { _id: typeId, message: sysMessage },
+        });
+      } else {
+        const sysMessage = {
+          role: 'system',
+          content: response.data.expertPrompt,
+        };
+        await updateExpert({
+          variables: { _id: typeId, message: sysMessage },
+        });
+      }
     } catch (err) {
       console.error(err);
     }
   }
 
   async function onLoad() {
-    const friend = await getFriend({
-      variables: {
-        id: friendId,
-      },
-    });
-
-    console.log(friend.data.friend.history);
-    setMessages(friend.data.friend.history);
-    // console.log(friend.data.friend._id);
-    // setFriendId(friend.data.friend._id)
+    if (type === 'Friend') {
+      const friend = await getFriend({
+        variables: {
+          id: typeId,
+        },
+      });
+      console.log(friend.data.friend.history);
+      setMessages(friend.data.friend.history);
+    } else {
+      const expert = await getExpert({
+        variables: {
+          id: typeId,
+        },
+      });
+      console.log('This is the expert data', expert);
+      setMessages(expert.data.expert.history);
+    }
   }
 
-  useEffect(() => {
-    onLoad();
-  }, [friendData, friendError, friendLoading]);
+  if (type === 'Friend') {
+    useEffect(() => {
+      onLoad();
+    }, [friendData, friendError, friendLoading]);
+  } else {
+    useEffect(() => {
+      onLoad();
+    }, [expertData, expertError, expertLoading]);
+  }
 
   const [text, setText] = useState('Hello this is a test');
   const { speak } = useSpeechSynthesis();
