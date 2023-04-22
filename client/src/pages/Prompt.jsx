@@ -323,7 +323,7 @@ export default function Prompt(props) {
                   />
                 ))}{' '}
                 {loading || expertPromptLoading ? (
-                  <Message role={'system'} content={'Loading'} />
+                  <Message role={'system'} content={'...'} />
                 ) : (
                   <>
                     {/* <Message role={'system'} content={promptResponse} /> */}
