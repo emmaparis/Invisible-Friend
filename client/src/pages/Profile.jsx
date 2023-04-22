@@ -31,6 +31,7 @@ function Profile() {
   const [emailFlag, setEmailFlag] = useBoolean();
   const [newEmailState, setNewEmailState] = useState(state.user.email);
   const [newExpertState, setNewExpertState] = useState(state.user.experts);
+  const [newFriendState, setNewFriendState] = useState(state.user.friends);
   const userData = state.user;
   const [loadUserData, { called, loading, data }] = useLazyQuery(QUERY_ME, {
     context: {
@@ -87,6 +88,15 @@ function Profile() {
 
   const [deleteExpert, { deleteData, deleteLoading, deleteError }] =
     useMutation(DELETE_EXPERT, {
+      context: {
+        headers: {
+          Authorization: `Bearer ${Auth.getToken()}`,
+        },
+      },
+    });
+
+  const [updateFriend, { friendData, friendLoading, friendError }] =
+    useMutation(UPDATE_USERDATA, {
       context: {
         headers: {
           Authorization: `Bearer ${Auth.getToken()}`,
@@ -154,10 +164,30 @@ function Profile() {
       },
     });
     loadUserData();
+    setNewExpertState(newExpertState.filter((expert) => expert._id !== id));
     updateExpert({
       variables: {
         ...userData,
         experts: newExpertState,
+      },
+    });
+
+    event.target.parentNode.remove();
+  };
+
+  const handleDeleteFriend = async (id, event) => {
+    console.log('id', id);
+    await deleteFriend({
+      variables: {
+        _id: id,
+      },
+    });
+    loadUserData();
+    setNewFriendState(newFriendState.filter((friend) => friend._id !== id));
+    updateFriend({
+      variables: {
+        ...userData,
+        newFriendState,
       },
     });
 
@@ -290,6 +320,9 @@ function Profile() {
                       colorScheme="red"
                       size="sm"
                       key={`delete${friend._id}`}
+                      onClick={(event) => {
+                        handleDeleteFriend(friend._id, event);
+                      }}
                     >
                       Delete
                     </Button>
