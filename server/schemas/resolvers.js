@@ -141,10 +141,10 @@ const resolvers = {
     addUser: async (parent, args) => {
       try {
         console.log(args);
-        const { error, value } = userSchema.validate(args);
-        if (error) {
-          throw new Error(userErrorMessages.validationError);
-        }
+        // const { error, value } = userSchema.validate(args);
+        // if (error) {
+        //   throw new Error(userErrorMessages.validationError);
+        // }
         const user = await User.create(args);
         console.log('user', user);
         const token = signToken(user);
