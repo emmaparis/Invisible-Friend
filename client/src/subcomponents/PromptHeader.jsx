@@ -16,15 +16,8 @@ import {
   FormLabel,
   Input,
   useDisclosure,
-  Text,
   CardHeader,
   Heading,
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogContent,
-  AlertDialogOverlay,
 } from '@chakra-ui/react';
 import { useLazyQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
@@ -59,6 +52,7 @@ const PromptHeader = () => {
   const [temperamentSelect, setTemperamentSelect] = useState('');
   const [ageSelect, setAgeSelect] = useState('');
   const [expertiseSelect, setExpertiseSelect] = useState('');
+  const [saveName, setSaveName] = useState(false);
   const navigate = useNavigate();
 
   const initialRef = React.useRef(null);
@@ -176,6 +170,7 @@ const PromptHeader = () => {
 
   const handleUpdateFriend = async () => {
     try {
+      setSaveName(newBotName);
       if (botType === 'Friend') {
         const { data } = await updateFriend({
           variables: {
@@ -187,6 +182,11 @@ const PromptHeader = () => {
             user: botData.user._id,
           },
         });
+        setBotData({
+          ...botData,
+          name: newBotName,
+        });
+        console.log(data);
       } else if (botType === 'Teacher') {
         const { data } = await updateExpert({
           variables: {
@@ -197,11 +197,13 @@ const PromptHeader = () => {
             user: botData.user._id,
           },
         });
+        setBotData({
+          ...botData,
+          name: newBotName,
+        });
+        console.log(data);
       }
-      setBotData({
-        ...botData,
-        name: newBotName,
-      });
+
       onClose();
     } catch (err) {
       console.error(err);
@@ -232,9 +234,16 @@ const PromptHeader = () => {
 
   return (
     <div>
-      <CardHeader style={{display: 'flex', flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+      <CardHeader
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
         <Heading fontSize="5xl" size="md" mr={3}>
-          Talk to {botData.name}
+          Talk to {saveName ? saveName : botData.name}
         </Heading>
         <img className="icon" src={avatars[botData.avatar]} alt="avatar" />
       </CardHeader>
