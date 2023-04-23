@@ -1,0 +1,154 @@
+#root {
+  text-align: center;
+}
+header {
+  padding: 1rem;
+}
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #64ddffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+.mainPage {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+.createfriend {
+  color: white;
+  background-color: #319795 !important;
+  box-shadow: 0px 5px 5px #81e6d9;
+  margin: 30px;
+  padding: 10px;
+  font-size: 1.2rem;
+  font-size: 2rem;
+  width: fit-content;
+  align-self: center;
+}
+.savefriend {
+  background-color: #e6fffa;
+  color: #1d4044;
+  box-shadow: 0px 5px 5px #81e6d9 !important;
+  margin: 30px 0 30px 0;
+  padding: 10px;
+  font-size: 1.2rem;
+  font-size: 2rem;
+  width: fit-content;
+  align-self: center;
+}
+.icon {
+  height: 30px;
+  display: inline;
+}
+.mainCard {
+  margin: 4rem;
+  max-width: 70%;
+  align-self: center;
+  background-color: #e6fffa;
+  box-shadow: 8px 5px 5px #b2f5ea;
+  border-radius: 2rem;
+}
+.formInput {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 3px;
+  padding-left: 5px;
+  margin: 5px;
+  width: fit-content;
+}
+.animation {
+  margin-top: 50px;
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: center;
+}
+.genButton {
+  background-color: white !important;
+  box-shadow: 0px 5px 5px #81e6d9 !important;
+}
+
+#chat-container {
+  width: 80%;
+  max-width: 600px;
+  height: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: auto;
+}
+
+.message {
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 15px;
+  max-width: 75%;
+  word-wrap: break-word;
+}
+
+.user {
+  background-color: #1e90ff;
+  color: #fff;
+  align-self: flex-end;
+  order: 2;
+  float: right;
+  clear: both;
+  border-bottom-right-radius: 0;
+  margin-left: 25%;
+}
+
+.system {
+  background-color: #e5e5e5;
+  color: #222;
+  float: left;
+  clear: both;
+  border-bottom-left-radius: 0;
+  margin-right: 25%;
+}
+
+.error-message {
+  background-color: red;
+  font-size: 2em;
+  width: 80%;
+  margin: auto;
+  margin-top: 5%;
+  margin-bottom: 3%;
+  border: rgb(0, 0, 0) solid 4px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}

@@ -180,10 +180,7 @@ const resolvers = {
 
     addFriend: async (parent, args) => {
       try {
-        const { error, value } = friendSchema.validate(args);
-        if (error) {
-          throw new Error(friendErrorMessages.validationError);
-        }
+        console.log(args);
 
         // Find user by id
         const user = await User.findById(args.user);
@@ -192,7 +189,7 @@ const resolvers = {
         }
 
         // Create a new friend
-        const friend = await Friend.create(value);
+        const friend = await Friend.create(args);
 
         // Add the friend to the user's friend list
         user.friends.push(friend);

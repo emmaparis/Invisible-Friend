@@ -1,6 +1,6 @@
 import { React, useEffect } from 'react';
 import { ButtonGroup } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import SavedFriendButton from '../subcomponents/SavedFriendButton';
 import CreateFriendButton from '../subcomponents/CreateFriendButton';
@@ -8,7 +8,6 @@ import Auth from '../utils/auth';
 import { useStoreContext } from '../utils/GlobalState';
 import { QUERY_ME } from '../utils/queries';
 import { UPDATE_USER } from '../utils/actions';
-import { useNavigate } from 'react-router-dom';
 
 function Home() {
   const navigate = useNavigate();
