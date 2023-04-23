@@ -28,6 +28,7 @@ const expertSchema = new Schema({
   avatar: {
     type: String,
     trim: true,
+    default: 'defaultAvatar',
   },
 });
 
