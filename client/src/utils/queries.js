@@ -173,12 +173,13 @@ export const QUERY_EXPERT = gql`
 
 export const PROMPT_FRIEND = gql`
   query Query(
-    $input: String!
+    $input: [inputMessage!]!
     $friendType: String!
     $temperament: String!
     $age: Int!
     $avatar: String
     $language: String!
+    $name: String!
   ) {
     prompt(
       input: $input
@@ -187,6 +188,7 @@ export const PROMPT_FRIEND = gql`
       age: $age
       language: $language
       avatar: $avatar
+      name: $name
     )
   }
 `;

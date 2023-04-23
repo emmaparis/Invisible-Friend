@@ -120,40 +120,45 @@ export default function Prompt(props) {
       // Create context for the bot
       const history = friend.data.friend.history;
       const contextArray = [];
+
       // Add the 10 most recent messages
-      for (let i = Math.max(history.length - 10, 1); i < history.length; i++) {
+      for (let i = Math.max(history.length - 10, 0); i < history.length; i++) {
         contextArray.push(history[i]);
       }
 
       // Function to estimate token count
-      const estimateTokenCount = (str) => Math.ceil(str.length / 4);
+      const estimateTokenCount = (messages) =>
+        messages.reduce(
+          (count, message) => count + Math.ceil(message.content.length / 4),
+          0
+        );
 
       // Check if the context exceeds the 2000-token limit
       const tokenLimit = 2000;
-      let context = contextArray
-        .map((message) => `${message.role}: ${message.content}`)
-        .join('\n');
-      let tokenCount = estimateTokenCount(context);
+      let tokenCount = estimateTokenCount(contextArray);
 
       while (tokenCount > tokenLimit) {
         // Remove the oldest message
         contextArray.splice(0, 1);
-        context = contextArray
-          .map((message) => `${message.role}: ${message.content}`)
-          .join('\n');
-        tokenCount = estimateTokenCount(context);
+        tokenCount = estimateTokenCount(contextArray);
       }
 
-      console.log('This is Context', context);
+      const cleanedContextArray = contextArray.map((message) => ({
+        role: message.role,
+        content: message.content,
+      }));
+
+      console.log('This is Context', cleanedContextArray);
 
       // Get the chatbot response
       response = await getFriendPromptResponse({
         variables: {
-          input: context,
+          input: cleanedContextArray,
           friendType: type,
           temperament: friend.data.friend.mood,
           age: friend.data.friend.age,
           language: friend.data.friend.language,
+          name: friend.data.friend.name,
         },
       });
       setPromptResponse(response.data.prompt);
@@ -211,7 +216,6 @@ export default function Prompt(props) {
           language: expert.data.expert.language,
         },
       });
-      console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', response);
       setPromptResponse(response.data.expertPrompt);
     }
 

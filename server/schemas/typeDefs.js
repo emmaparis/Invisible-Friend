@@ -60,12 +60,13 @@ const typeDefs = gql`
     experts: [Expert]
     expert(_id: ID!): Expert
     prompt(
-      input: String!
+      input: [inputMessage!]!
       friendType: String!
       temperament: String!
       age: Int!
       language: String!
       avatar: String
+      name: String!
     ): String
     expertPrompt(
       input: [inputMessage!]!

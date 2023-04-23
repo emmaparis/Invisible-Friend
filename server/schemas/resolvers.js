@@ -85,17 +85,38 @@ const resolvers = {
 
     prompt: async (
       parent,
-      { input, friendType, temperament, age, language }
+      { input, friendType, temperament, age, language, name }
     ) => {
       try {
-        console.log('userInput', input, friendType, temperament, age, language);
-        const completion = await openai.createCompletion({
-          model: 'text-davinci-003',
-          prompt: generatePrompt(input, friendType, temperament, age, language),
+        console.log(
+          'userInput',
+          input,
+          friendType,
+          temperament,
+          age,
+          language,
+          name
+        );
+        const completion = await openai.createChatCompletion({
+          model: 'gpt-3.5-turbo',
+          messages: [
+            {
+              role: 'user',
+              content: generatePrompt(
+                friendType,
+                temperament,
+                language,
+                age,
+                name
+              ),
+            },
+            ...input,
+          ],
           temperature: 0.6,
+          max_tokens: 250,
         });
         console.log(completion);
-        return completion.data.choices[0].text;
+        return completion.data.choices[0].message.content;
       } catch (error) {
         // Consider implementing your own error handling logic here
         console.error(error);
@@ -113,12 +134,12 @@ const resolvers = {
           messages: [
             {
               role: 'user',
-              content: generatePrompt(null, friendType, expertise, language),
+              content: generatePrompt(friendType, expertise, language),
             },
             ...input,
           ],
           temperature: 0.6,
-          max_tokens: 100,
+          max_tokens: 250,
         });
         console.log(completion.data.choices[0].message.content);
         return completion.data.choices[0].message.content;
@@ -128,31 +149,6 @@ const resolvers = {
       }
     },
   },
-  //   expertPrompt: async (
-  //     parent,
-  //     { input, friendType, expertise, language }
-  //   ) => {
-  //     try {
-  //       console.log('userInput', input, friendType, expertise, language);
-  //       const completion = await openai.createChatCompletion({
-  //         model: 'gpt-3.5-turbo',
-  //         messages: [
-  //           {
-  //             role: 'user',
-  //             content: generatePrompt(input, friendType, expertise, language),
-  //           },
-  //         ],
-  //         temperature: 0.6,
-  //         max_tokens: 100,
-  //       });
-  //       console.log(completion.data.choices[0].message.content);
-  //       return completion.data.choices[0].message.content;
-  //     } catch (error) {
-  //       // Consider implementing your own error handling logic here
-  //       console.error(error);
-  //     }
-  //   },
-  // },
 
   Mutation: {
     login: async (parent, { email, password }) => {
@@ -291,11 +287,6 @@ const resolvers = {
         // Add the message to the history
         friend.history.push(message);
 
-        // If the history array size is over 11, remove elements in positions 1 and 2
-        if (friend.history.length > 11) {
-          friend.history.splice(1, 2);
-        }
-
         // Save the updated friend and return it
         const updatedFriend = await friend.save();
         return updatedFriend;
@@ -314,11 +305,6 @@ const resolvers = {
 
         // Add the message to the history
         expert.history.push(message);
-
-        // If the history array size is over 11, remove elements in positions 1 and 2
-        if (expert.history.length > 11) {
-          expert.history.splice(1, 2);
-        }
 
         // Save the updated expert and return it
         const updatedExpert = await expert.save();
