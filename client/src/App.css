@@ -152,3 +152,24 @@ header {
 .hidden {
   display: none;
 }
+
+@media only screen and (max-width: 600px) {
+  .mainCard {
+    margin: 4rem;
+    max-width: 100%;
+  }
+  .mobile-hidden {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .mainCard {
+    margin: 4rem;
+    width: 100%;
+    max-width: 800px
+  }
+  .mainPage {
+    padding: 2rem;
+  }
+}
