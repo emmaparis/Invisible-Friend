@@ -74,10 +74,12 @@ export const QUERY_ME = gql`
       friends {
         _id
         name
+        avatar
       }
       experts {
         _id
         name
+        avatar
       }
     }
   }

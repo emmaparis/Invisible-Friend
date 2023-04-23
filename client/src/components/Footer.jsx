@@ -11,6 +11,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 
+
 const Footer = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [size, setSize] = React.useState('md');
@@ -22,7 +23,9 @@ const Footer = () => {
 
   return (
     <>
-      <Button onClick={() => handleSizeClick()} m={4}>{`Open Modal`}</Button>
+      <Button onClick={() => handleSizeClick()} m={4}>
+        Donate
+      </Button>
       <Modal onClose={onClose} size={size} isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>
