@@ -140,6 +140,31 @@ const resolvers = {
       return { token };
     },
 
+    updatePassword: async (parent, { _id, oldPassword, newPassword }) => {
+      try {
+        const user = await User.findOne({ _id });
+
+        if (!user) {
+          throw new AuthenticationError('No user with this email found!');
+        }
+
+        const correctPw = await user.isCorrectPassword(oldPassword);
+
+        if (!correctPw) {
+          throw new AuthenticationError('Incorrect password!');
+        }
+
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: _id },
+          { $set: { password: newPassword } },
+          { runValidators: true, new: true }
+        );
+        return updatedUser;
+      } catch (err) {
+        throw new Error(userErrorMessages.validationError);
+      }
+    },
+
     addUser: async (parent, args) => {
       try {
         console.log(args);
