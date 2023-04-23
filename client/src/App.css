@@ -154,6 +154,15 @@ header {
   display: none;
 }
 
+.profileCard {
+  margin: 4rem;
+  width: 50%;
+  align-self: center;
+  background-color: #e6fffa;
+  box-shadow: 8px 5px 5px #b2f5ea;
+  border-radius: 2rem;
+}
+
 @media only screen and (max-width: 600px) {
   .mainCard {
     margin: 4rem;
@@ -163,10 +172,18 @@ header {
     display: none;
   }
   .mainPage {
-    padding: 2rem;
+    padding: 1rem;
   }
   #chat-container {
     height: 40vh;
+  }
+  .profileCard {
+    margin: 0rem;
+    width: 100%;
+    align-self: center;
+    background-color: #e6fffa;
+    box-shadow: 8px 5px 5px #b2f5ea;
+    border-radius: 2rem;
   }
 }
 

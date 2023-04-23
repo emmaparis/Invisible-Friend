@@ -258,7 +258,7 @@ function Profile() {
 
   return (
     <div className="mainPage">
-      <Card className="mainCard" width="50%">
+      <Card className="profileCard">
         <CardHeader>
           {usernameFlag ? (
             <Stack direction="row" justify="space-between">
