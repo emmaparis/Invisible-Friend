@@ -162,6 +162,12 @@ header {
   .mobile-hidden {
     display: none;
   }
+  .mainPage {
+    padding: 2rem;
+  }
+  #chat-container {
+    height: 40vh;
+  }
 }
 
 @media only screen and (min-width: 600px) {
@@ -172,5 +178,7 @@ header {
   }
   .mainPage {
     padding: 2rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
   }
 }
