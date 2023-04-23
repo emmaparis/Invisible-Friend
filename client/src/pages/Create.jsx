@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
+import { useMutation, useLazyQuery } from '@apollo/client';
 import { Select } from 'chakra-react-select';
 import {
   Container,
@@ -10,11 +10,9 @@ import {
   HStack,
   RadioGroup,
   Radio,
-  FormHelperText,
   Button,
   Heading,
 } from '@chakra-ui/react';
-import { useLazyQuery } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
 import { UPDATE_USER } from '../utils/actions';
 import Auth from '../utils/auth';
@@ -27,78 +25,40 @@ import avatar4 from '../assets/images/avatars/avatar-4.png';
 import avatar5 from '../assets/images/avatars/avatar-5.png';
 import avatar6 from '../assets/images/avatars/avatar-6.png';
 
-export default function Create(props) {
+export default function Create() {
   const [showTemperament, setShowTemperament] = useState(false);
   const [showExpertise, setShowExpertise] = useState(false);
   const [botNameState, setBotNameState] = useState('');
-  const {
-    friendSelect,
-    temperamentSelect,
-    ageSelect,
-    languageSelect,
-    setFriendSelect,
-    setTemperamentSelect,
-    setAgeSelect,
-    setLanguageSelect,
-    setPromptEntered,
-    expertiseSelect,
-    setExpertiseSelect,
-  } = props;
+  const [friendSelect, setFriendSelect] = useState('');
+  const [temperamentSelect, setTemperamentSelect] = useState('');
+  const [ageSelect, setAgeSelect] = useState('');
+  const [languageSelect, setLanguageSelect] = useState('');
   const [state, dispatch] = useStoreContext();
-  const [loadUserData, { called, userloading, userdata }] = useLazyQuery(
-    QUERY_ME,
-    {
-      context: {
-        headers: {
-          Authorization: `Bearer ${Auth.getToken()}`,
-        },
-      },
-      onCompleted: (userdata) => {
-        dispatch({
-          type: UPDATE_USER,
-          user: userdata.me,
-        });
-      },
-      fetchPolicy: 'network-only',
-      pollInterval: 500,
-      notifyOnNetworkStatusChange: true,
-    }
-  );
-  const userData = state.user;
+  const [expertiseSelect, setExpertiseSelect] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [avatarSelect, setAvatarSelect] = useState('');
-  const [addFriend, { data, loading, error }] = useMutation(ADD_FRIEND);
-  const [
-    addExpert,
-    { data: expertData, loading: expertLoading, error: expertError },
-  ] = useMutation(ADD_EXPERT);
+  const [addFriend] = useMutation(ADD_FRIEND);
+  const [addExpert] = useMutation(ADD_EXPERT);
   const navigate = useNavigate();
-
-  const handleFriendSelect = (option) => {
-    setFriendSelect(option);
-  };
-
-  const handleTemperamentSelect = (option) => {
-    setTemperamentSelect(option);
-  };
-
-  const handleAgeSelect = (option) => {
-    setAgeSelect(option);
-  };
-
-  const handleLanguageSelect = (option) => {
-    setLanguageSelect(option);
-  };
-  const handleAvatarSelect = (value) => {
-    setAvatarSelect(value);
-  };
-
-  const handleExpertiseSelect = (option) => {
-    setExpertiseSelect(option);
-  };
-
-  const handleBotNameChange = (event) => {
-    setBotNameState(event.target.value);
-  };
+  const [loadUserData] = useLazyQuery(QUERY_ME, {
+    context: {
+      headers: {
+        Authorization: `Bearer ${Auth.getToken()}`,
+      },
+    },
+    onCompleted: (data) => {
+      dispatch({
+        type: UPDATE_USER,
+        user: data.me,
+      });
+    },
+    onError: (error) => {
+      console.error(error);
+      setErrorMessage(
+        'There has been an error trying to load your data. Please refresh the page.'
+      );
+    },
+  });
 
   const friendTypeOptions = [
     { value: 'Friend', label: 'Friend' },
@@ -142,6 +102,33 @@ export default function Create(props) {
     { value: 'Chinese', label: 'Chinese' },
     { value: 'Portugese', label: 'Portugese' },
   ];
+
+  const handleFriendSelect = (option) => {
+    setFriendSelect(option);
+  };
+
+  const handleTemperamentSelect = (option) => {
+    setTemperamentSelect(option);
+  };
+
+  const handleAgeSelect = (option) => {
+    setAgeSelect(option);
+  };
+
+  const handleLanguageSelect = (option) => {
+    setLanguageSelect(option);
+  };
+  const handleAvatarSelect = (value) => {
+    setAvatarSelect(value);
+  };
+
+  const handleExpertiseSelect = (option) => {
+    setExpertiseSelect(option);
+  };
+
+  const handleBotNameChange = (event) => {
+    setBotNameState(event.target.value);
+  };
 
   useEffect(() => {
     loadUserData();
@@ -209,12 +196,15 @@ export default function Create(props) {
       }
     } catch (error) {
       console.error('Error adding friend:', error);
-      navigate(`/404`);
+      setErrorMessage('Error creating bot. Please try again.');
     }
   };
 
   return (
     <div className="mainPage">
+      <div className={`error-message ${errorMessage ? '' : 'hidden'}`}>
+        {errorMessage}
+      </div>
       <Container className="mainCard" sx={{ width: '100%' }} p={15} mb={16}>
         <Heading>Build Your Friend</Heading>
         <FormControl p={4}>
@@ -223,7 +213,6 @@ export default function Create(props) {
             name="botName"
             placeholder="Enter Bot Name"
             size="lg"
-            onChange={(e) => setPromptEntered(e.target.value)}
             value={botNameState}
             onChange={handleBotNameChange}
           />
@@ -234,7 +223,7 @@ export default function Create(props) {
             classNamePrefix="Friend-Type-Select"
             options={friendTypeOptions}
             placeholder="Friend Type"
-            closeMenuOnSelect={true}
+            closeMenuOnSelect
             size="lg"
             chakraStyles={{
               dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
@@ -256,7 +245,7 @@ export default function Create(props) {
               classNamePrefix="Temperament-Select"
               options={temperamentOptions}
               placeholder="Temperament"
-              closeMenuOnSelect={true}
+              closeMenuOnSelect
               size="lg"
               chakraStyles={{
                 dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({

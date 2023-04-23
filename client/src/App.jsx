@@ -36,30 +36,6 @@ const client = new ApolloClient({
 });
 
 function App() {
-  const [friendSelect, setFriendSelect] = useState('');
-  const [temperamentSelect, setTemperamentSelect] = useState('');
-  const [ageSelect, setAgeSelect] = useState('');
-  const [languageSelect, setLanguageSelect] = useState('');
-  const [promptEntered, setPromptEntered] = useState('');
-  const [avatarSelect, setAvatarSelect] = useState('');
-  const [expertiseSelect, setExpertiseSelect] = useState('');
-  const options = {
-    friendSelect,
-    temperamentSelect,
-    ageSelect,
-    languageSelect,
-    promptEntered,
-    avatarSelect,
-    expertiseSelect,
-    setFriendSelect,
-    setTemperamentSelect,
-    setAgeSelect,
-    setLanguageSelect,
-    setPromptEntered,
-    setAvatarSelect,
-    setExpertiseSelect,
-  };
-
   return (
     <ApolloProvider client={client}>
       <ChakraProvider>
@@ -70,11 +46,8 @@ function App() {
               <Route path="/signup" element={<SignUp />} />
               <Route path="/login" element={<LogIn />} />
               <Route path="/" element={<Home />} />
-              <Route path="/create" element={<Create {...options} />} />
-              <Route
-                path="/prompt/:type/:id"
-                element={<Prompt {...options} />}
-              />
+              <Route path="/create" element={<Create />} />
+              <Route path="/prompt/:type/:id" element={<Prompt />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
