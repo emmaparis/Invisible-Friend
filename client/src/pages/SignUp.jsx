@@ -69,10 +69,11 @@ export default function SignUp() {
     <div className='mainPage'>
     <Card className='mainCard'
       sx={{
-        margin: '8rem',
+        margin: '0rem',
         backgroundColor: '#E6FFFA',
         boxShadow: '8px 5px 5px #B2F5EA',
         borderRadius: '2rem',
+        maxWidth: '600px',
       }}
     >
       <CardHeader>
