@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { useSpeechSynthesis } from 'react-speech-kit';
 
 export default function Message({ role, content }) {
-
   const [text, setText] = useState('Hello this is a test');
   const { speak } = useSpeechSynthesis();
 
@@ -10,5 +8,14 @@ export default function Message({ role, content }) {
     speak({ text: text });
   };
 
-  return <div className={`message ${role}`} onClick={()=>{handleOnClick(content)}}>{content}</div>;
+  return (
+    <div
+      className={`message ${role}`}
+      onClick={() => {
+        handleOnClick(content);
+      }}
+    >
+      {content}
+    </div>
+  );
 }
