@@ -80,6 +80,11 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
     updateUser(_id: ID!, username: String!, email: String!): User
+    updateUserPassword(
+      oldPassword: String!
+      newPassword: String!
+      _id: ID!
+    ): User
     deleteUser(_id: ID!): User
     addFriend(
       name: String!
@@ -97,8 +102,6 @@ const typeDefs = gql`
       age: Int!
       mood: String!
       user: String!
-      history: [inputMessage]
-      avatar: String
     ): Friend
     updateFriendHistory(_id: ID!, message: inputMessage): Friend
     updateExpertHistory(_id: ID!, message: inputMessage): Expert
@@ -117,8 +120,6 @@ const typeDefs = gql`
       language: String!
       expertise: String!
       user: String!
-      history: [inputMessage]
-      avatar: String
     ): Expert
     deleteExpert(_id: ID!): Expert
   }

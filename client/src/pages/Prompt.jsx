@@ -1,19 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useLazyQuery } from '@apollo/client';
-import { useSpeechSynthesis } from 'react-speech-kit';
-import {
-  PROMPT_FRIEND,
-  PROMPT_EXPERT,
-  QUERY_FRIEND,
-  QUERY_EXPERT,
-} from '../utils/queries';
-import { useMutation } from '@apollo/client';
-import {
-  UPDATE_FRIEND_HISTORY,
-  UPDATE_EXPERT_HISTORY,
-} from '../utils/mutations';
-import Message from '../subcomponents/Message';
-import audioIcon from '../assets/images/audioIcon.png';
 import { useParams } from 'react-router-dom';
 import {
   Card,
@@ -37,6 +22,21 @@ import {
   InputGroup,
   HStack,
 } from '@chakra-ui/react';
+import { useSpeechSynthesis } from 'react-speech-kit';
+import { useMutation, useLazyQuery } from '@apollo/client';
+import {
+  PROMPT_FRIEND,
+  PROMPT_EXPERT,
+  QUERY_FRIEND,
+  QUERY_EXPERT,
+} from '../utils/queries';
+import {
+  UPDATE_FRIEND_HISTORY,
+  UPDATE_EXPERT_HISTORY,
+} from '../utils/mutations';
+import Message from '../subcomponents/Message';
+import PromptHeader from '../subcomponents/PromptHeader';
+import audioIcon from '../assets/images/audioIcon.png';
 
 // Prompt component for interacting with a chatbot (Friend or Expert)
 export default function Prompt(props) {
@@ -272,17 +272,13 @@ export default function Prompt(props) {
       <Card
         className="mainCard"
         sx={{
-          margin: '8rem',
           backgroundColor: '#E6FFFA',
           boxShadow: '8px 5px 5px #B2F5EA',
           borderRadius: '2rem',
+          margin: '4rem',
         }}
       >
-        <CardHeader>
-          <Heading fontSize="5xl" size="md" m={3} mb={0}>
-            Talk to 'Friend Name'
-          </Heading>
-        </CardHeader>
+        <PromptHeader />
         <CardBody>
           <Stack divider={<StackDivider />} spacing="4">
             <Box>
@@ -293,25 +289,7 @@ export default function Prompt(props) {
                   justifyContent: 'space-between',
                   alignContent: 'center',
                 }}
-              >
-                <Text fontSize="lg">Friend Name</Text>
-                &emsp;
-                <ButtonGroup>
-                  <Button
-                    colorScheme="teal"
-                    style={{ color: 'white' }}
-                    size="sm"
-                  >
-                    Save Friend
-                  </Button>
-                  <Button colorScheme="teal" size="sm">
-                    Edit Friend
-                  </Button>
-                  <Button colorScheme="teal" size="sm">
-                    Remove Friend
-                  </Button>
-                </ButtonGroup>
-              </div>
+              ></div>
             </Box>
             <Box>
               <div id="chat-container">

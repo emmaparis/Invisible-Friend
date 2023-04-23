@@ -26,6 +26,24 @@ export const UPDATE_USERDATA = gql`
   }
 `;
 
+export const UPDATE_USERPASSWORD = gql`
+  mutation updateUserPassword(
+    $_id: ID!
+    $oldPassword: String!
+    $newPassword: String!
+  ) {
+    updateUserPassword(
+      _id: $_id
+      oldPassword: $oldPassword
+      newPassword: $newPassword
+    ) {
+      _id
+      username
+      email
+    }
+  }
+`;
+
 export const DELETE_USER = gql`
   mutation deleteUser($_id: ID!) {
     deleteUser(_id: $_id) {
@@ -82,8 +100,6 @@ export const UPDATE_FRIEND = gql`
     $age: Int!
     $mood: String!
     $user: String!
-    $avatar: String
-    $history: [inputMessage]
   ) {
     updateFriend(
       _id: $_id
@@ -92,8 +108,6 @@ export const UPDATE_FRIEND = gql`
       age: $age
       mood: $mood
       user: $user
-      avatar: $avatar
-      history: $history
     ) {
       _id
       name
@@ -206,8 +220,6 @@ export const UPDATE_EXPERT = gql`
     $language: String!
     $expertise: String!
     $user: String!
-    $avatar: String
-    $history: [inputMessage]
   ) {
     updateExpert(
       _id: $_id
@@ -215,23 +227,11 @@ export const UPDATE_EXPERT = gql`
       language: $language
       expertise: $expertise
       user: $user
-      avatar: $avatar
-      history: $history
     ) {
       _id
-      username
       language
       expertise
       avatar
-      user {
-        _id
-        username
-        email
-      }
-      history {
-        role
-        content
-      }
     }
   }
 `;

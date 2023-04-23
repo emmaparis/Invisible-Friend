@@ -76,6 +76,7 @@ const resolvers = {
 
     expert: async (parent, { _id }) => {
       try {
+        console.log('fetching expert', _id);
         return await Expert.findOne({ _id }).populate('user');
       } catch (err) {
         throw new Error(err.message);
@@ -139,6 +140,32 @@ const resolvers = {
       return { token };
     },
 
+    updateUserPassword: async (parent, { _id, oldPassword, newPassword }) => {
+      try {
+        console.log(_id, oldPassword, newPassword);
+        const user = await User.findOne({ _id });
+
+        if (!user) {
+          throw new AuthenticationError('No user with this id found!');
+        }
+
+        const correctPw = await user.isCorrectPassword(oldPassword);
+
+        if (!correctPw) {
+          throw new AuthenticationError('Incorrect password!');
+        }
+
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: _id },
+          { $set: { password: newPassword } },
+          { runValidators: true, new: true }
+        );
+        return updatedUser;
+      } catch (err) {
+        throw new Error(err, userErrorMessages.validationError);
+      }
+    },
+
     addUser: async (parent, args) => {
       try {
         console.log(args);
@@ -187,10 +214,7 @@ const resolvers = {
 
     addFriend: async (parent, args) => {
       try {
-        const { error, value } = friendSchema.validate(args);
-        if (error) {
-          throw new Error(friendErrorMessages.validationError);
-        }
+        console.log(args);
 
         // Find user by id
         const user = await User.findById(args.user);
@@ -199,7 +223,7 @@ const resolvers = {
         }
 
         // Create a new friend
-        const friend = await Friend.create(value);
+        const friend = await Friend.create(args);
 
         // Add the friend to the user's friend list
         user.friends.push(friend);
@@ -210,31 +234,17 @@ const resolvers = {
       }
     },
 
-    updateFriend: async (
-      parent,
-      { _id, name, language, age, mood, user, history, avatar }
-    ) => {
+    updateFriend: async (parent, args) => {
       try {
-        const { error, value } = friendSchema.validate({
-          name,
-          language,
-          age,
-          mood,
-          user,
-          history,
-          avatar,
-        });
-        if (error) {
-          throw new Error(friendErrorMessages.validationError);
-        }
+        console.log(args);
         const updatedFriend = await Friend.findOneAndUpdate(
-          { _id },
-          { $set: { ...value } },
+          { _id: args._id },
+          { $set: { ...args } },
           { runValidators: true, new: true }
         );
         return updatedFriend;
       } catch (err) {
-        throw new Error(friendErrorMessages.validationError);
+        throw new Error(err, friendErrorMessages.validationError);
       }
     },
 
@@ -306,30 +316,17 @@ const resolvers = {
       }
     },
 
-    updateExpert: async (
-      parent,
-      { _id, name, language, expertise, user, history, avatar }
-    ) => {
+    updateExpert: async (parent, args) => {
       try {
-        const { error, value } = expertSchema.validate({
-          name,
-          language,
-          expertise,
-          user,
-          history,
-          avatar,
-        });
-        if (error) {
-          throw new Error(expertErrorMessages.validationError);
-        }
+        console.log(args);
         const updatedExpert = await Expert.findOneAndUpdate(
-          { _id },
-          { $set: { ...value } },
+          { _id: args._id },
+          { $set: args },
           { runValidators: true, new: true }
         );
         return updatedExpert;
       } catch (err) {
-        throw new Error(expertErrorMessages.validationError);
+        throw new Error(err, expertErrorMessages.validationError);
       }
     },
 
