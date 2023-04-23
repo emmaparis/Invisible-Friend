@@ -145,7 +145,7 @@ const resolvers = {
         const user = await User.findOne({ _id });
 
         if (!user) {
-          throw new AuthenticationError('No user with this email found!');
+          throw new AuthenticationError('No user with this id found!');
         }
 
         const correctPw = await user.isCorrectPassword(oldPassword);
@@ -161,7 +161,7 @@ const resolvers = {
         );
         return updatedUser;
       } catch (err) {
-        throw new Error(userErrorMessages.validationError);
+        throw new Error(err, userErrorMessages.validationError);
       }
     },
 

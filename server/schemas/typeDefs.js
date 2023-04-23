@@ -80,11 +80,7 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
     updateUser(_id: ID!, username: String!, email: String!): User
-    updatePassword(
-      oldPassword: String!
-      newPassword: String!
-      userId: ID!
-    ): User
+    updatePassword(oldPassword: String!, newPassword: String!, _id: ID!): User
     deleteUser(_id: ID!): User
     addFriend(
       name: String!
