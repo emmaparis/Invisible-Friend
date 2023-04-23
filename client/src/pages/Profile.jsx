@@ -36,6 +36,7 @@ import avatarc from '../assets/images/avatars/avatar-3.png';
 import avatard from '../assets/images/avatars/avatar-4.png';
 import avatare from '../assets/images/avatars/avatar-5.png';
 import avatarf from '../assets/images/avatars/avatar-6.png';
+import defaultAvatar from '../assets/images/personIcon.png';
 
 const avatars = {
   avatar1: avatara,
@@ -44,6 +45,7 @@ const avatars = {
   avatar4: avatard,
   avatar5: avatare,
   avatar6: avatarf,
+  defaultAvatar: defaultAvatar,
 };
 
 function Profile() {

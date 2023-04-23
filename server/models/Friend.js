@@ -33,6 +33,7 @@ const friendSchema = new Schema({
   avatar: {
     type: String,
     trim: true,
+    default: 'defaultAvatar',
   },
 });
 

@@ -58,6 +58,7 @@ const LogIn = (props) => {
           boxShadow: '8px 5px 5px #B2F5EA',
           borderRadius: '2rem',
         }}
+        className="mainCard"
       >
         <CardHeader>
           <Heading fontSize="5xl" size="md" m={8}>

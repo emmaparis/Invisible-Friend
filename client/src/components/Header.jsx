@@ -39,7 +39,9 @@ export default function Header() {
           <Box
             sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
           >
-            <Heading sx={{ color: '#1D4044' }} className="mobile-hidden">INVISIBLE</Heading>
+            <Heading sx={{ color: '#1D4044' }} className="mobile-hidden">
+              INVISIBLE
+            </Heading>
             <Image
               boxSize="28px"
               objectFit="cover"
@@ -47,31 +49,33 @@ export default function Header() {
               alt="Invisible Friend logo."
               href=""
             />
-            <Heading sx={{ color: '#1D4044' }} className="mobile-hidden">FRIEND</Heading>
+            <Heading sx={{ color: '#1D4044' }} className="mobile-hidden">
+              FRIEND
+            </Heading>
           </Box>
         </Link>
         <Spacer />
         <ButtonGroup gap="2">
           {!Auth.loggedIn() ? (
             <>
-              <Button sx={{ backgroundColor: '#319795', color: 'white' }}>
-                <Link to="/signup" colorscheme="teal">
+              <Link to="/signup" colorscheme="teal">
+                <Button sx={{ backgroundColor: '#319795', color: 'white' }}>
                   Sign Up
-                </Link>
-              </Button>
-              <Button sx={{ backgroundColor: '#319795', color: 'white' }}>
-                <Link to="/login" colorscheme="teal">
+                </Button>
+              </Link>
+              <Link to="/login" colorscheme="teal">
+                <Button sx={{ backgroundColor: '#319795', color: 'white' }}>
                   Log in
-                </Link>
-              </Button>
+                </Button>
+              </Link>
             </>
           ) : (
             <>
-              <Button sx={{ backgroundColor: '#319795', color: 'white' }}>
-                <Link to="/profile" colorscheme="teal">
+              <Link to="/profile" colorscheme="teal">
+                <Button sx={{ backgroundColor: '#319795', color: 'white' }}>
                   Profile
-                </Link>
-              </Button>
+                </Button>
+              </Link>
               <Button
                 sx={{ backgroundColor: '#319795', color: 'white' }}
                 onClick={logout}
