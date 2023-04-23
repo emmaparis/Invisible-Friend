@@ -1,4 +1,5 @@
-import { React, useState, useEffect } from 'react';
+import React from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Button,
   ButtonGroup,
@@ -12,6 +13,7 @@ import {
   FormControl,
   FormLabel,
   Input,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { useLazyQuery } from '@apollo/client';
 import { QUERY_FRIEND, QUERY_EXPERT } from '../utils/queries';
