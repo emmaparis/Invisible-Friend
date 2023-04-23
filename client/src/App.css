@@ -186,4 +186,7 @@ header {
     width: 70vw;
     max-width: 1200px;
   }
+  .input-container {
+    padding: 0rem 4rem;
+  }
 }

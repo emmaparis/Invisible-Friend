@@ -377,7 +377,7 @@ const PromptHeader = () => {
               </ModalBody>
 
               <ModalFooter>
-                <Button colorScheme="blue" colorScheme="teal" mr={3} onClick={handleUpdateFriend}>
+                <Button colorScheme="teal" mr={3} onClick={handleUpdateFriend}>
                   Save
                 </Button>
                 <Button onClick={onClose}>Cancel</Button>
