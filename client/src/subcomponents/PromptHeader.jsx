@@ -19,6 +19,12 @@ import {
   Text,
   CardHeader,
   Heading,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
 } from '@chakra-ui/react';
 import { useLazyQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
@@ -29,6 +35,7 @@ import {
   DELETE_EXPERT,
   DELETE_FRIEND,
 } from '../utils/mutations';
+import Delete from '../subcomponents/Delete';
 import avatara from '../assets/images/avatars/avatar-1.png';
 import avatarb from '../assets/images/avatars/avatar-2.png';
 import avatarc from '../assets/images/avatars/avatar-3.png';
@@ -379,9 +386,7 @@ const PromptHeader = () => {
             </ModalContent>
           </Modal>
         </>
-        <Button colorScheme="red" size="sm" onClick={handleDelete}>
-          Delete
-        </Button>
+        <Delete handleDelete={handleDelete} botName={botData.name} />
       </ButtonGroup>
     </div>
   );
