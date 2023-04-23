@@ -39,7 +39,7 @@ export default function Header() {
           <Box
             sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
           >
-            <Heading sx={{ color: '#1D4044' }}>INVISIBLE</Heading>
+            <Heading sx={{ color: '#1D4044' }} className="mobile-hidden">INVISIBLE</Heading>
             <Image
               boxSize="28px"
               objectFit="cover"
@@ -47,7 +47,7 @@ export default function Header() {
               alt="Invisible Friend logo."
               href=""
             />
-            <Heading sx={{ color: '#1D4044' }}>FRIEND</Heading>
+            <Heading sx={{ color: '#1D4044' }} className="mobile-hidden">FRIEND</Heading>
           </Box>
         </Link>
         <Spacer />

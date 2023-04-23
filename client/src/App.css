@@ -32,9 +32,10 @@ header {
   }
 }
 .mainPage {
-  min-height: 100vh;
+  /* min-height: 100vh; */
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 .card {
   padding: 2em;
@@ -151,4 +152,38 @@ header {
 
 .hidden {
   display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .mainCard {
+    margin: 4rem;
+    max-width: 100%;
+  }
+  .mobile-hidden {
+    display: none;
+  }
+  .mainPage {
+    padding: 2rem;
+  }
+  #chat-container {
+    height: 40vh;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .mainCard {
+    margin: 4rem;
+    width: 100%;
+    max-width: 1400px
+  }
+  .mainPage {
+    padding: 2rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  #chat-container {
+    height: 60vh;
+    width: 80vw;
+    max-width: 1400px;
+  }
 }

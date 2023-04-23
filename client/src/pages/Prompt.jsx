@@ -280,7 +280,7 @@ export default function Prompt(props) {
           backgroundColor: '#E6FFFA',
           boxShadow: '8px 5px 5px #B2F5EA',
           borderRadius: '2rem',
-          margin: '4rem',
+          margin: '0rem',
         }}
       >
         <PromptHeader />
@@ -341,7 +341,7 @@ export default function Prompt(props) {
                             backgroundColor: 'white',
                             borderRadius: '1rem',
                             marginTop: '5px',
-                            width: '70%',
+                            width: ['50%', '70%'],
                             marginRight: '0',
                           }}
                           placeholder="What do you want to say?"
@@ -355,6 +355,7 @@ export default function Prompt(props) {
                             flexDirection: 'row',
                             width: '30%',
                           }}
+                          className="prompt-input-container"
                         >
                           <Button
                             minWidth={100}
