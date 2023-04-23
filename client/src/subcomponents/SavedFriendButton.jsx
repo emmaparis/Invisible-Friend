@@ -17,8 +17,6 @@ const avatars = {
 };
 
 const SavedFriendButton = ({ bot, onClick }) => {
-  console.log(bot);
-  console.log(bot.avatar);
   return (
     <>
       <Button className="savefriend" size="xl" p={4} onClick={onClick}>
