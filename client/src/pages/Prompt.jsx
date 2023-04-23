@@ -276,6 +276,7 @@ export default function Prompt(props) {
           backgroundColor: '#E6FFFA',
           boxShadow: '8px 5px 5px #B2F5EA',
           borderRadius: '2rem',
+          margin: '4rem'
         }}
       >
         <CardHeader>
@@ -297,11 +298,7 @@ export default function Prompt(props) {
                 <Text fontSize="lg">Friend Name</Text>
                 &emsp;
                 <ButtonGroup>
-                  <Button
-                    colorScheme="teal"
-                    style={{ color: 'white' }}
-                    size="sm"
-                  >
+                <Button colorScheme="teal" size="sm">
                     Save Friend
                   </Button>
                   <Button colorScheme="teal" size="sm">

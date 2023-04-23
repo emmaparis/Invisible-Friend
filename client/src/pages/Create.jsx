@@ -195,7 +195,7 @@ export default function Create(props) {
 
   return (
     <div className="mainPage">
-      <Container className="mainCard" sx={{ width: '100%' }} p={15} mb={16}>
+      <Container className="mainCard" sx={{ width: '100%' }} p={15} mb={16} m={8}>
         <Heading>Build Your Friend</Heading>
         <FormControl p={4}>
           <Select
@@ -309,13 +309,14 @@ export default function Create(props) {
           />
         </FormControl>
         <FormControl as="fieldset">
-          <FormLabel ml={10} as="legend" htmlFor={null}>
-            Choose a Friend
+          <FormLabel as="legend" htmlFor={null} sx={{margin: 'auto'}}>
+            Select Friend's Avatar
           </FormLabel>
           <RadioGroup
             defaultValue="Itachi"
             onChange={handleAvatarSelect}
             value={avatarSelect}
+            sx={{mt: 4}}
           >
             <HStack spacing="24px">
               <Radio value={avatar1}>
