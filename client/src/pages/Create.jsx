@@ -336,7 +336,7 @@ export default function Create() {
         </FormControl>
         <FormControl as="fieldset">
           <FormLabel ml={10} as="legend" htmlFor={null} sx={{ margin: 'auto' }}>
-            Select Friend's Avatar
+            Select Friends Avatar
           </FormLabel>
           <RadioGroup
             defaultValue="Itachi"

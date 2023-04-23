@@ -1,5 +1,4 @@
 import React from 'react';
-import { Lorem } from 'react-lorem-component';
 import {
   Modal,
   ModalOverlay,
@@ -24,7 +23,6 @@ const Footer = () => {
   return (
     <>
       <Button onClick={() => handleSizeClick()} m={4}>{`Open Modal`}</Button>
-
       <Modal onClose={onClose} size={size} isOpen={isOpen}>
         <ModalOverlay />
         <ModalContent>
