@@ -108,14 +108,14 @@ const resolvers = {
     ) => {
       try {
         console.log('userInput', input, friendType, expertise, language);
-        const completion = await openai.createCompletion({
-          model: 'text-davinci-003',
-          prompt: generatePrompt(input, friendType, expertise, language),
+        const completion = await openai.createChatCompletion({ 
+          model: "gpt-3.5-turbo",
+          messages: [{role: "user", content: generatePrompt(input, friendType, expertise, language)}],
           temperature: 0.6,
           max_tokens: 100,
         });
-        console.log(completion);
-        return completion.data.choices[0].text;
+        console.log(completion.data.choices[0].message.content);
+        return completion.data.choices[0].message.content;
       } catch (error) {
         // Consider implementing your own error handling logic here
         console.error(error);
@@ -170,6 +170,10 @@ const resolvers = {
     addUser: async (parent, args) => {
       try {
         console.log(args);
+        const { error, value } = userSchema.validate(args);
+        if (error) {
+          throw new Error(userErrorMessages.validationError);
+        }
         const user = await User.create(args);
         console.log('user', user);
         const token = signToken(user);
@@ -185,6 +189,10 @@ const resolvers = {
 
     updateUser: async (parent, args) => {
       try {
+        // const { error, value } = userSchema.validate(args);
+        // if (error) {
+        //   throw new Error(userErrorMessages.validationError);
+        // }
         const updatedUser = await User.findOneAndUpdate(
           { _id: args._id },
           { $set: { ...args } },
@@ -252,6 +260,11 @@ const resolvers = {
         // Add the message to the history
         friend.history.push(message);
 
+        // If the history array size is over 11, remove elements in positions 1 and 2
+        if (friend.history.length > 11) {
+          friend.history.splice(1, 2);
+        }
+
         // Save the updated friend and return it
         const updatedFriend = await friend.save();
         return updatedFriend;
@@ -270,6 +283,11 @@ const resolvers = {
 
         // Add the message to the history
         expert.history.push(message);
+
+        // If the history array size is over 11, remove elements in positions 1 and 2
+        if (expert.history.length > 11) {
+          expert.history.splice(1, 2);
+        }
 
         // Save the updated expert and return it
         const updatedExpert = await expert.save();
