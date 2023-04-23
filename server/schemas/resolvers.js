@@ -2,6 +2,7 @@ const { Configuration, OpenAIApi } = require('openai');
 const { generatePrompt } = require('../utils/chatgpt');
 const { signToken } = require('../utils/auth');
 const configuration = new Configuration({
+  organization: 'org-mn7Vpf7QJquy8xYToiiHY4lQ',
   apiKey: process.env.OPENAI_API_KEY,
 });
 const { AuthenticationError } = require('apollo-server-express');
@@ -91,7 +92,6 @@ const resolvers = {
           model: 'text-davinci-003',
           prompt: generatePrompt(input, friendType, temperament, age, language),
           temperature: 0.6,
-          max_tokens: 100,
         });
         console.log(completion);
         return completion.data.choices[0].text;
@@ -111,7 +111,6 @@ const resolvers = {
           model: 'text-davinci-003',
           prompt: generatePrompt(input, friendType, expertise, language),
           temperature: 0.6,
-          max_tokens: 100,
         });
         console.log(completion);
         return completion.data.choices[0].text;
@@ -143,6 +142,10 @@ const resolvers = {
     addUser: async (parent, args) => {
       try {
         console.log(args);
+        const { error, value } = userSchema.validate(args);
+        if (error) {
+          throw new Error(userErrorMessages.validationError);
+        }
         const user = await User.create(args);
         console.log('user', user);
         const token = signToken(user);
@@ -158,6 +161,10 @@ const resolvers = {
 
     updateUser: async (parent, args) => {
       try {
+        // const { error, value } = userSchema.validate(args);
+        // if (error) {
+        //   throw new Error(userErrorMessages.validationError);
+        // }
         const updatedUser = await User.findOneAndUpdate(
           { _id: args._id },
           { $set: { ...args } },
