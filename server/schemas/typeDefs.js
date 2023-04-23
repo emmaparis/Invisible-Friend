@@ -102,8 +102,6 @@ const typeDefs = gql`
       age: Int!
       mood: String!
       user: String!
-      history: [inputMessage]
-      avatar: String
     ): Friend
     updateFriendHistory(_id: ID!, message: inputMessage): Friend
     updateExpertHistory(_id: ID!, message: inputMessage): Expert

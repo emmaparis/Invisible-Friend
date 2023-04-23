@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
+import { Select } from 'chakra-react-select';
 import {
   Button,
   ButtonGroup,
@@ -16,11 +17,16 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useLazyQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { QUERY_FRIEND, QUERY_EXPERT } from '../utils/queries';
+import { UPDATE_FRIEND, UPDATE_EXPERT } from '../utils/mutations';
 
 const PromptHeader = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const [newBotName, setNewBotName] = useState('');
+  const [languageSelect, setLanguageSelect] = useState('');
+  const [temperamentSelect, setTemperamentSelect] = useState('');
+  const [ageSelect, setAgeSelect] = useState('');
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   const [getFriend, { loading: friendLoading, data: friendData }] =
@@ -34,7 +40,53 @@ const PromptHeader = () => {
     },
   });
 
+  const [updateFriend] = useMutation(UPDATE_FRIEND);
+  const [updateExpert] = useMutation(UPDATE_EXPERT);
+
   const [botData, setBotData] = useState({});
+
+  const languageOptions = [
+    { value: 'English', label: 'English' },
+    { value: 'Spanish', label: 'Spanish' },
+    { value: 'French', label: 'French' },
+    { value: 'Italian', label: 'Italian' },
+    { value: 'Japanese', label: 'Japanese' },
+    { value: 'Chinese', label: 'Chinese' },
+    { value: 'Portugese', label: 'Portugese' },
+  ];
+
+  const handleLanguageSelect = (option) => {
+    setLanguageSelect(option);
+  };
+
+  const temperamentOptions = [
+    { value: 'Happy', label: 'Happy' },
+    { value: 'Sad', label: 'Sad' },
+    { value: 'Neutral', label: 'Neutral' },
+    { value: 'Caring', label: 'Caring' },
+    { value: 'Stern', label: 'Stern' },
+    { value: 'Flirty', label: 'Flirty' },
+    { value: 'Drunk', label: 'Drunk' },
+  ];
+
+  const handleTemperamentSelect = (option) => {
+    setTemperamentSelect(option);
+  };
+
+  const ageOptions = [
+    { value: '5', label: '5' },
+    { value: '10', label: '10' },
+    { value: '20', label: '20' },
+    { value: '30', label: '30' },
+    { value: '40', label: '40' },
+    { value: '50', label: '50' },
+    { value: '60', label: '60' },
+    { value: '70', label: '70' },
+  ];
+
+  const handleAgeSelect = (option) => {
+    setAgeSelect(option);
+  };
 
   const url = window.location.href;
   const urlArray = url.split('/');
@@ -48,11 +100,9 @@ const PromptHeader = () => {
       });
     }
     if (botType === 'Teacher') {
-      console.log('botid', botId);
       getExpert({
         variables: { id: botId },
       });
-      console.log(expertData);
     }
   };
 
@@ -62,22 +112,45 @@ const PromptHeader = () => {
 
   useEffect(() => {
     if (friendLoading || expertLoading) {
-      console.log('Data is still loading');
     } else if (friendData) {
-      setBotData(friendData);
+      setBotData(friendData.friend);
     } else if (expertData) {
-      setBotData(expertData);
+      setBotData(expertData.expert);
     }
   }, [friendData, friendLoading, expertData, expertLoading]);
 
-  console.log('botData', botData);
+  const handleUpdateFriend = async () => {
+    try {
+      console.log({
+        _id: botId,
+        name: newBotName,
+        language: languageSelect.value,
+        mood: temperamentSelect.value,
+        age: ageSelect.value,
+        user: botData.user._id,
+      });
+      const { data } = await updateFriend({
+        variables: {
+          _id: botId,
+          name: newBotName,
+          language: languageSelect.value,
+          mood: temperamentSelect.value,
+          age: Number(ageSelect.value),
+          user: botData.user._id,
+        },
+      });
+      onClose();
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div>
       <ButtonGroup>
         <>
           <Button onClick={onOpen} colorScheme="teal" size="sm">
-            Edit Friend
+            Edit
           </Button>
 
           <Modal
@@ -88,22 +161,103 @@ const PromptHeader = () => {
           >
             <ModalOverlay />
             <ModalContent>
-              <ModalHeader>Create your account</ModalHeader>
+              <ModalHeader>Edit</ModalHeader>
               <ModalCloseButton />
               <ModalBody pb={6}>
                 <FormControl>
-                  <FormLabel>First name</FormLabel>
-                  <Input ref={initialRef} placeholder="First name" />
+                  <FormLabel>Name</FormLabel>
+                  <Input
+                    ref={initialRef}
+                    placeholder={botData.name}
+                    value={newBotName}
+                    onChange={(e) => setNewBotName(e.target.value)}
+                  />
                 </FormControl>
 
                 <FormControl mt={4}>
-                  <FormLabel>Last name</FormLabel>
-                  <Input placeholder="Last name" />
+                  <FormLabel>Language</FormLabel>
+                  <Select
+                    name="language"
+                    classNamePrefix="Language-Select"
+                    options={languageOptions}
+                    placeholder="Language"
+                    closeMenuOnSelect
+                    size="lg"
+                    chakraStyles={{
+                      dropdownIndicator: (
+                        prev,
+                        { selectProps: { menuIsOpen } }
+                      ) => ({
+                        ...prev,
+                        '> svg': {
+                          transitionDuration: 'normal',
+                          transform: `rotate(${menuIsOpen ? -180 : 0}deg)`,
+                        },
+                      }),
+                    }}
+                    onChange={handleLanguageSelect}
+                    value={languageSelect}
+                  />
                 </FormControl>
+
+                {botType === 'Friend' && (
+                  <>
+                    <FormControl p={4}>
+                      <FormLabel>Mood</FormLabel>
+                      <Select
+                        name="temperament"
+                        classNamePrefix="Temperament-Select"
+                        options={temperamentOptions}
+                        placeholder="Temperament"
+                        closeMenuOnSelect
+                        size="lg"
+                        chakraStyles={{
+                          dropdownIndicator: (
+                            prev,
+                            { selectProps: { menuIsOpen } }
+                          ) => ({
+                            ...prev,
+                            '> svg': {
+                              transitionDuration: 'normal',
+                              transform: `rotate(${menuIsOpen ? -180 : 0}deg)`,
+                            },
+                          }),
+                        }}
+                        onChange={handleTemperamentSelect}
+                        value={temperamentSelect}
+                      />
+                    </FormControl>
+                    <FormControl p={4}>
+                      <FormLabel>Age</FormLabel>
+                      <Select
+                        name="age"
+                        classNamePrefix="Age-Select"
+                        options={ageOptions}
+                        placeholder="Age"
+                        closeMenuOnSelect
+                        size="lg"
+                        chakraStyles={{
+                          dropdownIndicator: (
+                            prev,
+                            { selectProps: { menuIsOpen } }
+                          ) => ({
+                            ...prev,
+                            '> svg': {
+                              transitionDuration: 'normal',
+                              transform: `rotate(${menuIsOpen ? -180 : 0}deg)`,
+                            },
+                          }),
+                        }}
+                        onChange={handleAgeSelect}
+                        value={ageSelect}
+                      />
+                    </FormControl>
+                  </>
+                )}
               </ModalBody>
 
               <ModalFooter>
-                <Button colorScheme="blue" mr={3}>
+                <Button colorScheme="blue" mr={3} onClick={handleUpdateFriend}>
                   Save
                 </Button>
                 <Button onClick={onClose}>Cancel</Button>

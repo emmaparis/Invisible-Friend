@@ -227,31 +227,17 @@ const resolvers = {
       }
     },
 
-    updateFriend: async (
-      parent,
-      { _id, name, language, age, mood, user, history, avatar }
-    ) => {
+    updateFriend: async (parent, args) => {
       try {
-        const { error, value } = friendSchema.validate({
-          name,
-          language,
-          age,
-          mood,
-          user,
-          history,
-          avatar,
-        });
-        if (error) {
-          throw new Error(friendErrorMessages.validationError);
-        }
+        console.log(args);
         const updatedFriend = await Friend.findOneAndUpdate(
-          { _id },
-          { $set: { ...value } },
+          { _id: args._id },
+          { $set: { ...args } },
           { runValidators: true, new: true }
         );
         return updatedFriend;
       } catch (err) {
-        throw new Error(friendErrorMessages.validationError);
+        throw new Error(err, friendErrorMessages.validationError);
       }
     },
 
@@ -323,22 +309,8 @@ const resolvers = {
       }
     },
 
-    updateExpert: async (
-      parent,
-      { _id, name, language, expertise, user, history, avatar }
-    ) => {
+    updateExpert: async (parent, { _id, name, language, expertise, user }) => {
       try {
-        const { error, value } = expertSchema.validate({
-          name,
-          language,
-          expertise,
-          user,
-          history,
-          avatar,
-        });
-        if (error) {
-          throw new Error(expertErrorMessages.validationError);
-        }
         const updatedExpert = await Expert.findOneAndUpdate(
           { _id },
           { $set: { ...value } },

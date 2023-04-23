@@ -100,8 +100,6 @@ export const UPDATE_FRIEND = gql`
     $age: Int!
     $mood: String!
     $user: String!
-    $avatar: String
-    $history: [inputMessage]
   ) {
     updateFriend(
       _id: $_id
@@ -110,8 +108,6 @@ export const UPDATE_FRIEND = gql`
       age: $age
       mood: $mood
       user: $user
-      avatar: $avatar
-      history: $history
     ) {
       _id
       name
