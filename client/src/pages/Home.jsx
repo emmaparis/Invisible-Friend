@@ -47,7 +47,6 @@ function Home() {
     <div className="mainPage">
       <ButtonGroup
         style={{
-          marginTop: '150px',
           display: 'flex',
           flexDirection: 'column',
           alignSelf: 'center',

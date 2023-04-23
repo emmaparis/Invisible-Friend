@@ -32,7 +32,7 @@ header {
   }
 }
 .mainPage {
-  /* min-height: 100vh; */
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -185,5 +185,8 @@ header {
     height: 60vh;
     width: 70vw;
     max-width: 1200px;
+  }
+  .input-container {
+    padding: 0rem 4rem;
   }
 }
