@@ -23,7 +23,8 @@ const SavedFriendButton = ({ bot, onClick }) => {
     <>
       <Button className="savefriend" size="xl" p={4} onClick={onClick}>
         <img className="icon" src={avatars[bot.avatar]} alt="avatar" />
-        &emsp; {bot.name}
+        &emsp;
+        {bot.name}
         &emsp;
       </Button>
     </>
