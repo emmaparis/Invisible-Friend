@@ -374,7 +374,7 @@ export default function Create() {
         <Button
           onClick={handleAddFriend}
           mt={6}
-          style={{ backgroundColor: '#319795' }}
+          style={{ backgroundColor: '#319795', color: "white" }}
         >
           Initiate Friend
         </Button>

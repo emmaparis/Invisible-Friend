@@ -294,7 +294,7 @@ const PromptHeader = () => {
 
                 {botType === 'Friend' && (
                   <>
-                    <FormControl p={4}>
+                    <FormControl mt={4}>
                       <FormLabel>Mood</FormLabel>
                       <Select
                         name="temperament"
@@ -319,7 +319,7 @@ const PromptHeader = () => {
                         value={temperamentSelect}
                       />
                     </FormControl>
-                    <FormControl p={4}>
+                    <FormControl mt={4}>
                       <FormLabel>Age</FormLabel>
                       <Select
                         name="age"
