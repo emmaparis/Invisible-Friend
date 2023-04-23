@@ -16,7 +16,7 @@ const Delete = ({ handleDelete, botName }) => {
   return (
     <>
       <Button colorScheme="red" onClick={onOpen} size="sm">
-        Delete
+        Delete Friend
       </Button>
 
       <AlertDialog
