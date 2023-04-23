@@ -183,7 +183,7 @@ header {
   }
   #chat-container {
     height: 60vh;
-    width: 80vw;
-    max-width: 1400px;
+    width: 70vw;
+    max-width: 1200px;
   }
 }
