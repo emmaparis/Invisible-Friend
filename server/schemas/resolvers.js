@@ -75,6 +75,7 @@ const resolvers = {
 
     expert: async (parent, { _id }) => {
       try {
+        console.log('fetching expert', _id);
         return await Expert.findOne({ _id }).populate('user');
       } catch (err) {
         throw new Error(err.message);
