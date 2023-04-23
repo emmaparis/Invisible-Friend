@@ -108,9 +108,14 @@ const resolvers = {
     ) => {
       try {
         console.log('userInput', input, friendType, expertise, language);
-        const completion = await openai.createChatCompletion({ 
-          model: "gpt-3.5-turbo",
-          messages: [{role: "user", content: generatePrompt(input, friendType, expertise, language)}],
+        const completion = await openai.createChatCompletion({
+          model: 'gpt-3.5-turbo',
+          messages: [
+            {
+              role: 'user',
+              content: generatePrompt(input, friendType, expertise, language),
+            },
+          ],
           temperature: 0.6,
           max_tokens: 100,
         });
@@ -169,12 +174,11 @@ const resolvers = {
 
     addUser: async (parent, args) => {
       try {
-        console.log(args);
         const { error, value } = userSchema.validate(args);
         if (error) {
           throw new Error(userErrorMessages.validationError);
         }
-        const user = await User.create(args);
+        const user = await User.create(value);
         console.log('user', user);
         const token = signToken(user);
 
