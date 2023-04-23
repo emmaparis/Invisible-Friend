@@ -193,7 +193,7 @@ export const PROMPT_FRIEND = gql`
 
 export const PROMPT_EXPERT = gql`
   query Query(
-    $input: String!
+    $input: [inputMessage!]!
     $friendType: String!
     $avatar: String
     $language: String!

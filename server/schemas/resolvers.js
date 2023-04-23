@@ -108,10 +108,17 @@ const resolvers = {
     ) => {
       try {
         console.log('userInput', input, friendType, expertise, language);
-        const completion = await openai.createChatCompletion({ 
-          model: "gpt-3.5-turbo",
-          messages: [{role: "user", content: generatePrompt(input, friendType, expertise, language)}],
+        const completion = await openai.createChatCompletion({
+          model: 'gpt-3.5-turbo',
+          messages: [
+            {
+              role: 'user',
+              content: generatePrompt(null, friendType, expertise, language),
+            },
+            ...input,
+          ],
           temperature: 0.6,
+          max_tokens: 100,
         });
         console.log(completion.data.choices[0].message.content);
         return completion.data.choices[0].message.content;
@@ -121,6 +128,31 @@ const resolvers = {
       }
     },
   },
+  //   expertPrompt: async (
+  //     parent,
+  //     { input, friendType, expertise, language }
+  //   ) => {
+  //     try {
+  //       console.log('userInput', input, friendType, expertise, language);
+  //       const completion = await openai.createChatCompletion({
+  //         model: 'gpt-3.5-turbo',
+  //         messages: [
+  //           {
+  //             role: 'user',
+  //             content: generatePrompt(input, friendType, expertise, language),
+  //           },
+  //         ],
+  //         temperature: 0.6,
+  //         max_tokens: 100,
+  //       });
+  //       console.log(completion.data.choices[0].message.content);
+  //       return completion.data.choices[0].message.content;
+  //     } catch (error) {
+  //       // Consider implementing your own error handling logic here
+  //       console.error(error);
+  //     }
+  //   },
+  // },
 
   Mutation: {
     login: async (parent, { email, password }) => {

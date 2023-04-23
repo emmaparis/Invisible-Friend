@@ -136,7 +136,7 @@ export default function Prompt(props) {
       let tokenCount = estimateTokenCount(context);
 
       while (tokenCount > tokenLimit) {
-        // Remove the oldest message (excluding the first message)
+        // Remove the oldest message
         contextArray.splice(0, 1);
         context = contextArray
           .map((message) => `${message.role}: ${message.content}`)
@@ -174,39 +174,44 @@ export default function Prompt(props) {
       const contextArray = [];
 
       // Add the 10 most recent messages
-      for (let i = Math.max(history.length - 10, 1); i < history.length; i++) {
+      for (let i = Math.max(history.length - 10, 0); i < history.length; i++) {
         contextArray.push(history[i]);
       }
 
       // Function to estimate token count
-      const estimateTokenCount = (str) => Math.ceil(str.length / 4);
+      const estimateTokenCount = (messages) =>
+        messages.reduce(
+          (count, message) => count + Math.ceil(message.content.length / 4),
+          0
+        );
 
       // Check if the context exceeds the 2000-token limit
       const tokenLimit = 2000;
-      let context = contextArray
-        .map((message) => `${message.role}: ${message.content}`)
-        .join('\n');
-      let tokenCount = estimateTokenCount(context);
+      let tokenCount = estimateTokenCount(contextArray);
 
       while (tokenCount > tokenLimit) {
-        // Remove the oldest message (excluding the first message)
+        // Remove the oldest message
         contextArray.splice(0, 1);
-        context = contextArray
-          .map((message) => `${message.role}: ${message.content}`)
-          .join('\n');
-        tokenCount = estimateTokenCount(context);
+        tokenCount = estimateTokenCount(contextArray);
       }
-      console.log('This is Context', context);
 
-      // Get the chatbot response
+      const cleanedContextArray = contextArray.map((message) => ({
+        role: message.role,
+        content: message.content,
+      }));
+
+      console.log('This is Context', contextArray);
+
+      //Get the chatbot response
       response = await getExpertPromptResponse({
         variables: {
-          input: context,
+          input: cleanedContextArray,
           friendType: type,
           expertise: expert.data.expert.expertise,
           language: expert.data.expert.language,
         },
       });
+      console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', response);
       setPromptResponse(response.data.expertPrompt);
     }
 

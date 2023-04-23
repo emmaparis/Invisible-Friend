@@ -7,9 +7,8 @@ function generatePrompt(input, friendType, temperament, language, age) {
     `;
   } else {
     return `
-    Prompt: ${input}
 
-    Model prompt: Respond to me like you are a ${temperament} ${friendType} that speaks ${language}
+    Respond to me like you are a ${temperament} ${friendType} that speaks ${language}
     `;
   }
 }

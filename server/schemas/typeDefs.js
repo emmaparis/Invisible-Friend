@@ -68,7 +68,7 @@ const typeDefs = gql`
       avatar: String
     ): String
     expertPrompt(
-      input: String!
+      input: [inputMessage!]!
       friendType: String!
       expertise: String!
       language: String!
