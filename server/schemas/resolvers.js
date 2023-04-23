@@ -140,8 +140,9 @@ const resolvers = {
       return { token };
     },
 
-    updatePassword: async (parent, { _id, oldPassword, newPassword }) => {
+    updateUserPassword: async (parent, { _id, oldPassword, newPassword }) => {
       try {
+        console.log(_id, oldPassword, newPassword);
         const user = await User.findOne({ _id });
 
         if (!user) {
