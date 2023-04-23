@@ -30,6 +30,21 @@ import {
   DELETE_USER,
 } from '../utils/mutations';
 import UpdatePassword from '../subcomponents/UpdatePassword';
+import avatara from '../assets/images/avatars/avatar-1.png';
+import avatarb from '../assets/images/avatars/avatar-2.png';
+import avatarc from '../assets/images/avatars/avatar-3.png';
+import avatard from '../assets/images/avatars/avatar-4.png';
+import avatare from '../assets/images/avatars/avatar-5.png';
+import avatarf from '../assets/images/avatars/avatar-6.png';
+
+const avatars = {
+  avatar1: avatara,
+  avatar2: avatarb,
+  avatar3: avatarc,
+  avatar4: avatard,
+  avatar5: avatare,
+  avatar6: avatarf,
+};
 
 function Profile() {
   const [state, dispatch] = useStoreContext();
@@ -411,6 +426,11 @@ function Profile() {
                     <Text pt="2" fontSize="sm" key={friend._id}>
                       {friend.name}
                     </Text>
+                    <img
+                      className="icon"
+                      src={avatars[friend.avatar]}
+                      alt="avatar"
+                    />
                     <>
                       <Button
                         key={`delete${friend._id}`}
@@ -478,6 +498,11 @@ function Profile() {
                     <Text pt="2" fontSize="sm" key={expert._id}>
                       {expert.name}
                     </Text>
+                    <img
+                      className="icon"
+                      src={avatars[expert.avatar]}
+                      alt="avatar"
+                    />
                     <>
                       <Button
                         key={`delete${expert._id}`}
