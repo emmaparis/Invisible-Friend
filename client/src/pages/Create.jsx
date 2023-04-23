@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { ADD_FRIEND, ADD_EXPERT } from '../utils/mutations';
-import { useNavigate } from 'react-router-dom';
-import { useStoreContext } from '../utils/GlobalState';
+import { Select } from 'chakra-react-select';
 import {
   Container,
   FormControl,
@@ -16,7 +14,9 @@ import {
   Button,
   Heading,
 } from '@chakra-ui/react';
-import { Select } from 'chakra-react-select';
+import { QUERY_ME } from '../utils/queries';
+import { ADD_FRIEND, ADD_EXPERT } from '../utils/mutations';
+import { useStoreContext } from '../utils/GlobalState';
 import avatar1 from '../assets/images/avatars/avatar-1.png';
 import avatar2 from '../assets/images/avatars/avatar-2.png';
 import avatar3 from '../assets/images/avatars/avatar-3.png';
@@ -24,66 +24,10 @@ import avatar4 from '../assets/images/avatars/avatar-4.png';
 import avatar5 from '../assets/images/avatars/avatar-5.png';
 import avatar6 from '../assets/images/avatars/avatar-6.png';
 
-const avatarImages = [];
-for (let x = 1; x <= 6; x++) {
-  avatarImages.push('avatar' + x);
-}
-
-const friendTypeOptions = [
-  { value: 'Friend', label: 'Friend' },
-  { value: 'Teacher', label: 'Teacher' },
-];
-
-const temperamentOptions = [
-  { value: 'Happy', label: 'Happy' },
-  { value: 'Sad', label: 'Sad' },
-  { value: 'Neutral', label: 'Neutral' },
-  { value: 'Caring', label: 'Caring' },
-  { value: 'Stern', label: 'Stern' },
-  { value: 'Flirty', label: 'Flirty' },
-  { value: 'Drunk', label: 'Drunk' },
-];
-
-const expertiseOptions = [
-  { value: 'Mathematics', label: 'Mathematics' },
-  { value: 'Science', label: 'Science' },
-  { value: 'Social Studies', label: 'Social Studies' },
-  { value: 'Languages', label: 'Languages' },
-];
-
-const ageOptions = [
-  { value: '5', label: '5' },
-  { value: '10', label: '10' },
-  { value: '20', label: '20' },
-  { value: '30', label: '30' },
-  { value: '40', label: '40' },
-  { value: '50', label: '50' },
-  { value: '60', label: '60' },
-  { value: '70', label: '70' },
-];
-
-const languageOptions = [
-  { value: 'English', label: 'English' },
-  { value: 'Spanish', label: 'Spanish' },
-  { value: 'French', label: 'French' },
-  { value: 'Italian', label: 'Italian' },
-  { value: 'Japanese', label: 'Japanese' },
-  { value: 'Chinese', label: 'Chinese' },
-  { value: 'Portugese', label: 'Portugese' },
-];
-
-const avatarOptions = [
-  { value: avatar1, label: 'avatar1' },
-  { value: avatar2, label: 'avatar2' },
-  { value: avatar3, label: 'avatar3' },
-  { value: avatar4, label: 'avatar4' },
-  { value: avatar5, label: 'avatar5' },
-  { value: avatar6, label: 'avatar6' },
-];
-
 export default function Create(props) {
   const [showTemperament, setShowTemperament] = useState(false);
   const [showExpertise, setShowExpertise] = useState(false);
+  const [botNameState, setBotNameState] = useState('');
   const {
     friendSelect,
     temperamentSelect,
@@ -132,6 +76,67 @@ export default function Create(props) {
     setExpertiseSelect(option);
   };
 
+  const handleBotNameChange = (event) => {
+    setBotNameState(event.target.value);
+  };
+
+  const avatarImages = [];
+  for (let x = 1; x <= 6; x++) {
+    avatarImages.push('avatar' + x);
+  }
+
+  const friendTypeOptions = [
+    { value: 'Friend', label: 'Friend' },
+    { value: 'Teacher', label: 'Teacher' },
+  ];
+
+  const temperamentOptions = [
+    { value: 'Happy', label: 'Happy' },
+    { value: 'Sad', label: 'Sad' },
+    { value: 'Neutral', label: 'Neutral' },
+    { value: 'Caring', label: 'Caring' },
+    { value: 'Stern', label: 'Stern' },
+    { value: 'Flirty', label: 'Flirty' },
+    { value: 'Drunk', label: 'Drunk' },
+  ];
+
+  const expertiseOptions = [
+    { value: 'Mathematics', label: 'Mathematics' },
+    { value: 'Science', label: 'Science' },
+    { value: 'Social Studies', label: 'Social Studies' },
+    { value: 'Languages', label: 'Languages' },
+  ];
+
+  const ageOptions = [
+    { value: '5', label: '5' },
+    { value: '10', label: '10' },
+    { value: '20', label: '20' },
+    { value: '30', label: '30' },
+    { value: '40', label: '40' },
+    { value: '50', label: '50' },
+    { value: '60', label: '60' },
+    { value: '70', label: '70' },
+  ];
+
+  const languageOptions = [
+    { value: 'English', label: 'English' },
+    { value: 'Spanish', label: 'Spanish' },
+    { value: 'French', label: 'French' },
+    { value: 'Italian', label: 'Italian' },
+    { value: 'Japanese', label: 'Japanese' },
+    { value: 'Chinese', label: 'Chinese' },
+    { value: 'Portugese', label: 'Portugese' },
+  ];
+
+  const avatarOptions = [
+    { value: avatar1, label: 'avatar1' },
+    { value: avatar2, label: 'avatar2' },
+    { value: avatar3, label: 'avatar3' },
+    { value: avatar4, label: 'avatar4' },
+    { value: avatar5, label: 'avatar5' },
+    { value: avatar6, label: 'avatar6' },
+  ];
+
   useEffect(() => {
     if (friendSelect && friendSelect.value === 'Friend') {
       setShowTemperament(true);
@@ -158,9 +163,17 @@ export default function Create(props) {
       );
 
       if (friendSelect.value === 'Friend') {
+        console.log({
+          name: botNameState,
+          language: languageSelect.value,
+          age: parseInt(ageSelect.value),
+          mood: temperamentSelect.value,
+          user: state.user._id,
+          avatar: avatarSelect.value,
+        });
         const { data } = await addFriend({
           variables: {
-            name: 'system',
+            name: botNameState,
             language: languageSelect.value,
             age: parseInt(ageSelect.value),
             mood: temperamentSelect.value,
@@ -197,6 +210,17 @@ export default function Create(props) {
     <div className="mainPage">
       <Container className="mainCard" sx={{ width: '100%' }} p={15} mb={16}>
         <Heading>Build Your Friend</Heading>
+        <FormControl p={4}>
+          {/* add input for enter bot name */}
+          <Input
+            name="botName"
+            placeholder="Enter Bot Name"
+            size="lg"
+            onChange={(e) => setPromptEntered(e.target.value)}
+            value={botNameState}
+            onChange={handleBotNameChange}
+          />
+        </FormControl>
         <FormControl p={4}>
           <Select
             name="type"
