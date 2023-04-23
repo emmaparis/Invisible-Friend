@@ -202,10 +202,16 @@ export default function Create() {
 
   return (
     <div className="mainPage">
-      <div className={`error-message ${errorMessage ? '' : 'hidden'}`}>
-        {errorMessage}
-      </div>
-      <Container className="mainCard" sx={{ width: '100%' }} p={15} mb={16}>
+      <Container
+        className="mainCard"
+        sx={{ width: '100%' }}
+        p={15}
+        mb={16}
+        m={8}
+      >
+        <div className={`error-message ${errorMessage ? '' : 'hidden'}`}>
+          {errorMessage}
+        </div>
         <Heading>Build Your Friend</Heading>
         <FormControl p={4}>
           {/* add input for enter bot name */}
@@ -329,13 +335,14 @@ export default function Create() {
           />
         </FormControl>
         <FormControl as="fieldset">
-          <FormLabel ml={10} as="legend" htmlFor={null}>
-            Choose a Friend
+          <FormLabel ml={10} as="legend" htmlFor={null} sx={{ margin: 'auto' }}>
+            Select Friend's Avatar
           </FormLabel>
           <RadioGroup
             defaultValue="Itachi"
             onChange={handleAvatarSelect}
             value={avatarSelect}
+            sx={{ mt: 4 }}
           >
             <HStack spacing="24px">
               <Radio name="avatar1" value="avatar1">
