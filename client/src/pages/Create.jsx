@@ -14,8 +14,10 @@ import {
   Button,
   Heading,
 } from '@chakra-ui/react';
+import { useLazyQuery } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
-import { useQuery } from '@apollo/client';
+import { UPDATE_USER } from '../utils/actions';
+import Auth from '../utils/auth';
 import { ADD_FRIEND, ADD_EXPERT } from '../utils/mutations';
 import { useStoreContext } from '../utils/GlobalState';
 import avatar1 from '../assets/images/avatars/avatar-1.png';
@@ -43,22 +45,25 @@ export default function Create(props) {
     setExpertiseSelect,
   } = props;
   const [state, dispatch] = useStoreContext();
-  const [loadUserData, { called, loading, data }] = useLazyQuery(QUERY_ME, {
-    context: {
-      headers: {
-        Authorization: `Bearer ${Auth.getToken()}`,
+  const [loadUserData, { called, userloading, userdata }] = useLazyQuery(
+    QUERY_ME,
+    {
+      context: {
+        headers: {
+          Authorization: `Bearer ${Auth.getToken()}`,
+        },
       },
-    },
-    onCompleted: (data) => {
-      dispatch({
-        type: UPDATE_USER,
-        user: data.me,
-      });
-    },
-    fetchPolicy: 'network-only',
-    pollInterval: 500,
-    notifyOnNetworkStatusChange: true,
-  });
+      onCompleted: (userdata) => {
+        dispatch({
+          type: UPDATE_USER,
+          user: userdata.me,
+        });
+      },
+      fetchPolicy: 'network-only',
+      pollInterval: 500,
+      notifyOnNetworkStatusChange: true,
+    }
+  );
   const userData = state.user;
   const [avatarSelect, setAvatarSelect] = useState('');
   const [addFriend, { data, loading, error }] = useMutation(ADD_FRIEND);
@@ -137,6 +142,10 @@ export default function Create(props) {
     { value: 'Chinese', label: 'Chinese' },
     { value: 'Portugese', label: 'Portugese' },
   ];
+
+  useEffect(() => {
+    loadUserData();
+  }, []);
 
   useEffect(() => {
     if (friendSelect && friendSelect.value === 'Friend') {
