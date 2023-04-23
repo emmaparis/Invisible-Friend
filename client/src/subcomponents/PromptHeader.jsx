@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Select } from 'chakra-react-select';
 import {
   Button,
@@ -19,7 +20,12 @@ import {
 import { useLazyQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
 import { QUERY_FRIEND, QUERY_EXPERT } from '../utils/queries';
-import { UPDATE_FRIEND, UPDATE_EXPERT } from '../utils/mutations';
+import {
+  UPDATE_FRIEND,
+  UPDATE_EXPERT,
+  DELETE_EXPERT,
+  DELETE_FRIEND,
+} from '../utils/mutations';
 
 const PromptHeader = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -28,6 +34,7 @@ const PromptHeader = () => {
   const [temperamentSelect, setTemperamentSelect] = useState('');
   const [ageSelect, setAgeSelect] = useState('');
   const [expertiseSelect, setExpertiseSelect] = useState('');
+  const navigate = useNavigate();
 
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
@@ -44,6 +51,8 @@ const PromptHeader = () => {
 
   const [updateFriend] = useMutation(UPDATE_FRIEND);
   const [updateExpert] = useMutation(UPDATE_EXPERT);
+  const [deleteExpert] = useMutation(DELETE_EXPERT);
+  const [deleteFriend] = useMutation(DELETE_FRIEND);
 
   const [botData, setBotData] = useState({});
 
@@ -145,13 +154,6 @@ const PromptHeader = () => {
           },
         });
       } else if (botType === 'Teacher') {
-        console.log({
-          _id: botId,
-          name: newBotName,
-          language: languageSelect.value,
-          expertise: expertiseSelect.value,
-          user: botData.user._id,
-        });
         const { data } = await updateExpert({
           variables: {
             _id: botId,
@@ -163,6 +165,28 @@ const PromptHeader = () => {
         });
       }
       onClose();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      if (botType === 'Friend') {
+        const { data } = await deleteFriend({
+          variables: {
+            _id: botId,
+          },
+        });
+      } else if (botType === 'Teacher') {
+        const { data } = await deleteExpert({
+          variables: {
+            _id: botId,
+          },
+        });
+      }
+      onClose();
+      navigate('/');
     } catch (err) {
       console.error(err);
     }
@@ -317,8 +341,8 @@ const PromptHeader = () => {
             </ModalContent>
           </Modal>
         </>
-        <Button colorScheme="teal" size="sm">
-          Remove Friend
+        <Button colorScheme="red" size="sm" onClick={handleDelete}>
+          Delete
         </Button>
       </ButtonGroup>
     </div>
