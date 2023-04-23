@@ -136,3 +136,19 @@ header {
   border-bottom-left-radius: 0;
   margin-right: 25%;
 }
+
+.error-message {
+  background-color: red;
+  font-size: 2em;
+  width: 80%;
+  margin: auto;
+  margin-top: 5%;
+  margin-bottom: 3%;
+  border: rgb(0, 0, 0) solid 4px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}
