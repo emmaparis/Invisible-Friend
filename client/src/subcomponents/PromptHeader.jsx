@@ -27,6 +27,8 @@ const PromptHeader = () => {
   const [languageSelect, setLanguageSelect] = useState('');
   const [temperamentSelect, setTemperamentSelect] = useState('');
   const [ageSelect, setAgeSelect] = useState('');
+  const [expertiseSelect, setExpertiseSelect] = useState('');
+
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
   const [getFriend, { loading: friendLoading, data: friendData }] =
@@ -88,6 +90,17 @@ const PromptHeader = () => {
     setAgeSelect(option);
   };
 
+  const expertiseOptions = [
+    { value: 'Mathematics', label: 'Mathematics' },
+    { value: 'Science', label: 'Science' },
+    { value: 'Social Studies', label: 'Social Studies' },
+    { value: 'Languages', label: 'Languages' },
+  ];
+
+  const handleExpertiseSelect = (option) => {
+    setExpertiseSelect(option);
+  };
+
   const url = window.location.href;
   const urlArray = url.split('/');
   const botId = urlArray[urlArray.length - 1];
@@ -111,8 +124,7 @@ const PromptHeader = () => {
   }, []);
 
   useEffect(() => {
-    if (friendLoading || expertLoading) {
-    } else if (friendData) {
+    if (friendData) {
       setBotData(friendData.friend);
     } else if (expertData) {
       setBotData(expertData.expert);
@@ -121,24 +133,35 @@ const PromptHeader = () => {
 
   const handleUpdateFriend = async () => {
     try {
-      console.log({
-        _id: botId,
-        name: newBotName,
-        language: languageSelect.value,
-        mood: temperamentSelect.value,
-        age: ageSelect.value,
-        user: botData.user._id,
-      });
-      const { data } = await updateFriend({
-        variables: {
+      if (botType === 'Friend') {
+        const { data } = await updateFriend({
+          variables: {
+            _id: botId,
+            name: newBotName,
+            language: languageSelect.value,
+            mood: temperamentSelect.value,
+            age: Number(ageSelect.value),
+            user: botData.user._id,
+          },
+        });
+      } else if (botType === 'Teacher') {
+        console.log({
           _id: botId,
           name: newBotName,
           language: languageSelect.value,
-          mood: temperamentSelect.value,
-          age: Number(ageSelect.value),
+          expertise: expertiseSelect.value,
           user: botData.user._id,
-        },
-      });
+        });
+        const { data } = await updateExpert({
+          variables: {
+            _id: botId,
+            name: newBotName,
+            language: languageSelect.value,
+            expertise: expertiseSelect.value,
+            user: botData.user._id,
+          },
+        });
+      }
       onClose();
     } catch (err) {
       console.error(err);
@@ -250,6 +273,35 @@ const PromptHeader = () => {
                         }}
                         onChange={handleAgeSelect}
                         value={ageSelect}
+                      />
+                    </FormControl>
+                  </>
+                )}
+                {botType === 'Teacher' && (
+                  <>
+                    <FormControl p={4}>
+                      <FormLabel>Expertise</FormLabel>
+                      <Select
+                        name="expertise"
+                        classNamePrefix="Expertise-Select"
+                        options={expertiseOptions}
+                        placeholder="Expertise"
+                        closeMenuOnSelect
+                        size="lg"
+                        chakraStyles={{
+                          dropdownIndicator: (
+                            prev,
+                            { selectProps: { menuIsOpen } }
+                          ) => ({
+                            ...prev,
+                            '> svg': {
+                              transitionDuration: 'normal',
+                              transform: `rotate(${menuIsOpen ? -180 : 0}deg)`,
+                            },
+                          }),
+                        }}
+                        onChange={handleExpertiseSelect}
+                        value={expertiseSelect}
                       />
                     </FormControl>
                   </>

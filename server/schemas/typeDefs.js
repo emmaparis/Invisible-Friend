@@ -120,8 +120,6 @@ const typeDefs = gql`
       language: String!
       expertise: String!
       user: String!
-      history: [inputMessage]
-      avatar: String
     ): Expert
     deleteExpert(_id: ID!): Expert
   }

@@ -309,16 +309,17 @@ const resolvers = {
       }
     },
 
-    updateExpert: async (parent, { _id, name, language, expertise, user }) => {
+    updateExpert: async (parent, args) => {
       try {
+        console.log(args);
         const updatedExpert = await Expert.findOneAndUpdate(
-          { _id },
-          { $set: { ...value } },
+          { _id: args._id },
+          { $set: args },
           { runValidators: true, new: true }
         );
         return updatedExpert;
       } catch (err) {
-        throw new Error(expertErrorMessages.validationError);
+        throw new Error(err, expertErrorMessages.validationError);
       }
     },
 
