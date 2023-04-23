@@ -335,8 +335,9 @@ export default function Prompt(props) {
                     justifyContent: 'center',
                     alignContent: 'center',
                   }}
+                  className='input-container'
                 >
-                  <FormControl>
+                  <FormControl sx={{width: '100%'}}>
                     <form onSubmit={onSubmit}>
                       <InputGroup>
                         <Input

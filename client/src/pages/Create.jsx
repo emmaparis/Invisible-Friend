@@ -217,10 +217,16 @@ export default function Create() {
           {/* add input for enter bot name */}
           <Input
             name="botName"
-            placeholder="Enter Bot Name"
+            placeholder="Enter Friend Name"
             size="lg"
             value={botNameState}
             onChange={handleBotNameChange}
+            sx={{
+              textAlign: "center",
+              "&::placeholder": {
+                textAlign: "center",
+              },
+            }}
           />
         </FormControl>
         <FormControl p={4}>

@@ -232,17 +232,16 @@ const PromptHeader = () => {
 
   return (
     <div>
-      <CardHeader>
-        <Heading fontSize="5xl" size="md" m={3} mb={0}>
+      <CardHeader style={{display: 'flex', flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+        <Heading fontSize="5xl" size="md" mr={3}>
           Talk to {botData.name}
         </Heading>
+        <img className="icon" src={avatars[botData.avatar]} alt="avatar" />
       </CardHeader>
       <ButtonGroup>
         <>
-          <img className="icon" src={avatars[botData.avatar]} alt="avatar" />
-          <Text>{botData.name}</Text>
           <Button onClick={onOpen} colorScheme="teal" size="sm">
-            Edit
+            Edit Friend
           </Button>
 
           <Modal
@@ -378,7 +377,7 @@ const PromptHeader = () => {
               </ModalBody>
 
               <ModalFooter>
-                <Button colorScheme="blue" mr={3} onClick={handleUpdateFriend}>
+                <Button colorScheme="teal" mr={3} onClick={handleUpdateFriend}>
                   Save
                 </Button>
                 <Button onClick={onClose}>Cancel</Button>
