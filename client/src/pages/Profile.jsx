@@ -17,7 +17,6 @@ import {
   AlertDialogHeader,
   AlertDialogContent,
   AlertDialogOverlay,
-  useDisclosure,
 } from '@chakra-ui/react';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { useStoreContext } from '../utils/GlobalState';
@@ -30,6 +29,7 @@ import {
   DELETE_FRIEND,
   DELETE_USER,
 } from '../utils/mutations';
+import UpdatePassword from '../subcomponents/UpdatePassword';
 
 function Profile() {
   const [state, dispatch] = useStoreContext();
@@ -87,6 +87,7 @@ function Profile() {
 
   useEffect(() => {
     loadUserData();
+    console.log('userData', userData);
   }, []);
 
   const [updateEmail, { emailData, emailLoading, emailError }] = useMutation(
@@ -240,7 +241,7 @@ function Profile() {
 
   return (
     <div className="mainPage">
-      <Card className="mainCard">
+      <Card className="mainCard" width="50%">
         <CardHeader>
           {usernameFlag ? (
             <Stack direction="row" justify="space-between">
@@ -342,8 +343,9 @@ function Profile() {
                         backgroundColor: 'white',
                         borderRadius: '1rem',
                         paddingLeft: '5px',
-                        margin: '5px',
+                        margin: '2px',
                         width: '150%',
+                        height: '90%',
                       }}
                       placeholder={userData.email}
                       name="newEmail"
@@ -382,6 +384,18 @@ function Profile() {
                 </Stack>
               </Box>
             )}
+
+            <Box>
+              <Heading size="xs" textTransform="uppercase" align="left">
+                Password
+              </Heading>
+              <Stack direction="row" justify="space-between">
+                <Text pt="2" fontSize="sm">
+                  ********
+                </Text>
+                <UpdatePassword />
+              </Stack>
+            </Box>
 
             <Box>
               <Heading size="xs" textTransform="uppercase" align="left">
