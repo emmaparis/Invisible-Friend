@@ -41,7 +41,7 @@ export default function Header() {
           >
             <Heading sx={{ color: '#1D4044' }}>INVISIBLE</Heading>
             <Image
-              boxSize="30px"
+              boxSize="28px"
               objectFit="cover"
               src={logo}
               alt="Invisible Friend logo."
@@ -76,7 +76,7 @@ export default function Header() {
                 sx={{ backgroundColor: '#319795', color: 'white' }}
                 onClick={logout}
               >
-                Log Out
+                Logout
               </Button>
             </>
           )}
