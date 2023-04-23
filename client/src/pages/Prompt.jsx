@@ -22,7 +22,6 @@ import {
   InputGroup,
   HStack,
 } from '@chakra-ui/react';
-import { useSpeechSynthesis } from 'react-speech-kit';
 import { useMutation, useLazyQuery } from '@apollo/client';
 import {
   PROMPT_FRIEND,
@@ -268,13 +267,6 @@ export default function Prompt(props) {
       onLoad();
     }, [expertData, expertError, expertLoading]);
   }
-  // Text-to-speech functionality
-  const [text, setText] = useState('Hello this is a test');
-  const { speak } = useSpeechSynthesis();
-
-  const handleOnClick = (text) => {
-    speak({ text: text });
-  };
 
   return (
     <div className="mainPage">
@@ -310,20 +302,11 @@ export default function Prompt(props) {
                   />
                 ))}{' '}
                 {loading || expertPromptLoading ? (
+                  <>
                   <Message role={'system'} content={'...'} />
+                  </>
                 ) : (
                   <>
-                    {/* <Message role={'system'} content={promptResponse} /> */}
-                    {/* <Button
-                  minWidth={20}
-                  mr={5}
-                  className="genButton"
-                  value="Play"
-                  type="button"
-                  onClick={()=>{handleOnClick(promptResponse)}}
-                  >
-                      <img src={audioIcon} style={{height:'100%'}} alt='volume button.'></img>
-                  </Button> */}
                   </>
                 )}
               </div>
