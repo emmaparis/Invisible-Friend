@@ -152,21 +152,11 @@ export default function Create(props) {
 
   const handleAddFriend = async () => {
     try {
-      console.log(
-        'This is the data',
-        languageSelect,
-        ageSelect,
-        temperamentSelect,
-        state.user._id,
-        friendSelect,
-        expertiseSelect
-      );
-
       if (friendSelect.value === 'Friend') {
         console.log({
           name: botNameState,
           language: languageSelect.value,
-          age: parseInt(ageSelect.value),
+          age: parseInt(ageSelect.value, 10),
           mood: temperamentSelect.value,
           user: state.user._id,
           avatar: avatarSelect.value,
@@ -175,7 +165,7 @@ export default function Create(props) {
           variables: {
             name: botNameState,
             language: languageSelect.value,
-            age: parseInt(ageSelect.value),
+            age: parseInt(ageSelect.value, 10),
             mood: temperamentSelect.value,
             user: state.user._id,
             avatar: avatarSelect.value,
