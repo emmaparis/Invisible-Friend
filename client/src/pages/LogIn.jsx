@@ -53,11 +53,14 @@ const LogIn = (props) => {
     <div className="mainPage">
       <Card
         sx={{
-          margin: '8rem',
+          margin: '0rem',
+          padding: '2rem',
+          maxWidth: '600px',
           backgroundColor: '#E6FFFA',
           boxShadow: '8px 5px 5px #B2F5EA',
           borderRadius: '2rem',
         }}
+        className="mainCard"
       >
         <CardHeader>
           <Heading fontSize="5xl" size="md" m={8}>

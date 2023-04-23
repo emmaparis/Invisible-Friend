@@ -22,7 +22,6 @@ import {
   InputGroup,
   HStack,
 } from '@chakra-ui/react';
-import { useSpeechSynthesis } from 'react-speech-kit';
 import { useMutation, useLazyQuery } from '@apollo/client';
 import {
   PROMPT_FRIEND,
@@ -120,40 +119,45 @@ export default function Prompt(props) {
       // Create context for the bot
       const history = friend.data.friend.history;
       const contextArray = [];
+
       // Add the 10 most recent messages
-      for (let i = Math.max(history.length - 10, 1); i < history.length; i++) {
+      for (let i = Math.max(history.length - 10, 0); i < history.length; i++) {
         contextArray.push(history[i]);
       }
 
       // Function to estimate token count
-      const estimateTokenCount = (str) => Math.ceil(str.length / 4);
+      const estimateTokenCount = (messages) =>
+        messages.reduce(
+          (count, message) => count + Math.ceil(message.content.length / 4),
+          0
+        );
 
       // Check if the context exceeds the 2000-token limit
       const tokenLimit = 2000;
-      let context = contextArray
-        .map((message) => `${message.role}: ${message.content}`)
-        .join('\n');
-      let tokenCount = estimateTokenCount(context);
+      let tokenCount = estimateTokenCount(contextArray);
 
       while (tokenCount > tokenLimit) {
-        // Remove the oldest message (excluding the first message)
+        // Remove the oldest message
         contextArray.splice(0, 1);
-        context = contextArray
-          .map((message) => `${message.role}: ${message.content}`)
-          .join('\n');
-        tokenCount = estimateTokenCount(context);
+        tokenCount = estimateTokenCount(contextArray);
       }
 
-      console.log('This is Context', context);
+      const cleanedContextArray = contextArray.map((message) => ({
+        role: message.role,
+        content: message.content,
+      }));
+
+      console.log('This is Context', cleanedContextArray);
 
       // Get the chatbot response
       response = await getFriendPromptResponse({
         variables: {
-          input: context,
+          input: cleanedContextArray,
           friendType: type,
           temperament: friend.data.friend.mood,
           age: friend.data.friend.age,
           language: friend.data.friend.language,
+          name: friend.data.friend.name,
         },
       });
       setPromptResponse(response.data.prompt);
@@ -174,34 +178,38 @@ export default function Prompt(props) {
       const contextArray = [];
 
       // Add the 10 most recent messages
-      for (let i = Math.max(history.length - 10, 1); i < history.length; i++) {
+      for (let i = Math.max(history.length - 10, 0); i < history.length; i++) {
         contextArray.push(history[i]);
       }
 
       // Function to estimate token count
-      const estimateTokenCount = (str) => Math.ceil(str.length / 4);
+      const estimateTokenCount = (messages) =>
+        messages.reduce(
+          (count, message) => count + Math.ceil(message.content.length / 4),
+          0
+        );
 
       // Check if the context exceeds the 2000-token limit
       const tokenLimit = 2000;
-      let context = contextArray
-        .map((message) => `${message.role}: ${message.content}`)
-        .join('\n');
-      let tokenCount = estimateTokenCount(context);
+      let tokenCount = estimateTokenCount(contextArray);
 
       while (tokenCount > tokenLimit) {
-        // Remove the oldest message (excluding the first message)
+        // Remove the oldest message
         contextArray.splice(0, 1);
-        context = contextArray
-          .map((message) => `${message.role}: ${message.content}`)
-          .join('\n');
-        tokenCount = estimateTokenCount(context);
+        tokenCount = estimateTokenCount(contextArray);
       }
-      console.log('This is Context', context);
 
-      // Get the chatbot response
+      const cleanedContextArray = contextArray.map((message) => ({
+        role: message.role,
+        content: message.content,
+      }));
+
+      console.log('This is Context', contextArray);
+
+      //Get the chatbot response
       response = await getExpertPromptResponse({
         variables: {
-          input: context,
+          input: cleanedContextArray,
           friendType: type,
           expertise: expert.data.expert.expertise,
           language: expert.data.expert.language,
@@ -259,13 +267,6 @@ export default function Prompt(props) {
       onLoad();
     }, [expertData, expertError, expertLoading]);
   }
-  // Text-to-speech functionality
-  const [text, setText] = useState('Hello this is a test');
-  const { speak } = useSpeechSynthesis();
-
-  const handleOnClick = (text) => {
-    speak({ text: text });
-  };
 
   return (
     <div className="mainPage">
@@ -301,20 +302,11 @@ export default function Prompt(props) {
                   />
                 ))}{' '}
                 {loading || expertPromptLoading ? (
+                  <>
                   <Message role={'system'} content={'...'} />
+                  </>
                 ) : (
                   <>
-                    {/* <Message role={'system'} content={promptResponse} /> */}
-                    {/* <Button
-                  minWidth={20}
-                  mr={5}
-                  className="genButton"
-                  value="Play"
-                  type="button"
-                  onClick={()=>{handleOnClick(promptResponse)}}
-                  >
-                      <img src={audioIcon} style={{height:'100%'}} alt='volume button.'></img>
-                  </Button> */}
                   </>
                 )}
               </div>
