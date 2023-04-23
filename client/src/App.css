@@ -174,11 +174,16 @@ header {
   .mainCard {
     margin: 4rem;
     width: 100%;
-    max-width: 800px
+    max-width: 1400px
   }
   .mainPage {
     padding: 2rem;
     padding-top: 2rem;
     padding-bottom: 2rem;
+  }
+  #chat-container {
+    height: 60vh;
+    width: 80vw;
+    max-width: 1400px;
   }
 }
