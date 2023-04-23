@@ -278,11 +278,7 @@ export default function Prompt(props) {
           margin: '4rem',
         }}
       >
-        <CardHeader>
-          <Heading fontSize="5xl" size="md" m={3} mb={0}>
-            Talk to 'Friend Name'
-          </Heading>
-        </CardHeader>
+        <PromptHeader />
         <CardBody>
           <Stack divider={<StackDivider />} spacing="4">
             <Box>
@@ -293,9 +289,7 @@ export default function Prompt(props) {
                   justifyContent: 'space-between',
                   alignContent: 'center',
                 }}
-              >
-                <PromptHeader />
-              </div>
+              ></div>
             </Box>
             <Box>
               <div id="chat-container">

@@ -16,6 +16,9 @@ import {
   FormLabel,
   Input,
   useDisclosure,
+  Text,
+  CardHeader,
+  Heading,
 } from '@chakra-ui/react';
 import { useLazyQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
@@ -26,6 +29,21 @@ import {
   DELETE_EXPERT,
   DELETE_FRIEND,
 } from '../utils/mutations';
+import avatara from '../assets/images/avatars/avatar-1.png';
+import avatarb from '../assets/images/avatars/avatar-2.png';
+import avatarc from '../assets/images/avatars/avatar-3.png';
+import avatard from '../assets/images/avatars/avatar-4.png';
+import avatare from '../assets/images/avatars/avatar-5.png';
+import avatarf from '../assets/images/avatars/avatar-6.png';
+
+const avatars = {
+  avatar1: avatara,
+  avatar2: avatarb,
+  avatar3: avatarc,
+  avatar4: avatard,
+  avatar5: avatare,
+  avatar6: avatarf,
+};
 
 const PromptHeader = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -130,7 +148,9 @@ const PromptHeader = () => {
 
   useEffect(() => {
     getBotData();
-  }, []);
+  }, [updateExpert, updateFriend]);
+
+  useEffect(() => {}, [botData]);
 
   useEffect(() => {
     if (friendData) {
@@ -138,7 +158,14 @@ const PromptHeader = () => {
     } else if (expertData) {
       setBotData(expertData.expert);
     }
-  }, [friendData, friendLoading, expertData, expertLoading]);
+  }, [
+    friendData,
+    friendLoading,
+    expertData,
+    expertLoading,
+    updateExpert,
+    updateFriend,
+  ]);
 
   const handleUpdateFriend = async () => {
     try {
@@ -164,6 +191,10 @@ const PromptHeader = () => {
           },
         });
       }
+      setBotData({
+        ...botData,
+        name: newBotName,
+      });
       onClose();
     } catch (err) {
       console.error(err);
@@ -194,8 +225,15 @@ const PromptHeader = () => {
 
   return (
     <div>
+      <CardHeader>
+        <Heading fontSize="5xl" size="md" m={3} mb={0}>
+          Talk to {botData.name}
+        </Heading>
+      </CardHeader>
       <ButtonGroup>
         <>
+          <img className="icon" src={avatars[botData.avatar]} alt="avatar" />
+          <Text>{botData.name}</Text>
           <Button onClick={onOpen} colorScheme="teal" size="sm">
             Edit
           </Button>
