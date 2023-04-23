@@ -15,6 +15,7 @@ import {
   Heading,
 } from '@chakra-ui/react';
 import { QUERY_ME } from '../utils/queries';
+import { useQuery } from '@apollo/client';
 import { ADD_FRIEND, ADD_EXPERT } from '../utils/mutations';
 import { useStoreContext } from '../utils/GlobalState';
 import avatar1 from '../assets/images/avatars/avatar-1.png';
@@ -33,19 +34,33 @@ export default function Create(props) {
     temperamentSelect,
     ageSelect,
     languageSelect,
-    promptEntered,
-    avatarSelect,
     setFriendSelect,
     setTemperamentSelect,
     setAgeSelect,
     setLanguageSelect,
     setPromptEntered,
-    setAvatarSelect,
     expertiseSelect,
     setExpertiseSelect,
   } = props;
   const [state, dispatch] = useStoreContext();
-
+  const [loadUserData, { called, loading, data }] = useLazyQuery(QUERY_ME, {
+    context: {
+      headers: {
+        Authorization: `Bearer ${Auth.getToken()}`,
+      },
+    },
+    onCompleted: (data) => {
+      dispatch({
+        type: UPDATE_USER,
+        user: data.me,
+      });
+    },
+    fetchPolicy: 'network-only',
+    pollInterval: 500,
+    notifyOnNetworkStatusChange: true,
+  });
+  const userData = state.user;
+  const [avatarSelect, setAvatarSelect] = useState('');
   const [addFriend, { data, loading, error }] = useMutation(ADD_FRIEND);
   const [
     addExpert,
@@ -68,8 +83,8 @@ export default function Create(props) {
   const handleLanguageSelect = (option) => {
     setLanguageSelect(option);
   };
-  const handleAvatarSelect = (option) => {
-    setAvatarSelect(option);
+  const handleAvatarSelect = (value) => {
+    setAvatarSelect(value);
   };
 
   const handleExpertiseSelect = (option) => {
@@ -79,11 +94,6 @@ export default function Create(props) {
   const handleBotNameChange = (event) => {
     setBotNameState(event.target.value);
   };
-
-  const avatarImages = [];
-  for (let x = 1; x <= 6; x++) {
-    avatarImages.push('avatar' + x);
-  }
 
   const friendTypeOptions = [
     { value: 'Friend', label: 'Friend' },
@@ -128,15 +138,6 @@ export default function Create(props) {
     { value: 'Portugese', label: 'Portugese' },
   ];
 
-  const avatarOptions = [
-    { value: avatar1, label: 'avatar1' },
-    { value: avatar2, label: 'avatar2' },
-    { value: avatar3, label: 'avatar3' },
-    { value: avatar4, label: 'avatar4' },
-    { value: avatar5, label: 'avatar5' },
-    { value: avatar6, label: 'avatar6' },
-  ];
-
   useEffect(() => {
     if (friendSelect && friendSelect.value === 'Friend') {
       setShowTemperament(true);
@@ -159,7 +160,7 @@ export default function Create(props) {
           age: parseInt(ageSelect.value, 10),
           mood: temperamentSelect.value,
           user: state.user._id,
-          avatar: avatarSelect.value,
+          avatar: avatarSelect,
         });
         const { data } = await addFriend({
           variables: {
@@ -168,7 +169,7 @@ export default function Create(props) {
             age: parseInt(ageSelect.value, 10),
             mood: temperamentSelect.value,
             user: state.user._id,
-            avatar: avatarSelect.value,
+            avatar: avatarSelect,
           },
         });
 
@@ -176,13 +177,20 @@ export default function Create(props) {
         // Navigate to the /prompt/:id route using the newly added friend's _id
         navigate(`/prompt/${friendSelect.value}/${data.addFriend._id}`);
       } else {
+        console.log({
+          name: botNameState,
+          language: languageSelect.value,
+          expertise: expertiseSelect.value,
+          user: state.user._id,
+          avatar: avatarSelect,
+        });
         const { data } = await addExpert({
           variables: {
-            name: 'system',
+            name: botNameState,
             language: languageSelect.value,
             expertise: expertiseSelect.value,
             user: state.user._id,
-            avatar: avatarSelect.value,
+            avatar: avatarSelect,
           },
         });
 
@@ -262,7 +270,7 @@ export default function Create(props) {
               classNamePrefix="Expertise-Select"
               options={expertiseOptions}
               placeholder="Expertise"
-              closeMenuOnSelect={true}
+              closeMenuOnSelect
               size="lg"
               chakraStyles={{
                 dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
@@ -285,7 +293,7 @@ export default function Create(props) {
               classNamePrefix="Age-Select"
               options={ageOptions}
               placeholder="Age"
-              closeMenuOnSelect={true}
+              closeMenuOnSelect
               size="lg"
               chakraStyles={{
                 dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
@@ -307,7 +315,7 @@ export default function Create(props) {
             classNamePrefix="Language-Select"
             options={languageOptions}
             placeholder="Language"
-            closeMenuOnSelect={true}
+            closeMenuOnSelect
             size="lg"
             chakraStyles={{
               dropdownIndicator: (prev, { selectProps: { menuIsOpen } }) => ({
@@ -332,38 +340,39 @@ export default function Create(props) {
             value={avatarSelect}
           >
             <HStack spacing="24px">
-              <Radio value={avatar1}>
-                <img src={avatar1} />
+              <Radio name="avatar1" value="avatar1">
+                <img src={avatar1} alt="girl with pink hair and overalls" />
               </Radio>
-              <Radio value={avatar2}>
-                <img src={avatar2} />
+              <Radio name="avatar2" value="avatar2">
+                <img src={avatar2} alt="beared hipster with glasses" />
               </Radio>
-              <Radio value={avatar3}>
-                <img src={avatar3} />
+              <Radio name="avatar3" value="avatar3">
+                <img src={avatar3} alt="blonde boy sticking out his tongue" />
               </Radio>
             </HStack>
             <HStack spacing="24px">
-              <Radio value={avatar4}>
-                <img src={avatar4} />
+              <Radio name="avatar4" value="avatar4">
+                <img src={avatar4} alt="Freddy Mercury" />
               </Radio>
-              <Radio value={avatar5}>
-                <img src={avatar5} />
+              <Radio name="avatar5" value="avatar5">
+                <img
+                  src={avatar5}
+                  alt="Chain smoking emo girl with sunglasses"
+                />
               </Radio>
-              <Radio value={avatar6}>
-                <img src={avatar6} />
+              <Radio name="avatar6" value="avatar6">
+                <img src={avatar6} alt="Happy nerdy girl" />
               </Radio>
             </HStack>
           </RadioGroup>
         </FormControl>
-        <Link colorscheme="teal">
-          <Button
-            onClick={handleAddFriend}
-            mt={6}
-            style={{ backgroundColor: '#319795' }}
-          >
-            Initiate Friend
-          </Button>
-        </Link>
+        <Button
+          onClick={handleAddFriend}
+          mt={6}
+          style={{ backgroundColor: '#319795' }}
+        >
+          Initiate Friend
+        </Button>
       </Container>
     </div>
   );

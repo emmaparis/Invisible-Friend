@@ -180,10 +180,10 @@ const resolvers = {
 
     addFriend: async (parent, args) => {
       try {
-        const { error, value } = friendSchema.validate(args);
-        if (error) {
-          throw new Error(friendErrorMessages.validationError);
-        }
+        // const { error, value } = friendSchema.validate(args);
+        // if (error) {
+        //   throw new Error(friendErrorMessages.validationError);
+        // }
 
         // Find user by id
         const user = await User.findById(args.user);
